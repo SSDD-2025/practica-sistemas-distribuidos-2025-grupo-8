@@ -1,4 +1,4 @@
-package main.java.es.codeurjc.gymapp.model;
+package es.codeurjc.gymapp.model;
 import java.lang.annotation.Inherited;
 
 import jakarta.persistence.*;
@@ -14,8 +14,7 @@ public abstract class ModelEntity {
     public ModelEntity() {
     }
 
-    public ModelEntity(Long id, String name) {
-        this.id = id;
+    public ModelEntity(String name) {
         this.name = name;
     }
 
