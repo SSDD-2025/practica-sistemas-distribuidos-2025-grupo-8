@@ -14,8 +14,7 @@ public abstract class ModelEntity {
     public ModelEntity() {
     }
 
-    public ModelEntity(Long id, String name) {
-        this.id = id;
+    public ModelEntity(String name) {
         this.name = name;
     }
 
