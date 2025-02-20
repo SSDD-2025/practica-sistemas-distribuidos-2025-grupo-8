@@ -11,3 +11,22 @@ p{
     margin-top: 20%;
     text-shadow: 20px 20px 80px rgb(224, 47, 216);
 }
+#header{
+    display: flexbox;
+    flex-direction: column;
+    background-color: black;
+}
+#supHeader{
+    display: flexbox;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #cc00ff;
+}
+#infHeader{
+    display: flexbox;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: blueviolet;
+}
