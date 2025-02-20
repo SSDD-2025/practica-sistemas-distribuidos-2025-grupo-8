@@ -1,15 +1,22 @@
 package es.codeurjc.gymapp.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Exercise extends ModelEntity{
     
     private String description;
+    @ManyToOne
     private Material material;
+    @ManyToOne
     private Routine routine;
 
     public Exercise() {
+        super();
     }
 
     public Exercise(String description, Material material) {
+        super();
         this.description = description;
         this.material = material;
     }

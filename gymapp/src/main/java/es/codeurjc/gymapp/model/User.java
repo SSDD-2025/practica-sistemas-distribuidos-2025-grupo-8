@@ -7,7 +7,9 @@ import java.util.ArrayList;
 public class User extends ModelEntity {
 
     private String password;
+    @ManyToOne
     private Trainer trainer;
+    @OneToMany(mappedBy = "user")
     private ArrayList<Routine> routines;
 
     // Constructor

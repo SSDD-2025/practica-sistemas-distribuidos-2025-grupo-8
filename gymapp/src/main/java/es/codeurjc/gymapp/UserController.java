@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
 	private UserServices UserServices;
 
-    @PostMapping("/")
+    @GetMapping("/")
 	public String init(Model model) {
 
 		return "index";

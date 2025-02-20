@@ -3,11 +3,16 @@ package es.codeurjc.gymapp.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Routine extends ModelEntity{
 
     private String description;
     private String day;
+    @OneToMany(mappedBy = "routine")
     private Set<Exercise> exercises;
+    @ManyToOne
     private User user;
 
     public Routine() {
