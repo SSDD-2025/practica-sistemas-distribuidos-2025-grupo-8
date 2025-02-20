@@ -4,10 +4,15 @@ body{
     margin: 0;
     padding: 0;
 }
-p{
-    color: #cc00ff;
-    font-size: 20px;
-    text-align: center;
-    margin-top: 20%;
-    text-shadow: 20px 20px 80px rgb(224, 47, 216);
+body {
+    background-image: url('path/to/your/image.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.partial-image {
+    width: 50%; 
+    height: auto; 
+    display: block;
+    margin: 0 auto; 
 }
