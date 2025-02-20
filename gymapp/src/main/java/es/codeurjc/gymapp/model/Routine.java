@@ -6,8 +6,12 @@ import java.util.Set;
 import jakarta.persistence.*;
 
 @Entity
-public class Routine extends ModelEntity{
+public class Routine{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
     private String description;
     private String day;
     @OneToMany(mappedBy = "routine")
@@ -16,10 +20,8 @@ public class Routine extends ModelEntity{
     private User user;
 
     public Routine() {
-        super();
     }
     public Routine(String description, String day, Set<Exercise> exercises, User user) {
-        super();
         this.description = description;
         this.day = day;
         this.exercises = new HashSet<>();

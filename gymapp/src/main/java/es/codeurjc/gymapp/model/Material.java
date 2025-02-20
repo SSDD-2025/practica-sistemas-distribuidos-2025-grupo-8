@@ -5,16 +5,20 @@ import java.util.*;
 import jakarta.persistence.*;
 
 @Entity
-public class Material extends ModelEntity{
+public class Material{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
     @OneToMany(mappedBy = "material")
     private Set<Exercise> exercises = new HashSet<Exercise>();
 
     public Material() {
-        super();
     }
 
     public Material(String name) {
-        super(name);
+        this.name = name;
     }
 
     public Set<Exercise> getExercises() {

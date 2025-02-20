@@ -4,8 +4,12 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-public class User extends ModelEntity {
+public class User{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
     private String password;
     @ManyToOne
     private Trainer trainer;
@@ -14,7 +18,6 @@ public class User extends ModelEntity {
 
     // Constructor
     public User(String name, String password) {
-        super(name); 
         this.password = password;
         this.trainer = null;
         this.routines = new ArrayList<>();

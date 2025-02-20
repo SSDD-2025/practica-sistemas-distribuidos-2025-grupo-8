@@ -5,15 +5,18 @@ import java.util.*;
 import jakarta.persistence.*;
 
 @Entity
-public class Trainer extends ModelEntity{
+public class Trainer{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
     @OneToMany(mappedBy = "trainer")
     private Set<User> users = new HashSet<User>();
 
     public Trainer() {
-        super();
     }
     public Trainer(String name) {
-        super(name);
     }
     public Set<User> getUsers() {
         return users;
