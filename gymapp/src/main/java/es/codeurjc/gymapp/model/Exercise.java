@@ -3,8 +3,12 @@ package es.codeurjc.gymapp.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Exercise extends ModelEntity{
+public class Exercise{
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
     private String description;
     @ManyToOne
     private Material material;
@@ -12,11 +16,9 @@ public class Exercise extends ModelEntity{
     private Routine routine;
 
     public Exercise() {
-        super();
     }
 
     public Exercise(String description, Material material) {
-        super();
         this.description = description;
         this.material = material;
     }
@@ -43,5 +45,20 @@ public class Exercise extends ModelEntity{
 
     public void setRoutine(Routine routine){
         this.routine = routine;
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
