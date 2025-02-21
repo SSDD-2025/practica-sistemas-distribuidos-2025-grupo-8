@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {{#badname}}
+        <title>Error al iniciar sesión: cuenta no encontrada</title>
+        {{/badname}}
+        {{^badname}}
+        <title>Error al iniciar sesión: contraseña incorrecta</title>
+        {{/badname}}
+    </head>
+    <body>
+        <form action="/" method="post">
+            <input type='submit' value='Volver'/>
+        </form>
+    </body>
+</html>

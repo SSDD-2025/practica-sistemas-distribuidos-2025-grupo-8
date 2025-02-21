@@ -3,12 +3,16 @@ package es.codeurjc.gymapp.model;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
+
 @Entity
 public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String name;
     private String password;
     @ManyToOne
