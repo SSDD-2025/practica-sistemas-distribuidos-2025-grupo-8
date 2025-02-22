@@ -2,6 +2,7 @@ package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,9 @@ public class ExcerciseServices {
 
     public void deleteById(Long id) {
         exerciseRepository.deleteById(id);
+    }
+
+    public List<Exercise> findAll() {
+        return exerciseRepository.findAll();
     }
 }

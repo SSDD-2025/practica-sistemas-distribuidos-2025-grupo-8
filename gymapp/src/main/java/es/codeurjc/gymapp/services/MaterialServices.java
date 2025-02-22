@@ -36,4 +36,8 @@ public class MaterialServices {
         materialRepository.deleteById(id);
     }
 
+    public Optional<Material> findByName(String name) {
+        return materialRepository.findByName(name);
+    }
+
 }
