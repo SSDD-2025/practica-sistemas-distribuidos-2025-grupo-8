@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{name}}</title>        
+    </head>
+    <body>
+        {{#logged}}
+            <form action="/trainer/{{id}}/addOrReplace" method="post">
+                <input type='submit' value='Seleccionar entrenador'/>
+            </form>
+        {{/logged}}
+        {{^logged}}
+            <p>Para seleccionar al entrenador, primero debes iniciar sesión</p>
+        {{/logged}}	
+        <form action="/trainer" method="post">
+            <input type='submit' value='Volver'/>
+        </form>
+    </body>
+</html>

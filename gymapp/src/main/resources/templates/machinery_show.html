@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Maquinaria</title>
+        <link rel="stylesheet" type="text/css" href="gymapp/src/main/resources/static/style.css">
+    </head>
+    <body>
+        {{>header}}
+        <p>Nombre: {{machinery.name}}</p>
+        <p>Ejercicios: </p>
+
+        {{#exercises}}
+            <a href="exercise/{{id}}">{{name}}</a>
+        {{/exercises}}
+
+        {{>exercises}}
+            <p>No hay ejercicios disponibles actualmente.</p>
+        {{/exercises}}
+        {{>footer}}
+    </body>
+</html>

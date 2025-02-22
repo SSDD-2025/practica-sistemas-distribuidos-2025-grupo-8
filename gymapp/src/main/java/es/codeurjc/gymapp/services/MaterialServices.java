@@ -20,6 +20,10 @@ public class MaterialServices {
         //materialRepository.save(new Material());
     }
 
+    public Iterable<Material> findAll() {
+        return materialRepository.findAll();
+    }
+
     public Optional<Material> findById(Long id) {
         return materialRepository.findById(id);
     }
