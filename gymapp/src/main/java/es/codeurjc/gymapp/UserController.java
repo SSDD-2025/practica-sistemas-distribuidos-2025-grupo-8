@@ -14,6 +14,7 @@ import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.UserServices;
 
+@Controller
 public class UserController {
     
 	@Autowired
@@ -24,11 +25,7 @@ public class UserController {
 
     @GetMapping("/")
 	public String init(Model model) {
-		if(userSession.isLoggedIn()){ 
-			model.addAttribute("name", userSession.getName());
-		}else{
-			model.addAttribute("name", "Anónimo"); 
-		}
+
 		return "index";
 	}
 
@@ -70,11 +67,13 @@ public class UserController {
 		Optional<User> user = userServices.findByName(name); //name is supposed to be unique
 		if(user.isPresent() && user.get().getPassword().equals(password)){ //login successful
 			userSession.setName(name);
-			model.addAttribute("name", name);
 			return "index";
-		} else{
+		} else if(user.isPresent() && !user.get().getPassword().equals(password)){
 			model.addAttribute("badname", "false");
-			return "loginError"; //user could not be found or password was incorrect
+			return "loginError"; //password was incorrect
+		} else {
+			model.addAttribute("badname", "true");
+			return "loginError"; //user could not be found
 		}
 	}
 	@PostMapping("/account/register")
@@ -90,11 +89,6 @@ public class UserController {
 	@PostMapping("/account/logout")
 	public String sessionExit(Model model) {
 		userSession.logout();
-		model.addAttribute("name", "Anónimo");
-		return "index"; 
-		
+		return "index"; 		
 	}
-
-    
-
 }

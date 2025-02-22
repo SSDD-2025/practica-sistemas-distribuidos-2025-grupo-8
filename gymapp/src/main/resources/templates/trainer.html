@@ -6,8 +6,12 @@
     </head>
     <body>
         {{>header}}
-
-
+            <ul>
+                {{#trainers}}
+                <li><a href="/trainer/{{id}}">{{name}}</a></li>
+                {{/trainers}}
+                <p>Entrenador personal: {{personalTrainer}}</p>
+            </ul>
         {{>footer}}
     </body>
 </html>
