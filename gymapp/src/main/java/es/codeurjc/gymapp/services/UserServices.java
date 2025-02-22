@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.UserRepository;
 
@@ -34,5 +35,10 @@ public class UserServices {
 
     public Optional<User> findByName(String name) {
         return userRepository.findByName(name);
+    }
+
+    public void addRoutine(User user, Routine routine) {
+        user.addRoutine(routine);
+        userRepository.save(user);
     }
 }

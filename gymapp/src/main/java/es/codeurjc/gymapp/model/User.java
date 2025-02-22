@@ -67,4 +67,8 @@ public class User{
     public void setName(String name) {
         this.name = name;
     }
+
+    public void addRoutine(Routine routine) {
+        this.routines.add(routine);
+    }
 }

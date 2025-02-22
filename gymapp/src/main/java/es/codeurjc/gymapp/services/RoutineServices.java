@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.model.Routine;
+import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.RoutineRepository;
 
 @Service
