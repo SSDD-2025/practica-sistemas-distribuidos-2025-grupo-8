@@ -34,12 +34,6 @@ public class UserController {
 
 		return "facilities";
 	}
- 
-    @PostMapping("/trainer")
-	public String trainers(Model model) {
-
-		return "trainer";
-	}
 
 	@PostMapping("/account")
 	public String account(Model model) {
