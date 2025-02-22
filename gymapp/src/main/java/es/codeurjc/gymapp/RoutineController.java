@@ -2,6 +2,7 @@ package es.codeurjc.gymapp;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -60,15 +61,20 @@ public class RoutineController implements CommandLineRunner{
         List<Exercise> exercises = exerciseServices.findAll();
         model.addAttribute("exercises", exercises);
         return "routineCreate";
-    }
+    } 
 
     @PostMapping("/routine/save")
-    public String saveRoutine(Model model, @RequestParam Routine routine,HttpSession session) {
+    public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
+    @RequestParam String day, @RequestParam Set<Exercise> exercise, HttpSession session) {
+        Routine routine;
         if(!userSession.isLoggedIn()){
+            routine = new Routine(name, description, day, exercise);
             session.setAttribute("routines",routine);
             return "routineSaved";
         }else{
             User user = userServices.findByName(userSession.getName()).get();
+            routine = new Routine(name, description, day, exercise,user);
+            userServices.addRoutine(user,routine);
             routineServices.save(routine);
             return "routineSaved";
         }

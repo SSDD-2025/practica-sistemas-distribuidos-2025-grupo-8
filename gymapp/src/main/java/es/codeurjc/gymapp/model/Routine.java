@@ -21,11 +21,15 @@ public class Routine{
 
     public Routine() {
     }
-    public Routine(String description, String day, Set<Exercise> exercises, User user) {
+    public Routine(String name,String description, String day, Set<Exercise> exercises, User user) {
+        this(name, description, day, exercises);
+        this.user = user;
+    }
+    public Routine(String name,String description, String day, Set<Exercise> exercises) {
+        this.name = name;
         this.description = description;
         this.day = day;
         this.exercises = new HashSet<>();
-        this.user = user;
     }
     public String getDescription() {
         return description;
