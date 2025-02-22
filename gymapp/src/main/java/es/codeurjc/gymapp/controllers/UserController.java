@@ -58,6 +58,12 @@ public class UserController {
 			return "loginError"; //user could not be found
 		}
 	}
+
+	@GetMapping("/register/create")
+	public String register(Model model) {
+		return "register";
+	}
+
 	@PostMapping("/account/register")
 	public String register(Model model, @RequestParam String name, @RequestParam String password) {
 		Optional<User> user = userServices.findByName(name);
