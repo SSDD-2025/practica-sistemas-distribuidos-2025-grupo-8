@@ -14,6 +14,7 @@ import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.UserServices;
 
+@Controller
 public class UserController {
     
 	@Autowired
@@ -21,7 +22,7 @@ public class UserController {
 
     @Autowired
 	private UserServices userServices;
-
+ 
     @GetMapping("/")
 	public String init(Model model) {
 		if(userSession.isLoggedIn()){ 
@@ -43,13 +44,7 @@ public class UserController {
 
 		return "machinery";
 	}
-
-    @PostMapping("/routine")
-	public String routines(Model model) {
-
-		return "routine";
-	}
-
+ 
     @PostMapping("/trainer")
 	public String trainers(Model model) {
 
@@ -92,7 +87,6 @@ public class UserController {
 		userSession.logout();
 		model.addAttribute("name", "Anónimo");
 		return "index"; 
-		
 	}
 
     
