@@ -19,7 +19,7 @@ public class MaterialController {
 		return "machinery";
 	}
 
-    @PostMapping("/machinery/{{id}}")
+    @PostMapping("/machinery/{id}")
     public String showMachinery(Model model, @PathVariable long id) {
         model.addAttribute("machinery", materialServices.findById(id));
         model.addAttribute("id", id);

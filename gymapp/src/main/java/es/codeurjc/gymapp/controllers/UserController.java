@@ -38,12 +38,6 @@ public class UserController {
 
 		return "facilities";
 	}
-
-    @PostMapping("/machinery")
-	public String machinery(Model model) {
-
-		return "machinery";
-	}
  
     @PostMapping("/trainer")
 	public String trainers(Model model) {

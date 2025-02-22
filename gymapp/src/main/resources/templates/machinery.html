@@ -11,8 +11,8 @@
             <a href="machinery/{{id}}">{{name}}</a>
         {{/machineries}}
 
-        {{>machineries}}
-        <p>No hay maquinaria disponible actualmente.</p>
+        {{^machineries}}
+            <p>No hay maquinaria disponible actualmente.</p>
         {{/machineries}}
 
         {{>footer}}
