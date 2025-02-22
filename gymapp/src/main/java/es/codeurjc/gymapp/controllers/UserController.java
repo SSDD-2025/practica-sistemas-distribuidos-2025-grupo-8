@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp;
+package es.codeurjc.gymapp.controllers;
 
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ public class UserController {
 
     @Autowired
 	private UserServices userServices;
-
+ 
     @GetMapping("/")
 	public String init(Model model) {
 		if(userSession.isLoggedIn()){ 
@@ -39,18 +39,21 @@ public class UserController {
 		return "facilities";
 	}
 
-    @PostMapping("/machinery")
-	public String machinery(Model model) {
-
-		return "machinery";
-	}
-
+<<<<<<< HEAD:gymapp/src/main/java/es/codeurjc/gymapp/controllers/UserController.java
     @PostMapping("/routine")
 	public String routines(Model model) {
 
 		return "routines";
 	}
 
+=======
+    @PostMapping("/machinery")
+	public String machinery(Model model) {
+
+		return "machinery";
+	}
+ 
+>>>>>>> 783765d6035a637ae58234469e856a6c5d384ff0:gymapp/src/main/java/es/codeurjc/gymapp/UserController.java
     @PostMapping("/trainer")
 	public String trainers(Model model) {
 
@@ -93,7 +96,6 @@ public class UserController {
 		userSession.logout();
 		model.addAttribute("name", "Anónimo");
 		return "index"; 
-		
 	}
 
     

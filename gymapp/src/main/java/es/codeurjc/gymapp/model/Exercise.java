@@ -18,7 +18,8 @@ public class Exercise{
     public Exercise() {
     }
 
-    public Exercise(String description, Material material) {
+    public Exercise(String name,String description, Material material) {
+        this.name = name;
         this.description = description;
         this.material = material;
     }

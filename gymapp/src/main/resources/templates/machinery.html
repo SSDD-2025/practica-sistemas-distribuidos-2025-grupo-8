@@ -6,7 +6,14 @@
     </head>
     <body>
         {{>header}}
+        <h1>Maquinaria</h1>
+        {{#machineries}}
+            <a href="machinery/{{id}}">{{name}}</a>
+        {{/machineries}}
 
+        {{>machineries}}
+        <p>No hay maquinaria disponible actualmente.</p>
+        {{/machineries}}
 
         {{>footer}}
     </body>
