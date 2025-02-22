@@ -31,4 +31,8 @@ public class TrainerServices {
     public void deleteById(Long id) {
         trainerRepository.deleteById(id);
     }
+
+    public Iterable<Trainer> findAll() {
+        return trainerRepository.findAll();
+    }
 }
