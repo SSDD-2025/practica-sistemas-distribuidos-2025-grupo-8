@@ -20,6 +20,10 @@ public class ExcerciseServices {
 		//exerciseRepository.save(new Exercise());
 	}
 
+    public Iterable<Exercise> findAll() {
+        return exerciseRepository.findAll();
+    }
+
     public Optional<Exercise> findById(Long id) {
         return exerciseRepository.findById(id);
     }
