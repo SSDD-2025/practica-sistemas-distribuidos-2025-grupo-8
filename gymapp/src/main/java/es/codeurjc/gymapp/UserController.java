@@ -14,6 +14,7 @@ import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.UserServices;
 
+@Controller
 public class UserController {
     
 	@Autowired
@@ -47,7 +48,7 @@ public class UserController {
     @PostMapping("/routine")
 	public String routines(Model model) {
 
-		return "routine";
+		return "routines";
 	}
 
     @PostMapping("/trainer")
