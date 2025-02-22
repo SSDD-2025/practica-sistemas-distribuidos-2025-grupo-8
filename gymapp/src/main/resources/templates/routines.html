@@ -2,11 +2,22 @@
 <html>
     <head>
         <title>Rutinas</title>
-        <link rel="stylesheet" type="text/css" href="gymapp/src/main/resources/static/style.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         {{>header}}
-
+        <div>
+            <h1>Rutinas</h1>
+            <form action="/routine/create" method="post">
+                <input type="submit" value = "Crear rutina">
+            </form>
+            <form action="/routine/modify" method="post">
+                <input type="submit" value = "Modificar rutina">
+            </form>
+            <form action="/routine/delete" method="post">
+                <input type="submit" value = "Eliminar rutina">
+            </form>
+        </div>
 
         {{>footer}}
     </body>

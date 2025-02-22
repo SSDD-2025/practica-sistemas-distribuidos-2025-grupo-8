@@ -1,10 +1,19 @@
-p{
-    color: #cc00ff;
-    font-size: 20px;
-    text-align: center;
-    margin-top: 20%;
-    text-shadow: 20px 20px 80px rgb(224, 47, 216);
+/* Etiquetas naturales */
+body {
+    background-image: url('path/to/your/image.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+img {
+    max-width: 100%;
+    height: auto;
+    width: 30%;
+}
+li{
+    list-style-type: none;
+}
+/* Aquí empiezan los identificadores */
 #header{
     display: flex;
     flex-direction: column;
@@ -22,11 +31,9 @@ p{
     align-items: center;
     padding: 10px;
 }
-body {
-    background-image: url('path/to/your/image.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+/* Aquí empiezan las clases */
+.title{
+    font-size: xx-large;
 }
 .partial-image {
     width: 50%; 
@@ -34,3 +41,32 @@ body {
     display: block;
     margin: 0 auto; 
 }
+.inRows{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.alignItems{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+}
+/* Clases del footer */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10% 10%;
+    width: auto;
+}
+
+.footer-section {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+}
+

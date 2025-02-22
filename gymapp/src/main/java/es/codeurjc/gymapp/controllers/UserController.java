@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp;
+package es.codeurjc.gymapp.controllers;
 
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ public class UserController {
 
     @Autowired
 	private UserServices userServices;
-
+ 
     @GetMapping("/")
 	public String init(Model model) {
 
@@ -40,13 +40,7 @@ public class UserController {
 
 		return "machinery";
 	}
-
-    @PostMapping("/routine")
-	public String routines(Model model) {
-
-		return "routine";
-	}
-
+ 
     @PostMapping("/trainer")
 	public String trainers(Model model) {
 
