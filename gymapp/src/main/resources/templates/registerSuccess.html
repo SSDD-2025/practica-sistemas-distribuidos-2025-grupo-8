@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Cuenta registrada con éxito</title>
+        <title>Cuenta registrada</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <form action="/" method="post">
+        {{>header}}
+        <h1>Cuenta Registrada con éxito</h1>
+        <form action="/" method="get">
             <input type='submit' value='Volver'/>
         </form>
+        {{>footer}}
     </body>
 </html>
