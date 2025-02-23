@@ -71,7 +71,8 @@ public class UserController {
 			return "registerError"; //user was already registered
 		}
 		userSession.setName(name);
-		userServices.save(new User(name, password));
+		User newUser =new User(name, password);
+		userServices.save(newUser);
 		return "registerSuccess";
 	}
 	@PostMapping("/account/logout")
