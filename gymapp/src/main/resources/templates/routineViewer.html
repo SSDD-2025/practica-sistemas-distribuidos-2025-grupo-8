@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ver rutina</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        {{>header}}
+        {{#routine}}
+            <p> {{name}} </p>
+            <p> {{description}} </p>
+            <p> {{day}} </p>
+            {{#exercises}}
+                <li>
+                    <p> Ejercicio : {{name}}</p>
+                    <p> Descripción : {{description}}</p>
+                    <p> Material : {{material}} </p>
+                </li>
+            {{/exercises}}
+            {{^exercises}}
+                    <p> Esta rutina no tiene ejercicios </p>
+            {{exercises}}
+        {{/routine}}
+        {{>footer}}
+    </body>
+</html>

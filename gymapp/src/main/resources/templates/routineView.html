@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Rutina Guardada</title>
+        <title>Ver rutina</title>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         {{>header}}
-        <p>Rutina guardada</p>
+        {{#routines}}
+            <a href ="/routine/view/{id}"> {{name}}</a>
+        {{/routines}}
         {{>footer}}
     </body>
 </html>
