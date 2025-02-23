@@ -29,6 +29,7 @@ public class TrainerController {
     @PostMapping("/trainer")
 	public String trainers(Model model) {
         Iterable<Trainer> iterable = trainerServices.findAll();
+        if(!iterable.iterator().hasNext()) return "noTrainer";
         iterable.forEach(trainer -> model.addAttribute("trainer", trainer));
         if(userSession.isLoggedIn()) {
             User user = userServices.findByName(userSession.getName()).get();

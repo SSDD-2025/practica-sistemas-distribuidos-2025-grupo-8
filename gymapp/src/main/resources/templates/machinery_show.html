@@ -5,14 +5,14 @@
     </head>
     <body>
         {{>header}}
-        <p>Nombre: {{machinery.name}}</p>
+        <p>Nombre: {{name}}</p>
         <p>Ejercicios: </p>
 
         {{#exercises}}
             <a href="exercise/{{id}}">{{name}}</a>
         {{/exercises}}
 
-        {{>exercises}}
+        {{^exercises}}
             <p>No hay ejercicios disponibles actualmente.</p>
         {{/exercises}}
         {{>footer}}

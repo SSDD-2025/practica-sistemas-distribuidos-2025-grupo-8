@@ -16,11 +16,6 @@ public class UserServices {
     @Autowired
 	private UserRepository userRepository;
 
-    public UserServices() {
-        //userRepository.save(new User());
-        //userRepository.save(new User());
-    }
-
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
