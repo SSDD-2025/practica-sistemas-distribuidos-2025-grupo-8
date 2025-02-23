@@ -2,8 +2,10 @@ package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,5 +42,17 @@ public class ExerciseServices {
 
     public Material findByMaterial(Material material) {
         return exerciseRepository.findByMaterial(material);
+    }
+
+    public List<Exercise> findAllById(List<Long> id){
+        return exerciseRepository.findAllById(id);
+    }
+
+    public Set<Exercise> listToSet(List<Exercise> list){
+        Set<Exercise> set = new HashSet<>();
+        for(Exercise elem : list){
+            set.add(elem);
+        }
+        return set;
     }
 }

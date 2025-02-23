@@ -72,4 +72,8 @@ public class User{
     public void addRoutine(Routine routine) {
         this.routines.add(routine);
     }
+
+    public void deleteRoutine(Routine routine){
+        this.routines.remove(routine);
+    }
 }

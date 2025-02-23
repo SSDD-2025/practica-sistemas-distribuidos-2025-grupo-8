@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
+import es.codeurjc.gymapp.repositories.RoutineRepository;
 import es.codeurjc.gymapp.repositories.UserRepository;
 
 @Service
@@ -34,6 +35,11 @@ public class UserServices {
 
     public void addRoutine(User user, Routine routine) {
         user.addRoutine(routine);
+        userRepository.save(user);
+    }
+    
+    public void deleteRoutine(User user, Routine routine){
+        user.deleteRoutine(routine);
         userRepository.save(user);
     }
 }

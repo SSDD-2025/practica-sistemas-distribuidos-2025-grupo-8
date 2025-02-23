@@ -8,7 +8,14 @@
         {{>header}}
         <ul>
             {{#routines}}
-            <li><a href ="/routine/view/{{id}}"> {{name}}</a></li>
+            <li><a href ="/routine/view/{{id}}"> {{name}}</a>
+                <form action = "/routine/delete/{{id}}" method ="post">
+                    <input type = "submit" name = "Borrar rutina">
+                </form>
+                <form action = "/routine/modify/{{id}}" method ="post">
+                    <input type = "submit" name = "Modificar rutina">
+                </form>
+            </li>
             {{/routines}}
         </ul>
 

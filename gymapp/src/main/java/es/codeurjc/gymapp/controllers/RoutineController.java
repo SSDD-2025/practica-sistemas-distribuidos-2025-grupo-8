@@ -103,16 +103,46 @@ public class RoutineController implements CommandLineRunner{
         return "error";
     }
 
-    @PostMapping("/routine/delete")
+    @PostMapping("/routine/delete/{id}")
     public String deleteRoutine(Model model, @RequestParam Long id) {
+        if(userSession.isLoggedIn()){
+            User user = userServices.findByName(userSession.getName()).get();
+            userServices.deleteRoutine(user,routineServices.findById(id).get());
+            routineServices.deleteById(id);
+            return "routineDelete";
+        }
+        //TODO: should now erase in case no user is logged in
         routineServices.deleteById(id);
-        return "routine";
+        return "routineDelete";
     }
 
-    @PostMapping("/routine/modify")
-    public String modifyRoutine(Model model, @RequestParam Long id, @RequestParam String name) {
-        //routineServices.modify(id, name);
-        return "routine";
+    @PostMapping("/routine/modify/{id}")
+    public String modifyRoutine(Model model, @RequestParam Long id) {
+        Routine routine = routineServices.findById(id).get();
+        if(userSession.isLoggedIn()){
+            model.addAttribute("routine", routine);
+            model.addAttribute("exercises", exerciseServices.findAll());
+            model.addAttribute("selectedExercises", routine.getExercises());
+            return "routineModify";
+        }
+        //TODO: should now modify in case no user is logged in
+        return "routineModify";
+    }
+
+    @PostMapping("/routine/modified")
+    public String saveModifiedRoutine(@RequestParam Long id, @RequestParam String name, @RequestParam String description, @RequestParam String day, @RequestParam List<Long> exerciseIds) {
+        Optional<Routine> optionalRoutine = routineServices.findById(id);
+        if (optionalRoutine.isPresent()) {
+            Routine routine = optionalRoutine.get();
+            routine.setName(name);
+            routine.setDescription(description);
+            routine.setDay(day);
+            List<Exercise> exercises = exerciseServices.findAllById(exerciseIds);
+            routine.setExercises(exerciseServices.listToSet(exercises));
+            routineServices.save(routine);
+            return "redirect:/routine/view/" + id;
+        }
+        return "error";
     }
     
 }
