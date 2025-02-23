@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import es.codeurjc.gymapp.model.User;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByName(String name);
 }

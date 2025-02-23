@@ -19,7 +19,7 @@ import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
-import es.codeurjc.gymapp.services.ExcerciseServices;
+import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.MaterialServices;
 import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
@@ -38,7 +38,7 @@ public class RoutineController implements CommandLineRunner{
     @Autowired
     private UserServices userServices;
     @Autowired
-    private ExcerciseServices exerciseServices;
+    private ExerciseServices exerciseServices;
     @Autowired
     private MaterialServices materialServices;
 
@@ -99,7 +99,7 @@ public class RoutineController implements CommandLineRunner{
         if(routine.isPresent()){
             model.addAttribute("routine", routine.get());
             return "routineViewer";
-        }
+        } 
         return "error";
     }
 
