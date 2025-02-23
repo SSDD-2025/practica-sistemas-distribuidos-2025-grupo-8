@@ -2,10 +2,12 @@ package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.RoutineRepository;
@@ -31,6 +33,10 @@ public class RoutineServices {
 
     public void deleteById(Long id) {
         routineRepository.deleteById(id);
+    }
+    
+    public List<Routine> findByName(String name){
+        return routineRepository.findByName(name);
     }
 
 }

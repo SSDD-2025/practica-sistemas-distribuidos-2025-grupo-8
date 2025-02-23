@@ -1,5 +1,6 @@
 package es.codeurjc.gymapp.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -78,6 +79,28 @@ public class RoutineController implements CommandLineRunner{
             routineServices.save(routine);
             return "routineSaved";
         }
+    }
+    @PostMapping("/routine/view")
+    public String viewRoutine(Model model,HttpSession session){
+        List<Routine> routines = new ArrayList();
+        if(userSession.isLoggedIn()){
+            routines = routineServices.findByName(userSession.getName());
+            model.addAttribute("routines", routines);
+            return "routineView";
+        }
+        routines.add((Routine) session.getAttribute("routines"));
+        model.addAttribute("routines", routines);
+        return "routineView";
+    }
+
+    @GetMapping("/routine/view/{id}")
+    public String routineViewer(Model model,@PathVariable Long id){
+        Optional<Routine> routine = routineServices.findById(id);
+        if(routine.isPresent()){
+            model.addAttribute("routine", routine.get());
+            return "routineViewer";
+        }
+        return "error";
     }
 
     @PostMapping("/routine/delete")
