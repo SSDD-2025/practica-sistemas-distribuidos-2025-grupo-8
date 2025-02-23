@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {{#badname}}
-        <title>Error al iniciar sesión: cuenta no encontrada</title>
-        {{/badname}}
-        {{^badname}}
-        <title>Error al iniciar sesión: contraseña incorrecta</title>
-        {{/badname}}
+        <title>Error al iniciar sesión</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
+        {{>header}}
+        {{#badname}}
+            <p>Error al iniciar sesión: cuenta no encontrada</p>
+        {{/badname}}
+        {{^badname}}
+            <p>Error al iniciar sesión: contraseña incorrecta</p>
+        {{/badname}}
         <form action="/account" method="post">
             <input type='submit' value='Volver'/>
         </form>
+        {{>footer}}
     </body>
 </html>
