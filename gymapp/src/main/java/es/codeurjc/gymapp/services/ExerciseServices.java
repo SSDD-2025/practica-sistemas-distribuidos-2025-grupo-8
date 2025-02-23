@@ -8,15 +8,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.model.Exercise;
+import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.repositories.ExerciseRepository;
 
 @Service
-public class ExcerciseServices {
+public class ExerciseServices {
 
     @Autowired
     private ExerciseRepository exerciseRepository;
 
-    public ExcerciseServices() {
+    public ExerciseServices() {
 		//exerciseRepository.save(new Exercise());
 		//exerciseRepository.save(new Exercise());
 	}
@@ -35,5 +36,9 @@ public class ExcerciseServices {
 
     public List<Exercise> findAll() {
         return exerciseRepository.findAll();
+    }
+
+    public Material findByMaterial(Material material) {
+        return exerciseRepository.findByMaterial(material);
     }
 }
