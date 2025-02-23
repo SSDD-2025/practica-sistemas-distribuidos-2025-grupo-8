@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ver rutina</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        {{>header}}
+        {{#routines}}
+            <a href ="/routine/view/{id}"> {{name}}</a>
+        {{/routines}}
+        {{>footer}}
+    </body>
+</html>

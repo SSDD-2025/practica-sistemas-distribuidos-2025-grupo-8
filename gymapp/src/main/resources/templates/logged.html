@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sesión iniciada con {{name}}</title>
+        <title>Sesión iniciada</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
+        {{>header}}
+        <h1>Sesión iniciada como {{name}}</h1>
         <form action="account/logout" method="post">
             <input type='submit' value='Cerrar sesión'/>
         </form>
-        <form action="/" method="post">
+        <form action="/" method="get">
             <input type='submit' value='Volver'/>
         </form>
+        {{>footer}}
     </body>
 </html>

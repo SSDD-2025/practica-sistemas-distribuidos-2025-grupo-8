@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>No se pudo registrar, el usuario ya está en uso</title>
+        <title>Error en el Registro</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        <form action="/" method="post">
+        {{> header}}
+        <h1>No se pudo registrar, el usuario ya está en uso</h1>
+        <form action="/" method="get">
             <input type='submit' value='Volver'/>
         </form>
+        {{> footer}}
     </body>
 </html>

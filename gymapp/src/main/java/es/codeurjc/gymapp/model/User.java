@@ -18,7 +18,7 @@ public class User{
     private String password;
     @ManyToOne
     private Trainer trainer;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userMember")
     private List<Routine> routines;
 
     // Constructor

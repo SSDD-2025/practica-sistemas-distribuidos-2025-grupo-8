@@ -17,13 +17,13 @@ public class Routine{
     @OneToMany(mappedBy = "routine")
     private Set<Exercise> exercises;
     @ManyToOne
-    private User user;
+    private User userMember;
 
     public Routine() {
     }
     public Routine(String name,String description, String day, Set<Exercise> exercises, User user) {
         this(name, description, day, exercises);
-        this.user = user;
+        this.userMember = user;
     }
     public Routine(String name,String description, String day, Set<Exercise> exercises) {
         this.name = name;
@@ -56,11 +56,11 @@ public class Routine{
     }
 
     public User getUser() {
-        return user;
+        return userMember;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.userMember = user;
     }
 
     public void addExercise(Exercise exercise) {
