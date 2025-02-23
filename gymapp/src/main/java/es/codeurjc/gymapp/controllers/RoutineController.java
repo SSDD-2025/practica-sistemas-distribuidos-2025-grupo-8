@@ -99,7 +99,7 @@ public class RoutineController implements CommandLineRunner{
         if(routine.isPresent()){
             model.addAttribute("routine", routine.get());
             return "routineViewer";
-        }
+        } 
         return "error";
     }
 
