@@ -82,14 +82,15 @@ public class RoutineController implements CommandLineRunner{
     }
     @PostMapping("/routine/view")
     public String viewRoutine(Model model,HttpSession session){
-        List<Routine> routines = new ArrayList();
+        List<Routine> routines;
         if(userSession.isLoggedIn()){
             routines = routineServices.findByName(userSession.getName());
             model.addAttribute("routines", routines);
             return "routineView";
         }
+        /* 
         routines.add((Routine) session.getAttribute("routines"));
-        model.addAttribute("routines", routines);
+        model.addAttribute("routines", routines);*/
         return "routineView";
     }
 

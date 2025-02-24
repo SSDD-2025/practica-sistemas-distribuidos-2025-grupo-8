@@ -29,7 +29,7 @@ public class Routine{
         this.name = name;
         this.description = description;
         this.day = day;
-        this.exercises = new HashSet<>();
+        this.exercises = exercises;
     }
     public String getDescription() {
         return description;

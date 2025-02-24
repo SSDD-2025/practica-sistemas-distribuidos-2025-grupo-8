@@ -21,9 +21,13 @@ public class User{
     @OneToMany(mappedBy = "userMember")
     private List<Routine> routines;
 
+    public User(){
+        
+    }
     // Constructor
     public User(String name, String password) {
         this.password = password;
+        this.name = name;
         this.trainer = null;
         this.routines = new ArrayList<>();
     }
