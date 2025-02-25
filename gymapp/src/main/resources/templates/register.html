@@ -6,13 +6,15 @@
     </head>
     <body>
         {{>header}}
-            <form action="/account/register" method="post">
-                <p>Nombre: </p>
-                <input type='text' name='name'/>
-                <p>Contraseña:</p>
-                <input type='text' name='password'/>
-                <input type='submit' value='Registrar'/>
-            </form>
+        <form action="/account/register" method="post" enctype="multipart/form-data">
+            <p>Nombre: </p>
+            <input type='text' name='name'/>
+            <p>Contraseña:</p>
+            <input type='password' name='password'/>
+            <p>Imagen de perfil:</p>
+            <input type='file' name='image' accept=".jpg, .jpeg"/>
+            <input type='submit' value='Registrar'/>
+        </form>
         {{>footer}}
     </body>
 </html>

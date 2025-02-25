@@ -1,9 +1,12 @@
 package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.model.Routine;
@@ -21,7 +24,11 @@ public class UserServices {
         return userRepository.findById(id);
     }
 
-    public void save(User user) {
+    public void save(User user, MultipartFile imageFile) throws IOException{
+        if(!imageFile.isEmpty()) {
+            user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(),
+            imageFile.getSize()));
+        }
         userRepository.save(user);
     }
 

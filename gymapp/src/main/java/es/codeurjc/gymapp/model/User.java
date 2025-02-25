@@ -1,6 +1,9 @@
 package es.codeurjc.gymapp.model;
 
 import jakarta.persistence.*;
+
+import java.nio.file.Path;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +19,9 @@ public class User{
     @Column(unique = true)
     private String name;
     private String password;
+    @Lob
+    private Blob imageFile;
+
     @ManyToOne
     private Trainer trainer;
     @OneToMany(mappedBy = "userMember")
@@ -73,6 +79,14 @@ public class User{
         this.name = name;
     }
 
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
+    
     public void addRoutine(Routine routine) {
         this.routines.add(routine);
     }

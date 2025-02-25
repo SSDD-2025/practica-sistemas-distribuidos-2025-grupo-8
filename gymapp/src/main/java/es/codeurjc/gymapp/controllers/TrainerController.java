@@ -30,7 +30,7 @@ public class TrainerController {
 	public String trainers(Model model) {
         Iterable<Trainer> iterable = trainerServices.findAll();
         if(!iterable.iterator().hasNext()) return "noTrainer";
-        iterable.forEach(trainer -> model.addAttribute("trainer", trainer));
+       model.addAttribute("trainers", iterable);
         if(userSession.isLoggedIn()) {
             User user = userServices.findByName(userSession.getName()).get();
             if(user.getTrainer() != null) model.addAttribute("personalTrainer", user.getTrainer().getName());
@@ -55,7 +55,7 @@ public class TrainerController {
         Optional<Trainer> trainer = trainerServices.findById(id);
         User user = userServices.findByName(userSession.getName()).get();
         user.setTrainer(trainer.get());
-        userServices.save(user);
+        trainerServices.save(trainer.get());
         return "trainer"; 
     }
 

@@ -6,7 +6,7 @@
     </head>
     <body>
         {{> header}}
-        <h1>No se pudo registrar, el usuario ya está en uso</h1>
+        <h1>No se pudo registrar: {{error}}</h1>
         <form action="/" method="get">
             <input type='submit' value='Volver'/>
         </form>
