@@ -70,7 +70,6 @@ public class UserController {
 		Optional<User> user = userServices.findByName(name); // name is supposed to be unique
 		if (user.isPresent() && user.get().getPassword().equals(password)) { // login successful
 			userSession.setName(name);
-			if(user.get().getImageFile() != null) userSession.setImageFile(user.get().getImageFile());
 			return "loginSuccess";
 		} else if (user.isPresent() && !user.get().getPassword().equals(password)) {
 			model.addAttribute("error", "Contraseña incorrecta");
@@ -98,8 +97,6 @@ public class UserController {
 			return "registerError"; //user was already registered
 		}
 		userSession.setName(name);
-		if(image != null) userSession.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
-		else userSession.setImageFile(null);
 		User newUser = new User(name, password);
     	userServices.save(newUser, image);
 		return "registerSuccess";

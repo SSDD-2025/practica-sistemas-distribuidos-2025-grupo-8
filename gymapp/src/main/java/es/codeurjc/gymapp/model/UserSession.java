@@ -11,8 +11,6 @@ import jakarta.persistence.Lob;
 public class UserSession { //separate class to manage the user session
 
     private String name;
-    @Lob
-    private Blob imageFile;
 
     public String getName(){ 
         return name; 
@@ -27,15 +25,7 @@ public class UserSession { //separate class to manage the user session
 
     public void logout(){ 
         this.name = null; 
-        this.imageFile = null;
     }
 
-    public Blob getImageFile(){ 
-        return imageFile; 
-    }
-
-    public void setImageFile(Blob imageFile){ 
-        this.imageFile = imageFile; 
-    }
 }
 
