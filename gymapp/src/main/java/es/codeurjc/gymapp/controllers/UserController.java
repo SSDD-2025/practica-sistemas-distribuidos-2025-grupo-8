@@ -108,6 +108,18 @@ public class UserController {
 		return "logout"; 		
 	}
 
+	@PostMapping("/account/image")
+	public String changeImage(Model model, @RequestParam MultipartFile image) throws IOException {
+		Optional<User> user = userServices.findByName(userSession.getName());
+		if (image.isEmpty()) {
+            user.get().setImageFile(null);
+        } else {
+            user.get().setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
+        }
+		userServices.save(user.get(), image);
+		return "imageChanged"; 
+	}
+
 	@GetMapping("/user/image")
 	public ResponseEntity<Object> downloadImage() throws SQLException {;		
 		Optional<User> user = userServices.findByName(userSession.getName());
