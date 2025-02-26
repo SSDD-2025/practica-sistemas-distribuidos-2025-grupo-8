@@ -88,7 +88,7 @@ public class RoutineController implements CommandLineRunner{
     public String viewRoutine(Model model,HttpSession session){
         List<Routine> routines;
         if(userSession.isLoggedIn()){
-            routines = routineServices.findByName(userSession.getName());
+            routines = routineServices.findByUser(userServices.findByName(userSession.getName()).get());
             model.addAttribute("routines", routines);
             return "routineView";
         }
@@ -109,20 +109,27 @@ public class RoutineController implements CommandLineRunner{
     }
 
     @PostMapping("/routine/delete/{id}")
-    public String deleteRoutine(Model model, @RequestParam Long id) {
-        if(userSession.isLoggedIn()){
-            User user = userServices.findByName(userSession.getName()).get();
-            userServices.deleteRoutine(user,routineServices.findById(id).get());
-            routineServices.deleteById(id);
-            return "routineDelete";
+    public String deleteRoutine(Model model, @PathVariable Long id) {
+        Optional<Routine> optionalRoutine = routineServices.findById(id);
+        if (optionalRoutine.isPresent()) {
+            Routine routine = optionalRoutine.get();
+            if (userSession.isLoggedIn()) {
+                User user = userServices.findByName(userSession.getName()).get();
+                userServices.deleteRoutine(user, routine);
+                
+                for (Exercise exercise : routine.getExercises()) {
+                    exerciseServices.removeRoutine(routine, exercise);
+                    exerciseServices.save(exercise);
+                }
+                routineServices.deleteById(id);
+                return "routineDelete";
+            }
         }
-        //TODO: should now erase in case no user is logged in
-        routineServices.deleteById(id);
-        return "routineDelete";
+        return "error"; 
     }
 
     @PostMapping("/routine/modify/{id}")
-    public String modifyRoutine(Model model, @RequestParam Long id) {
+    public String modifyRoutine(Model model, @PathVariable Long id) {
         Routine routine = routineServices.findById(id).get();
         if(userSession.isLoggedIn()){
             model.addAttribute("routine", routine);

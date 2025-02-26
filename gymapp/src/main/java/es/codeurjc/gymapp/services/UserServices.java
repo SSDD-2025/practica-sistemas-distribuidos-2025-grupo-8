@@ -50,7 +50,7 @@ public class UserServices {
     }
     
     public void deleteRoutine(User user, Routine routine){
-        user.deleteRoutine(routine);
+        user.getRoutines().remove(routine);
         userRepository.save(user);
     }
 }
