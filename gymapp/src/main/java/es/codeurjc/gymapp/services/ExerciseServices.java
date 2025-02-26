@@ -60,4 +60,8 @@ public class ExerciseServices {
     public void addRoutine(Routine routine, Exercise exercise){
         exercise.addRoutine(routine);
     }
+
+    public void removeRoutine(Routine routine,Exercise exercise){
+        exercise.getRoutine().remove(routine);
+    }
 }
