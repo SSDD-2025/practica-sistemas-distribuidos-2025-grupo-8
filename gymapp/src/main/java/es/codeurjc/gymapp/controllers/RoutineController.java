@@ -77,6 +77,10 @@ public class RoutineController implements CommandLineRunner{
             routine = new Routine(name, description, day, exercise,user);
             userServices.addRoutine(user,routine);
             routineServices.save(routine);
+            for(Exercise ex : exercise){
+                exerciseServices.addRoutine(routine, ex);
+                exerciseServices.save(ex);
+            }
             return "routineSaved";
         }
     }
