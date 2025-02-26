@@ -21,11 +21,11 @@ public class User{
     private String password;
     @Lob
     private Blob imageFile;
-
     @ManyToOne
     private Trainer trainer;
     @OneToMany(mappedBy = "userMember")
     private List<Routine> routines;
+    private Boolean isAdmin;
 
     public User(){
         
@@ -85,6 +85,14 @@ public class User{
 
     public void setImageFile(Blob imageFile) {
         this.imageFile = imageFile;
+    }
+    
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
     
     public void addRoutine(Routine routine) {

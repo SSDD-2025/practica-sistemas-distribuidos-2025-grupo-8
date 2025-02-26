@@ -63,7 +63,7 @@ public class UserController {
 
 	@PostMapping("/account/login")
 	public String sessionInit(Model model, @RequestParam String name, @RequestParam String password) {
-		if (name == null || password == null) {
+		if (name == null || name.isEmpty() || password == null || password.isEmpty()) {
 			model.addAttribute("error", "Nombre de usuario o contraseña no pueden estar vacíos");
 			return "loginError";
 		}

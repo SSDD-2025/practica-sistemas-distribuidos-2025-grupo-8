@@ -39,4 +39,8 @@ public class RoutineServices {
         return routineRepository.findByName(name);
     }
 
+    public List<Routine> findByUser(User user){
+        return routineRepository.findByUserMember(user);
+    }
+
 }
