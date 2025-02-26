@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Entrenador {{name}}</title>
+        <title>Entrenador {{trainer}}</title>
         <link rel="stylesheet" type="text/css" href="/style.css">       
     </head>
     <body>
-        <h1>Entrenador {{name}}</h1>
         {{>common/header}}
+        <h1>Entrenador {{trainer}}</h1>
         {{#logged}}
-            <form action="/trainer/{{id}}/addOrReplace" method="post">
-                <input type='submit' value='Seleccionar entrenador'/>
+        <form action="/trainer/{{id}}/addOrReplace" method="post">
+            <input type='submit' value='Seleccionar entrenador personal'/>
+        </form>
+            {{#isAdmin}}
+            <form action="/trainer/{{id}}/delete" method="post">
+                <input type='submit' value='Eliminar entrenador'/>
             </form>
+            {{/isAdmin}}
         {{/logged}}
         {{^logged}}
             <p>Para seleccionar al entrenador, primero debes iniciar sesión</p>

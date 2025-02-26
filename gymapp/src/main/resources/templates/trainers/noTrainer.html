@@ -7,6 +7,11 @@
     <body>
             {{>common/header}}
             <h1>No hay entrenadores en este momento</h1>
+            {{#isAdmin}}
+            <form action="/trainer/add" method="post">
+                <input type="submit" value = "Añadir nuevo entrenador">
+            </form>
+            {{/isAdmin}}
             <form action="/" method="get">
                 <input type='submit' value='Volver'/>
             </form>
