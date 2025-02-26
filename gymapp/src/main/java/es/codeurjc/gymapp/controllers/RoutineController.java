@@ -88,7 +88,7 @@ public class RoutineController implements CommandLineRunner{
     public String viewRoutine(Model model,HttpSession session){
         List<Routine> routines;
         if(userSession.isLoggedIn()){
-            routines = routineServices.findByName(userSession.getName());
+            routines = routineServices.findByUser(userServices.findByName(userSession.getName()).get());
             model.addAttribute("routines", routines);
             return "routineView";
         }
