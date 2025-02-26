@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
@@ -55,9 +56,20 @@ public class TrainerController {
         Optional<Trainer> trainer = trainerServices.findById(id);
         User user = userServices.findByName(userSession.getName()).get();
         user.setTrainer(trainer.get());
-        trainerServices.save(trainer.get());
+        userServices.save(user);
+        trainer.get().addUser(user);
+        trainerServices.save(trainer.get());    
         return "trainer"; 
     }
 
-	
+	@PostMapping("/trainer/add")
+	public String addTrainer(Model model) {		
+		return "trainerAdd"; 
+	}
+
+	@PostMapping("/trainer/add/form")
+	public String addTrainerForm(Model model, @RequestParam String name) {		
+		trainerServices.save(new Trainer(name));
+		return "trainerAdded"; 
+	}
 }

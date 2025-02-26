@@ -17,6 +17,7 @@ public class Trainer{
     public Trainer() {
     }
     public Trainer(String name) {
+        this.name = name;
     }
     public Set<User> getUsers() {
         return users;

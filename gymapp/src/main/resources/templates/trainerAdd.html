@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Añadir entrenador</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
+    </head>
+    <body>
+        {{>header}}
+            <ul>
+                <form action="/trainer/add/form" method="post">
+                    <p>Nombre del entrenador: </p>
+                    <input type='text' name='name'/>
+                    <input type='submit' value='Añadir'/>
+                </form>               
+            </ul>
+        {{>footer}}
+    </body>
+</html>
