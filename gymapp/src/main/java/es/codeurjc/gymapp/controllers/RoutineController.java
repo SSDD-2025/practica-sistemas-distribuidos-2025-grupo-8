@@ -1,6 +1,7 @@
 package es.codeurjc.gymapp.controllers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -133,8 +134,7 @@ public class RoutineController implements CommandLineRunner{
         Routine routine = routineServices.findById(id).get();
         if(userSession.isLoggedIn()){
             model.addAttribute("routine", routine);
-            model.addAttribute("exercises", exerciseServices.findAll());
-            model.addAttribute("selectedExercises", routine.getExercises());
+            model.addAttribute("allExercises", exerciseServices.findAll());
             return "routineModify";
         }
         //TODO: should now modify in case no user is logged in
@@ -142,7 +142,8 @@ public class RoutineController implements CommandLineRunner{
     }
 
     @PostMapping("/routine/modified")
-    public String saveModifiedRoutine(@RequestParam Long id, @RequestParam String name, @RequestParam String description, @RequestParam String day, @RequestParam List<Long> exerciseIds) {
+    public String saveModifiedRoutine(@RequestParam Long id, @RequestParam String name, @RequestParam String description, 
+    @RequestParam String day, @RequestParam List<Long> exerciseIds) {
         Optional<Routine> optionalRoutine = routineServices.findById(id);
         if (optionalRoutine.isPresent()) {
             Routine routine = optionalRoutine.get();
@@ -150,7 +151,11 @@ public class RoutineController implements CommandLineRunner{
             routine.setDescription(description);
             routine.setDay(day);
             List<Exercise> exercises = exerciseServices.findAllById(exerciseIds);
-            routine.setExercises(exerciseServices.listToSet(exercises));
+            routine.setExercises(new HashSet<>(exercises));
+            for(Exercise ex : exercises){
+                exerciseServices.addRoutine(routine, ex);
+                exerciseServices.save(ex);
+            }
             routineServices.save(routine);
             return "redirect:/routine/view/" + id;
         }
