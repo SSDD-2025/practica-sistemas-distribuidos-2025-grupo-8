@@ -20,7 +20,7 @@ public class MaterialController {
     @PostMapping("/machinery")
 	public String machinery(Model model) {
         model.addAttribute("machineries", materialServices.findAll());
-		return "machinery";
+		return "machinery/machinery";
 	}
 
     @GetMapping("/machinery/{id}")
@@ -28,7 +28,7 @@ public class MaterialController {
         Material material =  materialServices.findById(id).get();
         model.addAttribute("machinery", material);
         model.addAttribute("exercises", material.getExercises());
-        return "machinery_show";
+        return "machinery/machinery_show";
     }
 
 }

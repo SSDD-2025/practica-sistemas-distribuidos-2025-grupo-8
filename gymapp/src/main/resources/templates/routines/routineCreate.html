@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>header}}
+        {{>common/header}}
             <form action = "/routine/save" method="post">
                 <h1>Crear rutina</h1>
                 <label for="name">Nombre de la rutina:</label>
@@ -25,12 +25,14 @@
                 {{/isLogged}}
                 {{^isLogged}}
                     <p>Debes estar logueado para crear una rutina</p>
-                    <form action="/login" method="post">
-                        <input type="submit" value="Login">
-                    </form>
+                    
                 {{/isLogged}}
             </form>
-
-        {{>footer}}
+            {{^isLogged}}
+            <form action="/account" method="post">
+                <input type="submit" value="Login">
+            </form>
+            {{/isLogged}}
+        {{>common/footer}}
     </body>
 </html>

@@ -52,6 +52,7 @@ public class Routine{
     }
 
     public void setExercises(Set<Exercise> exercises) {
+        this.exercises.clear();
         this.exercises = exercises;
     }
 

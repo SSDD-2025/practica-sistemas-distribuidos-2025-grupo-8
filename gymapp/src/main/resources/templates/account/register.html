@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>header}}
+        {{>common/header}}
         <form action="/account/register" method="post" enctype="multipart/form-data">
             <p>Nombre: </p>
             <input type='text' name='name'/>
@@ -15,6 +15,6 @@
             <input type='file' name='image' accept=".jpg, .jpeg"/>
             <input type='submit' value='Registrar'/>
         </form>
-        {{>footer}}
+        {{>common/footer}}
     </body>
 </html>

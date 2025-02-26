@@ -53,9 +53,10 @@ public class RoutineController implements CommandLineRunner{
         exerciseServices.save(new Exercise("Sentadillas", "Piernas",materialServices.findByName("Barra").get()));
         exerciseServices.save(new Exercise("Dominadas", "Espalda",materialServices.findByName("Barra de dominadas").get()));
     }   
+    
     @PostMapping("/routine")
     public String routines(Model model) {
-        return "routines";
+        return "routines/routines";
     }
 
     @PostMapping("/routine/create")
@@ -63,27 +64,36 @@ public class RoutineController implements CommandLineRunner{
         List<Exercise> exercises = exerciseServices.findAll();
         model.addAttribute("isLogged", userSession.isLoggedIn());
         model.addAttribute("exercises", exercises);
-        return "routineCreate";
+        return "routines/routineCreate";
     }
 
     @PostMapping("/routine/save")
     public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
     @RequestParam String day, @RequestParam Set<Exercise> exercise, HttpSession session) {
         Routine routine;
+        if(name.isEmpty()){
+            model.addAttribute("message", "La rutina debe tener nombre");
+            return "error";
+        }
+        if(day.isEmpty()){
+            model.addAttribute("message", "La rutina debe contener algun día");
+            return "error";
+        }
         if(exercise.isEmpty()){
-            model.addAttribute("message", "You must select at least one exercise");
+            model.addAttribute("message", "Al menos un ejercicio debe ser seleccionado");
             return "error";
         }
         User user = userServices.findByName(userSession.getName()).get();
-        routine = new Routine(name, description, day, exercise,user);
+        routine = new Routine(name, description, day, exercise, user);
         userServices.addRoutine(user,routine);
         routineServices.save(routine);
         for(Exercise ex : exercise){
             exerciseServices.addRoutine(routine, ex);
             exerciseServices.save(ex);
         }
-        return "routineSaved";
+        return "routines/routineSaved";
     }
+    
     @PostMapping("/routine/view")
     public String viewRoutine(Model model,HttpSession session){
         List<Routine> routines;
@@ -91,13 +101,13 @@ public class RoutineController implements CommandLineRunner{
             routines = routineServices.findByUser(userServices.findByName(userSession.getName()).get());
             model.addAttribute("routines", routines);
             model.addAttribute("isLogged", userSession.isLoggedIn());
-            return "routineView";
+            return "routines/routineView";
         }
         model.addAttribute("isLogged", userSession.isLoggedIn());
         /* 
         routines.add((Routine) session.getAttribute("routines"));
         model.addAttribute("routines", routines);*/
-        return "routineView";
+        return "routines/routineView";
     }
 
     @GetMapping("/routine/view/{id}")
@@ -106,7 +116,7 @@ public class RoutineController implements CommandLineRunner{
         if(routine.isPresent()){
             model.addAttribute("routine", routine.get());
             model.addAttribute("isLogged", userSession.isLoggedIn());
-            return "routineViewer";
+            return "routines/routineViewer";
         } 
         return "error";
     }
@@ -125,7 +135,7 @@ public class RoutineController implements CommandLineRunner{
                     exerciseServices.save(exercise);
                 }
                 routineServices.deleteById(id);
-                return "routineDelete";
+                return "routines/routineDelete";
             }
         }
         return "error"; 
@@ -137,31 +147,48 @@ public class RoutineController implements CommandLineRunner{
         if(userSession.isLoggedIn()){
             model.addAttribute("routine", routine);
             model.addAttribute("allExercises", exerciseServices.findAll());
-            return "routineModify";
+            return "routines/routineModify";
         }
         //TODO: should now modify in case no user is logged in
-        return "routineModify";
+        return "routines/routineModify";
     }
 
     @PostMapping("/routine/modified")
-    public String saveModifiedRoutine(@RequestParam Long id, @RequestParam String name, @RequestParam String description, 
-    @RequestParam String day, @RequestParam List<Long> exerciseIds) {
-        Optional<Routine> optionalRoutine = routineServices.findById(id);
-        if (optionalRoutine.isPresent()) {
-            Routine routine = optionalRoutine.get();
-            routine.setName(name);
-            routine.setDescription(description);
-            routine.setDay(day);
-            List<Exercise> exercises = exerciseServices.findAllById(exerciseIds);
-            routine.setExercises(new HashSet<>(exercises));
-            for(Exercise ex : exercises){
-                exerciseServices.addRoutine(routine, ex);
-                exerciseServices.save(ex);
-            }
-            routineServices.save(routine);
-            return "redirect:/routine/view/" + id;
+    public String saveModifiedRoutine(Model model, @RequestParam Long id, @RequestParam String name, 
+    @RequestParam String description, @RequestParam String day, @RequestParam List<Long> exerciseIds) {
+        if(name.equals(null)){
+            model.addAttribute("message", "El nombre de la rutina no puede estar vacio");
+            return "error";
         }
-        return "error";
+        if(day.equals(null)){
+            model.addAttribute("message", "El día o los días de la rutina no puede/n estar vacio/s");
+            return "error";
+        }
+        if(exerciseIds.isEmpty()){
+            model.addAttribute("message", "La rutina debe tener al menos un ejercicio");
+            return "error";
+        }
+        Optional<Routine> optionalRoutine = routineServices.findById(id);
+        if (!optionalRoutine.isPresent()) return "error";
+
+        Routine routine = optionalRoutine.get();
+        //Update of Not DataStructs
+        routine.setName(name);
+        routine.setDescription(description);
+        routine.setDay(day);
+        //TODO: Correct update of exercises in the routine idk what does it
+        routine.getExercises().clear();
+        routine.getExercises().addAll(exerciseServices.findAllById(exerciseIds));
+        routineServices.save(routine);
+
+        for(Exercise ex : routine.getExercises()){
+            exerciseServices.addRoutine(routine, ex);
+            exerciseServices.save(ex);
+        }
+        
+        return "redirect:/routine/view/" + id;
+        
+        
     }
      
 }

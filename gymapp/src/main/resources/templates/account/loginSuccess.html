@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Error al iniciar sesión</title>
+        <title>Sesión iniciada</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>header}}
-        <p>Error al iniciar sesión: {{error}}</p>
-        <form action="/account" method="post">
+        {{>common/header}}
+        <h1>Sesión iniciada</h1>
+        <form action="/" method="get">
             <input type='submit' value='Volver'/>
         </form>
-        {{>footer}}
+        {{>common/footer}}
     </body>
 </html>

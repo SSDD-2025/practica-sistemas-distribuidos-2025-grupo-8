@@ -65,54 +65,54 @@ public class UserController implements CommandLineRunner {
 			model.addAttribute("name", userSession.getName()); //maybe add more info about the user
 			return "logged";
 		}
-		return "account"; //user is not logged in
+		return "account/account"; //user is not logged in
 	}
 
 	@PostMapping("/account/login")
 	public String sessionInit(Model model, @RequestParam String name, @RequestParam String password) {
 		if (name == null || name.isEmpty() || password == null || password.isEmpty()) {
 			model.addAttribute("error", "Nombre de usuario o contraseña no pueden estar vacíos");
-			return "loginError";
+			return "account/loginError";
 		}
 		Optional<User> user = userServices.findByName(name); // name is supposed to be unique
 		if (user.isPresent() && user.get().getPassword().equals(password)) { // login successful
 			userSession.setName(name);
-			return "loginSuccess";
+			return "account/loginSuccess";
 		} else if (user.isPresent() && !user.get().getPassword().equals(password)) {
 			model.addAttribute("error", "Contraseña incorrecta");
-			return "loginError"; // password was incorrect
+			return "account/loginError"; // password was incorrect
 		} else {
 			model.addAttribute("error", "Usuario no encontrado");
-			return "loginError"; // user could not be found
+			return "account/loginError"; // user could not be found
 		}
 	}
 
 	@GetMapping("/register/create")
 	public String register(Model model) {
-		return "register";
+		return "account/register";
 	}
 
 	@PostMapping("/account/register")
 	public String register(Model model, @RequestParam String name, @RequestParam String password, @RequestParam MultipartFile image) throws IOException {
 		if (name == null || password == null) {
 			model.addAttribute("error", "Nombre de usuario o contraseña no pueden estar vacíos");
-			return "registerError";
+			return "account/registerError";
 		}
 		Optional<User> user = userServices.findByName(name);
 		if(user.isPresent()){
 			model.addAttribute("error", "El usuario ya está en uso");
-			return "registerError"; //user was already registered
+			return "account/registerError"; //user was already registered
 		}
 		userSession.setName(name);
 		User newUser = new User(name, password, false);
     	userServices.save(newUser, image);
-		return "registerSuccess";
+		return "account/registerSuccess";
 	}
 
 	@PostMapping("/account/logout")
 	public String sessionExit(Model model) {
 		userSession.logout();
-		return "logout"; 		
+		return "account/logout"; 		
 	}
 
 	@PostMapping("/account/image")
@@ -124,7 +124,7 @@ public class UserController implements CommandLineRunner {
             user.get().setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
         }
 		userServices.save(user.get(), image);
-		return "imageChanged"; 
+		return "account/imageChanged"; 
 	}
 
 	@GetMapping("/user/image")

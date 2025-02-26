@@ -15,6 +15,6 @@ public class ExerciseController {
     @GetMapping("/exercise/{id}")
     public String showExercise(Model model, @PathVariable long id) {
         model.addAttribute("exercise", exerciseService.findById(id));
-        return "exercise_show";
+        return "exercises/exercise_show";
     }
 }

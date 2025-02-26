@@ -6,7 +6,7 @@
     </head>
     <body>
         <h1>Entrenador {{name}}</h1>
-        {{>header}}
+        {{>common/header}}
         {{#logged}}
             <form action="/trainer/{{id}}/addOrReplace" method="post">
                 <input type='submit' value='Seleccionar entrenador'/>
@@ -18,6 +18,6 @@
         <form action="/trainer" method="post">
             <input type='submit' value='Volver'/>
         </form>
-        {{>footer}}
+        {{>common/footer}}
     </body>
 </html>

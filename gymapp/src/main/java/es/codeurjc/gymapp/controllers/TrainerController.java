@@ -30,8 +30,8 @@ public class TrainerController {
     @PostMapping("/trainer")
 	public String trainers(Model model) {
         Iterable<Trainer> iterable = trainerServices.findAll();
-        if(!iterable.iterator().hasNext()) return "noTrainer";
-       model.addAttribute("trainers", iterable);
+        if(!iterable.iterator().hasNext()) return "trainers/noTrainer";
+        model.addAttribute("trainers", iterable);
         if(userSession.isLoggedIn()) {
             User user = userServices.findByName(userSession.getName()).get();
             if(user.getTrainer() != null) model.addAttribute("personalTrainer", user.getTrainer().getName());
@@ -40,7 +40,7 @@ public class TrainerController {
         else{
             model.addAttribute("personalTrainer", "Inicia sesión para ver tu entrenador personal");
         }
-		return "trainer";
+		return "trainers/trainer";
 	}
 
     @PostMapping("/trainer/{id}")
@@ -48,7 +48,7 @@ public class TrainerController {
         Optional<Trainer> trainer = trainerServices.findById(id);
         model.addAttribute("trainer", trainer.get());
         model.addAttribute("logged", userSession.isLoggedIn());
-        return "trainerDetails"; 
+        return "trainers/trainerDetails"; 
     }
 
     @PostMapping("/trainer/{id}/addOrReplace")
@@ -59,17 +59,17 @@ public class TrainerController {
         userServices.save(user);
         trainer.get().addUser(user);
         trainerServices.save(trainer.get());    
-        return "trainer"; 
+        return "trainers/trainer"; 
     }
 
 	@PostMapping("/trainer/add")
 	public String addTrainer(Model model) {		
-		return "trainerAdd"; 
+		return "trainers/trainerAdd"; 
 	}
 
 	@PostMapping("/trainer/add/form")
 	public String addTrainerForm(Model model, @RequestParam String name) {		
 		trainerServices.save(new Trainer(name));
-		return "trainerAdded"; 
+		return "trainers/trainerAdded"; 
 	}
 }

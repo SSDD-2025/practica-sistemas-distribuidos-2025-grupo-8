@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>header}}
+        {{>common/header}}
         {{#routine}}
             <form action = "/routine/modified" method="post">
                 <h1>Modificar rutina</h1>
@@ -27,6 +27,6 @@
                 <input type="submit" value="Modificar rutina">
             </form>
         {{/routine}}
-        {{>footer}}
+        {{>common/footer}}
     </body>
 </html>

@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>header}}
+        {{>common/header}}
         <h1>Maquinaria</h1>
         {{#machineries}}
             <a href="machinery/{{id}}">{{name}}</a>
@@ -15,6 +15,6 @@
             <p>No hay maquinaria disponible actualmente.</p>
         {{/machineries}}
 
-        {{>footer}}
+        {{>common/footer}}
     </body>
 </html>

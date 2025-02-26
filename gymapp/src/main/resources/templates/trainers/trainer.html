@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>header}}
+        {{>common/header}}
             <ul>
                 {{#trainers}}
                 <li><a href="/trainer/{{id}}">{{name}}</a></li>
@@ -22,6 +22,6 @@
 
                 <p>Entrenador personal: {{personalTrainer}}</p>
             </ul>
-        {{>footer}}
+        {{>common/footer}}
     </body>
 </html>

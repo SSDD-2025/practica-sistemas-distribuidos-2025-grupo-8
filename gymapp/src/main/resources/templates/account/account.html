@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>header}}
+        {{>common/header}}
             <form action="account/login" method="post">
                 <p>Nombre: </p>
                 <input type='text' name='name'/>
@@ -14,6 +14,6 @@
                 <input type='submit' value='Iniciar sesión'/>
             </form>
             <p>¿No tienes una cuenta? <a href="/register/create">Regístrate aquí</a></p>
-        {{>footer}}
+        {{>common/footer}}
     </body>
 </html>
