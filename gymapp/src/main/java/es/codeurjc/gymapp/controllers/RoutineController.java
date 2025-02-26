@@ -60,29 +60,28 @@ public class RoutineController implements CommandLineRunner{
     @PostMapping("/routine/create")
     public String createRoutine(Model model) {
         List<Exercise> exercises = exerciseServices.findAll();
+        model.addAttribute("isLogged", userSession.isLoggedIn());
         model.addAttribute("exercises", exercises);
         return "routineCreate";
-    } 
+    }
 
     @PostMapping("/routine/save")
     public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
     @RequestParam String day, @RequestParam Set<Exercise> exercise, HttpSession session) {
         Routine routine;
-        if(!userSession.isLoggedIn()){
-            routine = new Routine(name, description, day, exercise);
-            session.setAttribute("routines",routine);
-            return "routineSaved";
-        }else{
-            User user = userServices.findByName(userSession.getName()).get();
-            routine = new Routine(name, description, day, exercise,user);
-            userServices.addRoutine(user,routine);
-            routineServices.save(routine);
-            for(Exercise ex : exercise){
-                exerciseServices.addRoutine(routine, ex);
-                exerciseServices.save(ex);
-            }
-            return "routineSaved";
+        if(exercise.isEmpty()){
+            model.addAttribute("message", "You must select at least one exercise");
+            return "error";
         }
+        User user = userServices.findByName(userSession.getName()).get();
+        routine = new Routine(name, description, day, exercise,user);
+        userServices.addRoutine(user,routine);
+        routineServices.save(routine);
+        for(Exercise ex : exercise){
+            exerciseServices.addRoutine(routine, ex);
+            exerciseServices.save(ex);
+        }
+        return "routineSaved";
     }
     @PostMapping("/routine/view")
     public String viewRoutine(Model model,HttpSession session){
@@ -90,8 +89,10 @@ public class RoutineController implements CommandLineRunner{
         if(userSession.isLoggedIn()){
             routines = routineServices.findByUser(userServices.findByName(userSession.getName()).get());
             model.addAttribute("routines", routines);
+            model.addAttribute("isLogged", userSession.isLoggedIn());
             return "routineView";
         }
+        model.addAttribute("isLogged", userSession.isLoggedIn());
         /* 
         routines.add((Routine) session.getAttribute("routines"));
         model.addAttribute("routines", routines);*/
@@ -103,6 +104,7 @@ public class RoutineController implements CommandLineRunner{
         Optional<Routine> routine = routineServices.findById(id);
         if(routine.isPresent()){
             model.addAttribute("routine", routine.get());
+            model.addAttribute("isLogged", userSession.isLoggedIn());
             return "routineViewer";
         } 
         return "error";

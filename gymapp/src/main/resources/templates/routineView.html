@@ -7,16 +7,27 @@
     <body>
         {{>header}}
         <ul>
-            {{#routines}}
-            <li><a href ="/routine/view/{{id}}"> {{name}}</a>
-                <form action = "/routine/delete/{{id}}" method ="post">
-                    <input type = "submit" name = "Borrar rutina">
+            {{#isLogged}}
+                {{#routines}}
+                <li><a href ="/routine/view/{{id}}"> {{name}}</a>
+                    <form action = "/routine/delete/{{id}}" method ="post">
+                        <input type = "submit" value = "Borrar rutina">
+                    </form>
+                    <form action = "/routine/modify/{{id}}" method ="post">
+                        <input type = "submit" value = "Modificar rutina">
+                    </form>
+                </li>
+                {{/routines}}
+                {{^routines}}
+                    <li>No hay rutinas</li>
+                {{/routines}}
+            {{/isLogged}}
+            {{^isLogged}}
+                <li>Debes iniciar sesión para ver las rutinas</li>
+                <form action="/login" method="post">
+                    <input type="button" value="Iniciar sesión"">
                 </form>
-                <form action = "/routine/modify/{{id}}" method ="post">
-                    <input type = "submit" name = "Modificar rutina">
-                </form>
-            </li>
-            {{/routines}}
+            {{/isLogged}}
         </ul>
 
         {{>footer}}

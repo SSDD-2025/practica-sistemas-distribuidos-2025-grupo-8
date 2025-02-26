@@ -6,23 +6,31 @@
     </head>
     <body>
         {{>header}}
-        {{#routine}}
-            <p> {{name}} </p>
-            <p> {{description}} </p>
-            <p> {{day}} </p>
-            <ul>
-                {{#exercises}}
-                    <li>
-                        <p> Ejercicio : {{name}}</p>
-                        <p> Descripción : {{description}}</p>
-                        <p> Material : {{material.name}} </p>
-                    </li>
+        {{#isLogged}}
+            {{#routine}}
+                <p> {{name}} </p>
+                <p> {{description}} </p>
+                <p> {{day}} </p>
+                <ul>
+                    {{#exercises}}
+                        <li>
+                            <p> Ejercicio : {{name}}</p>
+                            <p> Descripción : {{description}}</p>
+                            <p> Material : {{material.name}} </p>
+                        </li>
+                    {{/exercises}}
+                </ul>
+                {{^exercises}}
+                        <p> Esta rutina no tiene ejercicios </p>
                 {{/exercises}}
-            </ul>
-            {{^exercises}}
-                    <p> Esta rutina no tiene ejercicios </p>
-            {{/exercises}}
-        {{/routine}}
+            {{/routine}}
+        {{/isLogged}}
+        {{^isLogged}}
+            <p>Debes estar logueado para ver una rutina</p>
+            <form action="/login" method="post">
+                <input type="submit" value="Login">
+            </form>
+        {{/isLogged}}
         {{>footer}}
     </body>
 </html>

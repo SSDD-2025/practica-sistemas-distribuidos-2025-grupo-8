@@ -20,7 +20,15 @@
                         <option value="{{id}}">{{name}}</option>
                     {{/exercises}}
                 </select><br><br>
-                <input type="submit" value="Crear rutina">
+                {{#isLogged}}
+                    <input type="submit" value="Crear rutina">
+                {{/isLogged}}
+                {{^isLogged}}
+                    <p>Debes estar logueado para crear una rutina</p>
+                    <form action="/login" method="post">
+                        <input type="submit" value="Login">
+                    </form>
+                {{/isLogged}}
             </form>
 
         {{>footer}}
