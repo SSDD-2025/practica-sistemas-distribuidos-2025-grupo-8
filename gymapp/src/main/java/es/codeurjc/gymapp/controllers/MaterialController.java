@@ -16,8 +16,6 @@ public class MaterialController {
 
     @Autowired
     private MaterialServices materialServices;
-    @Autowired
-    private ExerciseServices exerciseServices;
 
     @PostMapping("/machinery")
 	public String machinery(Model model) {
@@ -29,7 +27,7 @@ public class MaterialController {
     public String showMachinery(Model model, @PathVariable long id) {
         Material material =  materialServices.findById(id).get();
         model.addAttribute("machinery", material);
-        model.addAttribute("exercises", exerciseServices.findByMaterial(material));
+        model.addAttribute("exercises", material.getExercises());
         return "machinery_show";
     }
 
