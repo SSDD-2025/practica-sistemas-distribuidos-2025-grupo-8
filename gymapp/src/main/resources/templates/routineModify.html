@@ -6,7 +6,7 @@
     </head>
     <body>
         {{>header}}
-        {{#rotuine}}
+        {{#routine}}
             <form action = "/routine/modified" method="post">
                 <h1>Modificar rutina</h1>
 
@@ -16,13 +16,13 @@
                 <input type="text" id="name" name="name" value ="{{name}}"><br><br>
                 <label for="description">Descripción:</label>
                 <input type="text" id="description" name="description" value="{{description}}"><br><br>
-                <label for="difficulty">Día de la semana:</label>
+                <label for="day">Día de la semana:</label>
                 <input type="text" id="day" name="day" value = "{{day}}"><br><br>
                 <label for="exercise">Ejercicios:</label>
-                <select id ="exercise" name = "exercise" multiple>
-                    {{#exercises}}
-                        <option value="{{id}}" {{#selectedExercises}}{{#equals id ../id}}selected{{/equals}}{{/selectedExercises}}>{{name}}</option>
-                    {{/exercises}}
+                <select id ="exercise" name = "exerciseIds" multiple>
+                    {{#allExercises}}
+                        <option value="{{id}}"> {{name}} </option>
+                    {{/allExercises}}
                 </select><br><br>
                 <input type="submit" value="Modificar rutina">
             </form>

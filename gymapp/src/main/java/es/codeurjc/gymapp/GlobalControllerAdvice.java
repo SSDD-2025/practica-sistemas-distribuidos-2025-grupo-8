@@ -36,4 +36,13 @@ public class GlobalControllerAdvice {
         return false;
     }
 
+    @ModelAttribute("isAdmin")
+    public boolean addIsAdminToModel() {
+        if(userSession.isLoggedIn()){
+            Optional<User> user = userServices.findByName(userSession.getName());
+            return Boolean.TRUE.equals(user.get().getIsAdmin());
+        }
+        return false;
+    }
+
 }
