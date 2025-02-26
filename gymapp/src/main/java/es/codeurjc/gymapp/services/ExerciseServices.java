@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
+import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.repositories.ExerciseRepository;
 
 @Service
@@ -54,5 +55,9 @@ public class ExerciseServices {
             set.add(elem);
         }
         return set;
+    }
+
+    public void addRoutine(Routine routine, Exercise exercise){
+        exercise.addRoutine(routine);
     }
 }

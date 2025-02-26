@@ -1,5 +1,8 @@
 package es.codeurjc.gymapp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,8 +15,8 @@ public class Exercise{
     private String description;
     @ManyToOne
     private Material material;
-    @ManyToOne
-    private Routine routine;
+    @ManyToMany
+    private List<Routine> routine;
 
     public Exercise() {
     }
@@ -22,6 +25,7 @@ public class Exercise{
         this.name = name;
         this.description = description;
         this.material = material;
+        this.routine = new ArrayList<>();
     }
 
     public String getDescription() {
@@ -40,11 +44,11 @@ public class Exercise{
         this.material = material;
     }
 
-    public Routine getRoutine() {
+    public List<Routine> getRoutine() {
         return routine;
     }
 
-    public void setRoutine(Routine routine){
+    public void setRoutine(List<Routine> routine){
         this.routine = routine;
     }
     public Long getId() {
@@ -61,5 +65,13 @@ public class Exercise{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addRoutine (Routine routine){
+        this.routine.add(routine);
+    }
+
+    public void removeRoutine(Routine routine){
+        this.routine.remove(routine);
     }
 }

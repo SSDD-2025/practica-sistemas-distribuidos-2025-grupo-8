@@ -14,7 +14,7 @@ public class Routine{
     private String name;
     private String description;
     private String day;
-    @OneToMany(mappedBy = "routine")
+    @ManyToMany(mappedBy = "routine")
     private Set<Exercise> exercises;
     @ManyToOne
     private User userMember;
