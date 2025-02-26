@@ -31,9 +31,10 @@ public class User{
         
     }
     // Constructor
-    public User(String name, String password) {
-        this.password = password;
+    public User(String name, String password, Boolean isAdmin) {
         this.name = name;
+        this.password = password;
+        this.isAdmin = isAdmin;
         this.trainer = null;
         this.routines = new ArrayList<>();
     }
@@ -94,7 +95,7 @@ public class User{
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    
+
     public void addRoutine(Routine routine) {
         this.routines.add(routine);
     }

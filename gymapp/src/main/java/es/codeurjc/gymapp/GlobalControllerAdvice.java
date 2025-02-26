@@ -40,7 +40,7 @@ public class GlobalControllerAdvice {
     public boolean addIsAdminToModel() {
         if(userSession.isLoggedIn()){
             Optional<User> user = userServices.findByName(userSession.getName());
-            return user.get().getIsAdmin();
+            return Boolean.TRUE.equals(user.get().getIsAdmin());
         }
         return false;
     }

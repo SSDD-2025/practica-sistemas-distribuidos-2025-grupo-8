@@ -10,6 +10,16 @@
                 {{#trainers}}
                 <li><a href="/trainer/{{id}}">{{name}}</a></li>
                 {{/trainers}}
+
+                {{#isAdmin}}
+                <form action="/trainer/add" method="post">
+                    <input type="submit" value = "Añadir nuevo entrenador">
+                </form>
+                {{/isAdmin}}
+                {{^isAdmin}}
+                
+                {{/isAdmin}}
+
                 <p>Entrenador personal: {{personalTrainer}}</p>
             </ul>
         {{>footer}}

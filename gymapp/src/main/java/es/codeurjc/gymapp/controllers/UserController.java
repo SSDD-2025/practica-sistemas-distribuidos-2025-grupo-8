@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +24,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.boot.CommandLineRunner;
 
+import es.codeurjc.gymapp.model.Exercise;
+import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.UserServices;
 
 
 @Controller
-public class UserController {
+public class UserController implements CommandLineRunner {
     
 	@Autowired
 	private UserSession userSession;
@@ -38,14 +42,17 @@ public class UserController {
     @Autowired
 	private UserServices userServices;
 
-	private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "images");
-
     @GetMapping("/")
 	public String init(Model model) {
 
 		return "index";
 	}
 
+	@Override
+    public void run(String... args) throws Exception {
+        userServices.save(new User("admin", "admin", true));
+    }  
+	
     @PostMapping("/facilities")
 	public String facilities(Model model) {
 
@@ -97,7 +104,7 @@ public class UserController {
 			return "registerError"; //user was already registered
 		}
 		userSession.setName(name);
-		User newUser = new User(name, password);
+		User newUser = new User(name, password, false);
     	userServices.save(newUser, image);
 		return "registerSuccess";
 	}
