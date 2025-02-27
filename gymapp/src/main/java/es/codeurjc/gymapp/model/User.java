@@ -23,7 +23,7 @@ public class User{
     private Blob imageFile;
     @ManyToOne
     private Trainer trainer;
-    @OneToMany(mappedBy = "userMember")
+    @OneToMany(mappedBy="userMember")
     private List<Routine> routines;
     private Boolean isAdmin;
 

@@ -41,7 +41,7 @@ public class TrainerController {
         else{
             model.addAttribute("personalTrainer", "Inicia sesión para ver tu entrenador personal");
         }
-		return "trainers/trainer";
+		return "trainers/trainersShow";
 	}
 
     @GetMapping("/trainer/{id}")
@@ -59,8 +59,9 @@ public class TrainerController {
         user.setTrainer(trainer.get());
         userServices.save(user);
         trainer.get().addUser(user);
-        trainerServices.save(trainer.get());    
-        return "trainers/personalTrainer"; 
+        trainerServices.save(trainer.get()); 
+        model.addAttribute("message", "Entrenador personal cambiado correctamente");     
+        return "trainers/trainerMessage"; 
     }
 
 	@PostMapping("/trainer/add")
@@ -75,13 +76,15 @@ public class TrainerController {
             user.setTrainer(null);
             userServices.save(user);
         }
-        trainerServices.deleteById(id);    
-        return "trainerDeleted";
+        trainerServices.deleteById(id); 
+        model.addAttribute("message", "Entrenador eliminado correctamente");  
+        return "trainers/trainerMessage";
     }
 
 	@PostMapping("/trainer/add/form")
 	public String addTrainerForm(Model model, @RequestParam String name) {		
 		trainerServices.save(new Trainer(name));
-		return "trainers/trainerAdded"; 
+        model.addAttribute("message", "Entrenador añadido correctamente");  
+		return "trainers/trainerMessage"; 
 	}
 }

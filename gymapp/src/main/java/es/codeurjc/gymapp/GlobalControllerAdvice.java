@@ -29,17 +29,26 @@ public class GlobalControllerAdvice {
 
     @ModelAttribute("hasImage")
     public boolean addHasImageToModel() {
-        if(userSession.isLoggedIn()){
+        if (userSession.isLoggedIn()) {
             Optional<User> user = userServices.findByName(userSession.getName());
-            return user.get().getImageFile() != null;
+    
+            if (user.isPresent()) { 
+                return user.get().getImageFile() != null; //return true if the user has an image
+            } else {
+                return false;  
+            }
         }
-        return false;
+        return false; 
     }
 
     @ModelAttribute("isAdmin")
     public boolean addIsAdminToModel() {
-        if(userSession.isLoggedIn()){
+        if (userSession.isLoggedIn()) {
             Optional<User> user = userServices.findByName(userSession.getName());
+            if (user.isEmpty()) {
+                userSession.logout();  // 🔴 Cierra sesión si el usuario no existe
+                return false;
+            }
             return Boolean.TRUE.equals(user.get().getIsAdmin());
         }
         return false;
