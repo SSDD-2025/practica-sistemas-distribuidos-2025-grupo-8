@@ -1,12 +1,16 @@
 package es.codeurjc.gymapp.controllers;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +30,7 @@ import es.codeurjc.gymapp.services.TrainerServices;
 import es.codeurjc.gymapp.services.UserServices;
 
 @Controller
-public class TrainerController {
+public class TrainerController implements CommandLineRunner {
     
 	@Autowired
 	private UserSession userSession;
@@ -36,6 +40,37 @@ public class TrainerController {
 
     @Autowired
 	private TrainerServices trainerServices;
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Trainer 1
+        Trainer arnold = new Trainer("Arnold Schwarzenegger", "Entrenador de culturismo");
+        arnold.setImageFile(loadImageAsBlob("static/images/arnold.png"));
+
+        // Trainer 2
+        Trainer theRock = new Trainer("Dwayne Johnson", "Entrenador de lucha libre");
+        theRock.setImageFile(loadImageAsBlob("static/images/theRock.png"));
+
+        // Save trainers
+        trainerServices.save(arnold);
+        trainerServices.save(theRock);
+    }
+
+
+    private Blob loadImageAsBlob(String imagePath) {
+        try {
+            // ClassResource to get image
+            ClassPathResource resource = new ClassPathResource(imagePath);
+            InputStream inputStream = resource.getInputStream();
+            
+            byte[] imageBytes = inputStream.readAllBytes();
+            return BlobProxy.generateProxy(new ByteArrayInputStream(imageBytes), imageBytes.length);
+        } catch (IOException e) {
+            //Null if image not found
+            return null;
+        }
+    }
+
 
     @PostMapping("/trainer")
 	public String trainers(Model model) {
