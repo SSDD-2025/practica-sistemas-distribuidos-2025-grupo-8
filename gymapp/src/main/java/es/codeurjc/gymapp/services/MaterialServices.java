@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.repositories.ExerciseRepository;
 import es.codeurjc.gymapp.repositories.MaterialRepository;
@@ -43,6 +44,17 @@ public class MaterialServices {
         materialRepository.save(material);
     }
 
+    public void createAndSave(String name, List<Long> exercises) {
+        Material material = new Material(name);
+        materialRepository.save(material);
+        for (Long id: exercises) {
+            Exercise exercise = exerciseServices.findById(id).get();
+            material.addExercise(exerciseServices.findById(id).get());
+            exerciseServices.setMaterialAndSave(exercise, material);
+        }
+        materialRepository.save(material);
+    }
+
     public void deleteById(Long id) {
         materialRepository.deleteById(id);
     }
@@ -50,5 +62,4 @@ public class MaterialServices {
     public Optional<Material> findByName(String name) {
         return materialRepository.findByName(name);
     }
-
 }

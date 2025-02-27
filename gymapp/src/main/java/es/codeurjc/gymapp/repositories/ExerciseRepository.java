@@ -9,5 +9,5 @@ import es.codeurjc.gymapp.model.Material;
 
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     List<Exercise> findAll();
-    public Material findByMaterial(Material material);
+    public Exercise findByMaterial(Material material);
 }

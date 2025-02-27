@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class MaterialController {
     @Autowired
     private ExerciseServices exerciseServices;
     
-    @PostMapping("/machinery")
+    @RequestMapping("/machinery")
 	public String machinery(Model model) {
         model.addAttribute("machineries", materialServices.findAll());
 		return "machinery/machinery";
@@ -38,14 +40,14 @@ public class MaterialController {
     }
 
     @PostMapping("/machinery/save")
-    public String saveMachinery(Material material, List<Long> exercises) {
-        materialServices.save(material, exercises);
+    public String saveMachinery(@RequestParam("name") String name, @RequestParam(value = "exercise", required = false) List<Long> exercises) {
+        materialServices.createAndSave(name, exercises);
         return "machinery/machinery_save";
     }
 
-    @PostMapping("/machinery/add")
+    @GetMapping("/machinery/add")
     public String addMachinery(Model model) {
-        model.addAttribute("exercises", exerciseServices.findAll());
+        model.addAttribute("exercises", exerciseServices.findExercisesNotAssigned());
         return "machinery/machinery_add";
     }
 }

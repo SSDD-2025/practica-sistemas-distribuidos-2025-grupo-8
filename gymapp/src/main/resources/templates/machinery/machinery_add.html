@@ -6,8 +6,10 @@
     <body>
         {{>common/header}}
         <h1>Añadir Maquinaria</h1>
-        <form action="machinery/save" method="post">
+        <form action="/machinery/save" method="post">
+            <label for="name">Nombre:</label>
             <input type="text" name="name">
+            <br><br>
             <label for="exercise">Ejercicio:</label>
             <select name="exercise" id="exercise" multiple>
                 {{#exercises}}
