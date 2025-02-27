@@ -129,6 +129,7 @@ public class RoutineController implements CommandLineRunner{
             if (userSession.isLoggedIn()) {
                 User user = userServices.findByName(userSession.getName()).get();
                 userServices.deleteRoutine(user, routine);
+                routineServices.deleteUser(routine,user);
                 
                 for (Exercise exercise : routine.getExercises()) {
                     exerciseServices.removeRoutine(routine, exercise);
@@ -177,8 +178,14 @@ public class RoutineController implements CommandLineRunner{
         routine.setDescription(description);
         routine.setDay(day);
         //TODO: Correct update of exercises in the routine idk what does it
-        routine.getExercises().clear();
-        routine.getExercises().addAll(exerciseServices.findAllById(exerciseIds));
+                
+        for(Exercise ex : routine.getExercises()){
+            exerciseServices.removeRoutine(routine, ex);
+            exerciseServices.save(ex);
+        }
+        routineServices.deleteExercises(routine);
+
+        routineServices.addExercises(routine, exerciseServices.listToSet(exerciseServices.findAllById(exerciseIds)));
         routineServices.save(routine);
 
         for(Exercise ex : routine.getExercises()){
