@@ -2,6 +2,7 @@ package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
-import es.codeurjc.gymapp.repositories.ExerciseRepository;
 import es.codeurjc.gymapp.repositories.MaterialRepository;
 
 @Service
@@ -61,5 +61,18 @@ public class MaterialServices {
 
     public Optional<Material> findByName(String name) {
         return materialRepository.findByName(name);
+    }
+
+    public void safeDelete(Long id) {
+        Optional<Material> material = materialRepository.findById(id);
+        if (material.isPresent()) {
+            for (Exercise exercise: material.get().getExercises()) {
+                exercise.setMaterial(null);
+                exerciseServices.save(exercise);
+            }
+            material.get().setExercises(new HashSet<Exercise>());
+            materialRepository.save(material.get());
+            materialRepository.delete(material.get());
+        }
     }
 }

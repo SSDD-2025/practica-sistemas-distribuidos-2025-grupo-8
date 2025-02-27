@@ -8,14 +8,20 @@
         {{>common/header}}
         <h1>Maquinaria</h1>
         {{#machineries}}
-            <a href="machinery/{{id}}">{{name}}</a>
+            <a href="machinery/{{id}}">{{name}}</a><br>
+            {{#isAdmin}}
+                <form action="/machinery/delete/{{id}}" method="post">
+                    <input type="submit" value="Borrar maquinaria">
+                </form>
+            {{/isAdmin}}
         {{/machineries}}
 
         {{^machineries}}
             <p>No hay maquinaria disponible actualmente.</p>
         {{/machineries}}
-        <br>
+        
         {{#isAdmin}}
+            <br>
             <a href="/machinery/add">Añadir maquinaria</a>
         {{/isAdmin}}
         {{>common/footer}}

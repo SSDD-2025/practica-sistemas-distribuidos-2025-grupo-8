@@ -13,7 +13,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.model.Material;
-import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.MaterialServices;
 
@@ -40,14 +39,25 @@ public class MaterialController {
     }
 
     @PostMapping("/machinery/save")
-    public String saveMachinery(@RequestParam("name") String name, @RequestParam(value = "exercise", required = false) List<Long> exercises) {
-        materialServices.createAndSave(name, exercises);
-        return "machinery/machinery_save";
+    public String saveMachinery(Model model, @RequestParam("name") String name, @RequestParam(value = "exercise", required = false) List<Long> exercises) {
+        if (exercises != null){
+            materialServices.createAndSave(name, exercises);
+            return "machinery/machinery_save";
+        }
+        model.addAttribute("message", "Se debe seleccionar al menos un ejercicio");
+        return "error";
+        
     }
 
     @GetMapping("/machinery/add")
     public String addMachinery(Model model) {
         model.addAttribute("exercises", exerciseServices.findExercisesNotAssigned());
         return "machinery/machinery_add";
+    }
+
+    @RequestMapping("/machinery/delete/{id}")
+    public String deleteMachinery(@PathVariable long id) {
+        materialServices.safeDelete(id);
+        return "machinery/machinery_delete";
     }
 }
