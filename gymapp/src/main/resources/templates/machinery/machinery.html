@@ -14,7 +14,10 @@
         {{^machineries}}
             <p>No hay maquinaria disponible actualmente.</p>
         {{/machineries}}
-
+        <br>
+        {{#isAdmin}}
+            <a href="/machinery/add">Añadir maquinaria</a>
+        {{/isAdmin}}
         {{>common/footer}}
     </body>
 </html>

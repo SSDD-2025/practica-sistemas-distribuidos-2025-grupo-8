@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Añadir Maquinaria</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
+    </head>
+    <body>
+        {{>common/header}}
+        <h1>Añadir Maquinaria</h1>
+        <form action="machinery/save" method="post">
+            <input type="text" name="name">
+            <label for="exercise">Ejercicio:</label>
+            <select name="exercise" id="exercise" multiple>
+                {{#exercises}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/exercises}}
+            </select>
+            <input type="submit" value="Añadir Maquinaria">
+        </form>
+        {{>common/footer}}
+    </body>
+</html>
