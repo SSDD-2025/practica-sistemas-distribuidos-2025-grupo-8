@@ -1,12 +1,16 @@
 package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.model.Trainer;
+import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.TrainerRepository;
 
 @Service
@@ -34,5 +38,13 @@ public class TrainerServices {
 
     public Iterable<Trainer> findAll() {
         return trainerRepository.findAll();
+    }
+
+    public void save(Trainer trainer, MultipartFile imageFile) throws IOException{
+        if(!imageFile.isEmpty()) {
+            trainer.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(),
+            imageFile.getSize()));
+        }
+        trainerRepository.save(trainer);
     }
 }

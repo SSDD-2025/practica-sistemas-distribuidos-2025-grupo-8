@@ -1,3 +1,4 @@
+
 package es.codeurjc.gymapp.model;
 
 import java.util.*;

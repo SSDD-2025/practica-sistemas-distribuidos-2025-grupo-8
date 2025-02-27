@@ -1,14 +1,23 @@
 package es.codeurjc.gymapp.controllers;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Optional;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
@@ -86,5 +95,31 @@ public class TrainerController {
 		trainerServices.save(new Trainer(name));
         model.addAttribute("message", "Entrenador añadido correctamente");  
 		return "trainers/trainerMessage"; 
+	}
+
+    @PostMapping("/trainer/image/{id}")
+	public String changeImage(Model model, @RequestParam MultipartFile image, @PathVariable Long id) throws IOException {
+		Optional<Trainer> trainer = trainerServices.findById(id);
+		if (image.isEmpty()) {
+            trainer.get().setImageFile(null);
+        } else {
+            trainer.get().setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
+        }
+		trainerServices.save(trainer.get(), image);
+		return "index"; 
+	}
+
+    @GetMapping("/trainer/image/{id}")
+	public ResponseEntity<Object> downloadImage(@PathVariable Long id) throws SQLException {
+        Optional<Trainer> trainer = trainerServices.findById(id);
+        if(!trainer.isPresent()) return ResponseEntity.notFound().build();
+
+        Blob image = trainer.get().getImageFile();
+        if(image == null) return ResponseEntity.notFound().build();
+
+        Resource file = new InputStreamResource(image.getBinaryStream());
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                .contentLength(image.length()).body(file);
+		
 	}
 }

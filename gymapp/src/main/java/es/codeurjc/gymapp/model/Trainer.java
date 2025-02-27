@@ -1,5 +1,6 @@
 package es.codeurjc.gymapp.model;
 
+import java.sql.Blob;
 import java.util.*;
 
 import jakarta.persistence.*;
@@ -11,6 +12,9 @@ public class Trainer{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String description;
+    @Lob
+    private Blob imageFile;
     @OneToMany(mappedBy = "trainer")
     private Set<User> users = new HashSet<User>();
 
@@ -46,5 +50,13 @@ public class Trainer{
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
     }
 }
