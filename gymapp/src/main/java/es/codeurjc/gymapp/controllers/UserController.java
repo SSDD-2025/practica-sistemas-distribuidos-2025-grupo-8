@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.core.io.InputStreamResource;
@@ -28,8 +29,11 @@ import org.springframework.boot.CommandLineRunner;
 
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
+import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
+import es.codeurjc.gymapp.services.ExerciseServices;
+import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
 
 
@@ -41,6 +45,12 @@ public class UserController implements CommandLineRunner {
 
     @Autowired
 	private UserServices userServices;
+
+	@Autowired
+	private RoutineServices	routineServices;
+
+	@Autowired
+	private ExerciseServices exerciseServices;
 
     @GetMapping("/")
 	public String init(Model model) {
@@ -63,7 +73,7 @@ public class UserController implements CommandLineRunner {
 	public String account(Model model) {
 		if(userSession.isLoggedIn()){
 			model.addAttribute("name", userSession.getName()); //maybe add more info about the user
-			return "logged";
+			return "account/logged";
 		}
 		return "account/account"; //user is not logged in
 	}
@@ -77,7 +87,8 @@ public class UserController implements CommandLineRunner {
 		Optional<User> user = userServices.findByName(name); // name is supposed to be unique
 		if (user.isPresent() && user.get().getPassword().equals(password)) { // login successful
 			userSession.setName(name);
-			return "account/loginSuccess";
+			model.addAttribute("message", "Sesión iniciada con éxito");
+			return "account/accountMessage";
 		} else if (user.isPresent() && !user.get().getPassword().equals(password)) {
 			model.addAttribute("error", "Contraseña incorrecta");
 			return "account/loginError"; // password was incorrect
@@ -106,15 +117,44 @@ public class UserController implements CommandLineRunner {
 		userSession.setName(name);
 		User newUser = new User(name, password, false);
     	userServices.save(newUser, image);
-		return "account/registerSuccess";
+		model.addAttribute("message", "Usuario registrado con éxito");
+		return "account/accountMessage";
 	}
 
 	@PostMapping("/account/logout")
 	public String sessionExit(Model model) {
 		userSession.logout();
-		return "account/logout"; 		
+		model.addAttribute("message", "Sesión cerrada");
+		return "account/accountMessage"; 		
 	}
 
+	@PostMapping("/account/deleteAccount")
+	public String sessionDelete(Model model) {
+		Optional<User> optionalUser = userServices.findByName(userSession.getName());
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
+			
+			// Delete routines from exercises
+			for (Routine routine : user.getRoutines()) {
+				for (Exercise exercise : exerciseServices.findAll()) {
+					exercise.getRoutine().remove(routine);
+					exerciseServices.save(exercise);
+				}
+			}
+
+			// Delete all routines
+			routineServices.deleteAllRoutines(user);
+			
+			// Delete user
+			userServices.deleteById(user.getId());
+			
+			model.addAttribute("message", "Cuenta eliminada con éxito");
+			return "account/accountMessage";
+		} else {
+			model.addAttribute("message", "Usuario no encontrado");
+			return "account/accountMessage";
+		}
+	}
 	@PostMapping("/account/image")
 	public String changeImage(Model model, @RequestParam MultipartFile image) throws IOException {
 		Optional<User> user = userServices.findByName(userSession.getName());
@@ -124,7 +164,8 @@ public class UserController implements CommandLineRunner {
             user.get().setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
         }
 		userServices.save(user.get(), image);
-		return "account/imageChanged"; 
+		model.addAttribute("message", "Imagen cambiada con éxito");
+		return "account/accountMessage"; 
 	}
 
 	@GetMapping("/user/image")

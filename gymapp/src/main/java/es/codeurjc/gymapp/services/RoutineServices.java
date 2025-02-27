@@ -59,4 +59,8 @@ public class RoutineServices {
         routineRepository.save(routine);
     }
 
+    public void deleteAllRoutines(User user){
+        routineRepository.deleteAll(user.getRoutines());
+    }
+
 }
