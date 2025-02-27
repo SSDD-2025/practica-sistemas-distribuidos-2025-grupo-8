@@ -30,6 +30,7 @@ public class Routine{
         this.description = description;
         this.day = day;
         this.exercises = exercises;
+        this.userMember = null;
     }
     public String getDescription() {
         return description;
@@ -68,8 +69,16 @@ public class Routine{
         this.exercises.add(exercise);
     }
 
+    public void addExercises(Set<Exercise> exercises){
+        this.exercises.addAll(exercises);
+    }
+
     public void removeExercise(Exercise exercise) {
         this.exercises.remove(exercise);
+    }
+
+    public void removeExercises(){
+        this.getExercises().clear();
     }
 
     public Long getId() {

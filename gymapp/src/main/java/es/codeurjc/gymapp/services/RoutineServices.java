@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,6 +42,21 @@ public class RoutineServices {
 
     public List<Routine> findByUser(User user){
         return routineRepository.findByUserMember(user);
+    }
+
+    public void deleteExercises(Routine routine){
+        routine.removeExercises();
+        routineRepository.save(routine);
+    }
+
+    public void addExercises(Routine routine , Set<Exercise> exercises){
+        routine.addExercises(exercises);
+        routineRepository.save(routine);
+    }
+
+    public void deleteUser(Routine routine, User user){
+        routine.setUser(null);
+        routineRepository.save(routine);
     }
 
 }
