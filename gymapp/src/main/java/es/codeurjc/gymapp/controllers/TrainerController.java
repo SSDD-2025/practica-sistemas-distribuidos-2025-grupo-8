@@ -56,7 +56,7 @@ public class TrainerController {
     @GetMapping("/trainer/{id}")
     public String getTrainer(Model model, @PathVariable Long id) {
         Optional<Trainer> trainer = trainerServices.findById(id);
-        model.addAttribute("trainer", trainer.get().getName());
+        model.addAttribute("trainer", trainer.get());
         model.addAttribute("logged", userSession.isLoggedIn());
         return "trainers/trainerDetails"; 
     }
@@ -91,8 +91,9 @@ public class TrainerController {
     }
 
 	@PostMapping("/trainer/add/form")
-	public String addTrainerForm(Model model, @RequestParam String name) {		
-		trainerServices.save(new Trainer(name));
+	public String addTrainerForm(Model model, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile image) throws IOException {		
+		Trainer trainer = new Trainer(name, description);
+        trainerServices.save(trainer, image);
         model.addAttribute("message", "Entrenador añadido correctamente");  
 		return "trainers/trainerMessage"; 
 	}

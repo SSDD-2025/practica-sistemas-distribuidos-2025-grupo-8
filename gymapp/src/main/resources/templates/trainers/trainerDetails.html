@@ -6,9 +6,14 @@
     </head>
     <body>
         {{>common/header}}
-        <h1>Entrenador {{trainer}}</h1>
+        <div>
+            <h1>Entrenador {{trainer.name}}</h1>
+            <p>Descripción {{trainer.description}}</p>
+            <img src="/trainer/image/{{id}}" alt="Imagen del entrenador">
+        </div>
+        
         {{#logged}}
-        <form action="/trainer/{{id}}/addOrReplace" method="post">
+        <form action="/trainer/{{id}}/addOrReplace" method="post" enctype="multipart/form-data">
             <input type='submit' value='Seleccionar entrenador personal'/>
         </form>
             {{#isAdmin}}
@@ -17,6 +22,7 @@
             </form>
             {{/isAdmin}}
         {{/logged}}
+
         {{^logged}}
             <p>Para seleccionar al entrenador, primero debes iniciar sesión</p>
         {{/logged}}	

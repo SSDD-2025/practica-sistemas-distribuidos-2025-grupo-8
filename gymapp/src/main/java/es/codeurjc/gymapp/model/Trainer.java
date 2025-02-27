@@ -23,6 +23,15 @@ public class Trainer{
     public Trainer(String name) {
         this.name = name;
     }
+    public Trainer(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    public Trainer(String name, String description, Blob imageFile) {
+        this.name = name;
+        this.description = description;
+        this.imageFile = imageFile;
+    }
     public Set<User> getUsers() {
         return users;
     }
@@ -58,5 +67,13 @@ public class Trainer{
 
     public void setImageFile(Blob imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

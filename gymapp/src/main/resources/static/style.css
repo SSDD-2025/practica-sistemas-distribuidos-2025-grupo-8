@@ -55,6 +55,13 @@ li{
     align-items: center;
     padding: 0px;
 }
+/* Clases de formularios*/
+.sendForm{
+    padding: auto;
+}
+.infoForm{
+    padding: auto;
+}
 /* Clases del footer */
 .container {
     display: flex;

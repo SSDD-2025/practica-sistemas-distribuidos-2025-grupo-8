@@ -7,10 +7,19 @@
     <body>
         {{>common/header}}
             <ul>
-                <form action="/trainer/add/form" method="post">
-                    <p>Nombre del entrenador: </p>
-                    <input type='text' name='name'/>
-                    <input type='submit' value='Añadir'/>
+                <form action="/trainer/add/form" method="post" enctype="multipart/form-data">
+                    <div class="infoForm">
+                        <p>Nombre del entrenador: </p>
+                        <input type='text' name='name'/>
+                        <p>Descripción: </p>
+                        <input type='text' name='description'/>
+                        <p>Foto del entrenador: </p>
+                        <input type="file" name='image' accept=".jpg, .jpeg"/>
+                    </div>  
+                    <br><br>
+                    <div class="sendForm">
+                        <input type='submit' value='Añadir'/>
+                    </div>
                 </form>               
             </ul>
         {{>common/footer}}
