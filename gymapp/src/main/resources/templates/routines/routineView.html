@@ -9,7 +9,10 @@
         <ul>
             {{#isLogged}}
                 {{#routines}}
-                <li><a href ="/routine/view/{{id}}"> {{name}}</a>
+                <li>
+                    <form action="/routine/view/{{id}}" method="get">
+                        <button type="submit" class="button">{{name}}</button>
+                    </form>               
                     <form action = "/routine/delete/{{id}}" method ="post">
                         <input type = "submit" value = "Borrar rutina">
                     </form>

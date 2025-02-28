@@ -1,4 +1,4 @@
-/* Etiquetas naturales */
+/* Natural tags */
 body {
     background-image: url('path/to/your/image.jpg');
     background-size: cover;
@@ -13,7 +13,7 @@ img {
 li{
     list-style-type:none;
 }
-/* Aquí empiezan los identificadores */
+/* Ids start here */
 #header{
     display: flex;
     flex-direction: column;
@@ -23,6 +23,7 @@ li{
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
+    background-color: #555;
 }
 #infHeader{
     display: flex;
@@ -30,8 +31,13 @@ li{
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    background-color: #ccc;
 }
-/* Aquí empiezan las clases */
+#textAccount{
+    font-size: 24px;
+    color: white;
+}
+/* Classes start here */
 .title{
     font-size: xx-large;
 }
@@ -55,14 +61,14 @@ li{
     align-items: center;
     padding: 0px;
 }
-/* Clases de formularios*/
+/* Classes for forms*/
 .sendForm{
     padding: auto;
 }
 .infoForm{
     padding: auto;
 }
-/* Clases del footer */
+/* Classes for the footer */
 .container {
     display: flex;
     flex-direction: row;
@@ -78,3 +84,119 @@ li{
     flex-direction: column;
 }
 
+.button {
+    margin: 5px; 
+    padding: 10px 15px; 
+    background-color: #757575; 
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.button:hover {
+    background-color: #3D3D3D; 
+}
+
+/* Classes for the header */
+.buttonsHeader{
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.buttonsHeader:hover {
+    background-color: #555; 
+}
+
+.imagesHeader{
+    width: 100px;
+    height: 100px;
+    background: no-repeat center;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+}
+
+.buttonsRoutines{
+    background-color: #222;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+.buttonsRoutines:hover {
+    background-color: #555; 
+}
+
+//css for routines
+#backgroundRoutine{
+    background-color: #555;
+}
+.containerRoutine {
+    position: relative;
+    height: 100vh;
+}
+.box {
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+#divRoutines{
+    top: 5%;
+    left: 50%;
+}
+
+#divOptionsCreate{
+    top: 20%;
+    left: 40%;
+}
+
+#divOptionsShow{
+    top: 20%;
+    left: 60%;
+}
+#home{
+    background-image: url('images/Icone.png');
+}
+#userImage{
+    background-image: url('user/image');
+}
+#no_userImage{
+    background-image: url('images/no_image.jpg');
+}
+
+input {
+    margin: 3px; 
+    padding: 10px 15px; 
+    background-color: #DADADA; 
+    color: black;
+    padding: 10px 20px;
+    font-size: 16px; 
+    border: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+input:hover {
+    background-color: #B0B0B0; 
+}

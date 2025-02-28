@@ -38,6 +38,10 @@ public class User{
         this.trainer = null;
         this.routines = new ArrayList<>();
     }
+    
+    public User(String name, String password) {
+        this(name, password, false);
+    }
 
     // Getters and Setters
     public String getPassword() {
