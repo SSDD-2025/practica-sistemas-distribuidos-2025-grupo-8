@@ -6,23 +6,22 @@
     </head>
     <body>
         {{>common/header}}
-            <ul>
-                {{#trainers}}
-                <li>
-                    <form action="/trainer/{{id}}" method="get">
-                        <button type="submit" class="button">{{name}}</button>
-                    </form>
-                </li>
-                {{/trainers}}
-
-                {{#isAdmin}}
-                <form action="/trainer/add" method="post">
-                    <input type="submit" value = "Añadir nuevo entrenador">
+        <h1>Entrenadores</h1>
+            {{#trainers}}
+            <li>
+                <form action="/trainer/{{id}}" method="get">
+                    <button type="submit" class="button">{{name}}</button>
                 </form>
-                {{/isAdmin}}
-                
-                <p>Entrenador personal: {{personalTrainer}}</p>
-            </ul>
+            </li>
+            {{/trainers}}
+
+            {{#isAdmin}}
+            <form action="/trainer/add" method="post">
+                <input type="submit" value = "Añadir nuevo entrenador">
+            </form>
+            {{/isAdmin}}
+            
+            <p>Entrenador personal: {{personalTrainer}}</p>
         {{>common/footer}}
     </body>
 </html>
