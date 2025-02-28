@@ -9,11 +9,7 @@
         <p>Ejercicios:
 
         {{#exercises}}
-        <li>
-            <form action="/machinery/{{id}}" method="get">
-                <button type="submit" class="button">{{name}}</button>
-            </form>
-        </li>
+            {{name}}
         {{/exercises}}
 
         {{^exercises}}
