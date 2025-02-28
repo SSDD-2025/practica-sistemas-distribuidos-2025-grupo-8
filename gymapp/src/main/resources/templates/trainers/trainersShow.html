@@ -8,7 +8,11 @@
         {{>common/header}}
             <ul>
                 {{#trainers}}
-                <li><a href="/trainer/{{id}}">{{name}}</a></li>
+                <li>
+                    <form action="/trainer/{{id}}" method="get">
+                        <button type="submit" class="button">{{name}}</button>
+                    </form>
+                </li>
                 {{/trainers}}
 
                 {{#isAdmin}}
