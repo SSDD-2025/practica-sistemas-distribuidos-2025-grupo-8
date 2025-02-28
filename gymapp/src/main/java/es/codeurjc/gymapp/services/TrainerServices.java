@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.model.Comment;
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.TrainerRepository;
@@ -18,6 +19,9 @@ public class TrainerServices {
 
     @Autowired
     private TrainerRepository trainerRepository;
+
+    @Autowired
+    private CommentService commentServices;
 
     public TrainerServices() {
         // trainerRepository.save(new Trainer());
@@ -46,5 +50,10 @@ public class TrainerServices {
             imageFile.getSize()));
         }
         trainerRepository.save(trainer);
+    }
+
+    public void addCommentToTrainer(Trainer trainer, User user, String message){
+        Comment comment = new Comment(message);
+        commentServices.save(trainer, comment, user);
     }
 }

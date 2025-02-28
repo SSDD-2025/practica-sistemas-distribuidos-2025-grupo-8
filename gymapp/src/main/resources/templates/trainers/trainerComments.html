@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title> Comentarios del trainer</title>
+        <link rel="stylesheet" type="text/css" href="/style.css"> 
+    </head>
+    <body>
+        {{>common/header}}
+        <h1>Comentarios</h1>
+        {{#comments}}
+        <b>{{author.name}}: </b>: {{message}}<br>
+        {{/comments}}
+
+        {{^comments}}
+        <p> No hay comentarios todavía.</p>
+        {{/comments}}
+        <form action="/trainer/{{id}}/comments/add" method="post">
+            <input type="submit" value="Añadir comentario">
+        </form>
+        {{>common/footer}}
+    </body>
+</html>

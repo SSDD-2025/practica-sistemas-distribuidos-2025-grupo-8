@@ -13,7 +13,9 @@
             <p>{{trainer.description}}</p>
             <img src="/trainer/image/{{id}}" alt="Imagen del entrenador">
         </div>
-        
+        <form action="/trainer/{{id}}/comments" method ="post">
+            <input type="submit" value="Ver comentarios"/>
+        </form>
         {{#logged}}
         <form action="/trainer/{{id}}/addOrReplace" method="post" enctype="multipart/form-data">
             <input type='submit' value='Seleccionar entrenador personal'/>

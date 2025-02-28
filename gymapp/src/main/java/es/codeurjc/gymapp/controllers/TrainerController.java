@@ -20,12 +20,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.codeurjc.gymapp.model.Comment;
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
+import es.codeurjc.gymapp.services.CommentService;
 import es.codeurjc.gymapp.services.TrainerServices;
 import es.codeurjc.gymapp.services.UserServices;
 
@@ -41,6 +44,9 @@ public class TrainerController implements CommandLineRunner {
     @Autowired
 	private TrainerServices trainerServices;
 
+    @Autowired
+    private CommentService commentServices;
+    
     @Override
     public void run(String... args) throws Exception {
         // Trainer 1
@@ -123,6 +129,44 @@ public class TrainerController implements CommandLineRunner {
         trainerServices.deleteById(id); 
         model.addAttribute("message", "Entrenador eliminado correctamente");  
         return "trainers/trainerMessage";
+    }
+
+    @RequestMapping("/trainer/{id}/comments")
+    public String showComments(Model model, @PathVariable Long id) {
+        Optional<Trainer> opTrainer = trainerServices.findById(id);
+        if (opTrainer.isPresent()){
+            Trainer trainer = opTrainer.get();
+            model.addAttribute("id", id);
+            model.addAttribute("comments", trainer.getComments());
+            return "trainers/trainerComments";
+        }
+        model.addAttribute("message", "No se ha encontrado el entrenador");
+        return "error";
+
+    }
+
+    @PostMapping("/trainer/{id}/comments/add")
+    public String addComment(Model model, @PathVariable Long id){
+        Optional<Trainer> opTrainer = trainerServices.findById(id);
+        if (opTrainer.isPresent()){
+            model.addAttribute("id", id);
+            model.addAttribute("trainerName", opTrainer.get().getName());
+            return "trainers/trainerComments_add";
+        }
+        return "error";
+    }
+
+    @PostMapping("/trainer/{id}/comments/save")
+    public String saveComment(Model model, @PathVariable long id, @RequestParam String userName, @RequestParam String message){
+        Optional<Trainer> opTrainer = trainerServices.findById(id);
+        if (opTrainer.isPresent()){
+            Comment comment = new Comment(message);
+            User user = userServices.findByName(userName).get();
+            trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
+            return "redirect:/trainer/{id}/comments";
+        }
+        model.addAttribute("message", "Error al guardar el comentario");
+        return "error";
     }
 
 	@PostMapping("/trainer/add/form")

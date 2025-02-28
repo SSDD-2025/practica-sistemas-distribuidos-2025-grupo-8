@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Añadir comentario</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
+    </head>
+    <body>
+        {{>common/header}}
+        <h1>Entrenador: {{trainerName}}</h1>
+        <form action="/trainer/{{id}}/comments/save" method="post">
+            <p>Usuario: <input type="text" name="userName" value="{{name}}"></p>
+            <p>Mensaje:<input type="text" name="message"/></p>
+            <input type="submit" value="Enviar comentario">
+        </form>
+        {{>common/footer}}
+    </body>
+</html>

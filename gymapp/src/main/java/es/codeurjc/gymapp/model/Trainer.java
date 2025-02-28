@@ -17,6 +17,9 @@ public class Trainer{
     private Blob imageFile;
     @OneToMany(mappedBy = "trainer")
     private Set<User> users = new HashSet<User>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
 
     public Trainer() {
     }
@@ -75,5 +78,13 @@ public class Trainer{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Comment> getComments(){
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments){
+        this.comments = comments;
     }
 }
