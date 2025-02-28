@@ -42,6 +42,11 @@ public class ExerciseServices implements CommandLineRunner{
         exerciseRepository.save(exercise);
     }
 
+    public void save(String name, String description){
+        Exercise exercise = new Exercise(name, description);
+        exerciseRepository.save(exercise);
+    }
+
     public void deleteById(Long id) {
         exerciseRepository.deleteById(id);
     }

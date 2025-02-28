@@ -7,7 +7,7 @@
         {{>common/header}}
         <h1>Entrenador: {{trainerName}}</h1>
         <form action="/trainer/{{id}}/comments/save" method="post">
-            <p>Usuario: <input type="text" name="userName" value="{{name}}"></p>
+            <p>Usuario: {{name}}</p>
             <p>Mensaje:<input type="text" name="message"/></p>
             <input type="submit" value="Enviar comentario">
         </form>

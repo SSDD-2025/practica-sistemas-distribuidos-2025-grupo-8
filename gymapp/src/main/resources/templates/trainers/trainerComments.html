@@ -13,9 +13,13 @@
         {{^comments}}
         <p> No hay comentarios todavía.</p>
         {{/comments}}
+        
+        {{#logged}}
         <form action="/trainer/{{id}}/comments/add" method="post">
             <input type="submit" value="Añadir comentario">
         </form>
+        {{/logged}}
+        
         {{>common/footer}}
     </body>
 </html>

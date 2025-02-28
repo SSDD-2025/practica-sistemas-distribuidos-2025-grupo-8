@@ -136,6 +136,7 @@ public class TrainerController implements CommandLineRunner {
         Optional<Trainer> opTrainer = trainerServices.findById(id);
         if (opTrainer.isPresent()){
             Trainer trainer = opTrainer.get();
+            model.addAttribute("logged", userSession.isLoggedIn());
             model.addAttribute("id", id);
             model.addAttribute("comments", trainer.getComments());
             return "trainers/trainerComments";
@@ -157,11 +158,11 @@ public class TrainerController implements CommandLineRunner {
     }
 
     @PostMapping("/trainer/{id}/comments/save")
-    public String saveComment(Model model, @PathVariable long id, @RequestParam String userName, @RequestParam String message){
+    public String saveComment(Model model, @PathVariable long id, @RequestParam String message){
         Optional<Trainer> opTrainer = trainerServices.findById(id);
         if (opTrainer.isPresent()){
             Comment comment = new Comment(message);
-            User user = userServices.findByName(userName).get();
+            User user = userServices.findByName(userSession.getName()).get();
             trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
             return "redirect:/trainer/{id}/comments";
         }
