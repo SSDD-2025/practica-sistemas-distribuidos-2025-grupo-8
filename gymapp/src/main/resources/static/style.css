@@ -130,6 +130,50 @@ li{
     cursor: pointer;
 }
 
+.buttonsRoutines{
+    background-color: #222;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+.buttonsRoutines:hover {
+    background-color: #555; 
+}
+
+//css for routines
+#backgroundRoutine{
+    background-color: #555;
+}
+.containerRoutine {
+    position: relative;
+    height: 100vh;
+}
+.box {
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+#divRoutines{
+    top: 5%;
+    left: 50%;
+}
+
+#divOptionsCreate{
+    top: 20%;
+    left: 40%;
+}
+
+#divOptionsShow{
+    top: 20%;
+    left: 60%;
+}
 #home{
     background-image: url('images/Icone.png');
 }

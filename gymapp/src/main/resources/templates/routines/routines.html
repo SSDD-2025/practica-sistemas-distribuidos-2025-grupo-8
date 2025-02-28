@@ -6,15 +6,20 @@
     </head>
     <body>
         {{>common/header}}
-        <div>
-            
-            <h1>Rutinas</h1>
-            <form action="/routine/create" method="post">
-                <input type="submit" value = "Crear rutina">
-            </form>
-            <form action = "/routine/view" method = "post">
-                <input type="submit" value = "Ver rutinas">
-            </form>
+        <div class = "containerRoutine" >
+            <div class = "box" id = "divRoutines">
+                <h1>Rutinas</h1>
+            </div>
+            <div class = "box" id = "divOptionsCreate">
+                <form action="/routine/create" method="post">
+                    <input class = "buttonsRoutines"type="submit" value = "Crear rutina">
+                </form>
+            </div>
+            <div class = "box" id = "divOptionsShow">
+                <form action = "/routine/view" method = "post">
+                    <input class = "buttonsRoutines" type="submit" value = "Ver rutinas">
+                </form>
+            </div>
         </div>
 
         {{>common/footer}}
