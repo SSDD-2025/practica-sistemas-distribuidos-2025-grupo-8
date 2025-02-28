@@ -53,6 +53,10 @@ public class ExerciseServices implements CommandLineRunner{
         return exerciseRepository.findByMaterial(material);
     }
 
+    public List<Exercise> findByMaterialIsNotNull(){
+        return exerciseRepository.findByMaterialIsNotNull();
+    }
+
     public List<Exercise> findAllById(List<Long> id){
         return exerciseRepository.findAllById(id);
     }

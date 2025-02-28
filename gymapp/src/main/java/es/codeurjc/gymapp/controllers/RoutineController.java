@@ -61,7 +61,7 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/create")
     public String createRoutine(Model model) {
-        List<Exercise> exercises = exerciseServices.findAll();
+        List<Exercise> exercises = exerciseServices.findByMaterialIsNotNull();
         model.addAttribute("isLogged", userSession.isLoggedIn());
         model.addAttribute("exercises", exercises);
         return "routines/routineCreate";
@@ -147,7 +147,7 @@ public class RoutineController implements CommandLineRunner{
         Routine routine = routineServices.findById(id).get();
         if(userSession.isLoggedIn()){
             model.addAttribute("routine", routine);
-            model.addAttribute("allExercises", exerciseServices.findAll());
+            model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
             return "routines/routineModify";
         }
         //TODO: should now modify in case no user is logged in
