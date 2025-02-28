@@ -54,7 +54,6 @@ public class UserController implements CommandLineRunner {
 
     @GetMapping("/")
 	public String init(Model model) {
-
 		return "index";
 	}
 
@@ -71,31 +70,32 @@ public class UserController implements CommandLineRunner {
 
 	@PostMapping("/account")
 	public String account(Model model) {
-		if(userSession.isLoggedIn()){
-			model.addAttribute("name", userSession.getName()); //maybe add more info about the user
-			return "account/logged";
+		if(!userSession.isLoggedIn()){
+			return "account/account";
 		}
-		return "account/account"; //user is not logged in
+		model.addAttribute("name", userSession.getName()); //maybe add more info about the user
+		return "account/logged";
 	}
 
 	@PostMapping("/account/login")
 	public String sessionInit(Model model, @RequestParam String name, @RequestParam String password) {
-		if (name == null || name.isEmpty() || password == null || password.isEmpty()) {
-			model.addAttribute("error", "Nombre de usuario o contraseña no pueden estar vacíos");
-			return "account/loginError";
+		if (name.isEmpty() || password.isEmpty()) {
+			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
+			return "error";
 		}
-		Optional<User> user = userServices.findByName(name); // name is supposed to be unique
-		if (user.isPresent() && user.get().getPassword().equals(password)) { // login successful
-			userSession.setName(name);
-			model.addAttribute("message", "Sesión iniciada con éxito");
-			return "account/accountMessage";
-		} else if (user.isPresent() && !user.get().getPassword().equals(password)) {
-			model.addAttribute("error", "Contraseña incorrecta");
-			return "account/loginError"; // password was incorrect
-		} else {
-			model.addAttribute("error", "Usuario no encontrado");
-			return "account/loginError"; // user could not be found
+		// name is supposed to be unique as a username
+		Optional<User> user = userServices.findByName(name); 
+		if(!user.isPresent()) {
+			model.addAttribute("message", "Usuario no encontrado");
+			return "error";
 		}
+		if(!user.get().getPassword().equals(password)) {
+			model.addAttribute("message", "Contraseña incorrecta");
+			return "error";
+		}
+		userSession.setName(name);
+		model.addAttribute("message", "Sesión iniciada con éxito");
+		return "account/accountMessage";
 	}
 
 	@GetMapping("/register/create")
@@ -105,17 +105,17 @@ public class UserController implements CommandLineRunner {
 
 	@PostMapping("/account/register")
 	public String register(Model model, @RequestParam String name, @RequestParam String password, @RequestParam MultipartFile image) throws IOException {
-		if (name == null || password == null) {
-			model.addAttribute("error", "Nombre de usuario o contraseña no pueden estar vacíos");
-			return "account/registerError";
+		if (name.isEmpty() || password.isEmpty()) {
+			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
+			return "error";
 		}
 		Optional<User> user = userServices.findByName(name);
 		if(user.isPresent()){
-			model.addAttribute("error", "El usuario ya está en uso");
-			return "account/registerError"; //user was already registered
+			model.addAttribute("message", "El usuario ya existe");
+			return "error"; //user was already registered
 		}
 		userSession.setName(name);
-		User newUser = new User(name, password, false);
+		User newUser = new User(name, password);
     	userServices.save(newUser, image);
 		model.addAttribute("message", "Usuario registrado con éxito");
 		return "account/accountMessage";
@@ -125,36 +125,30 @@ public class UserController implements CommandLineRunner {
 	public String sessionExit(Model model) {
 		userSession.logout();
 		model.addAttribute("message", "Sesión cerrada");
-		return "account/accountMessage"; 		
+		return "account/accountMessage";
 	}
 
 	@PostMapping("/account/deleteAccount")
 	public String sessionDelete(Model model) {
 		Optional<User> optionalUser = userServices.findByName(userSession.getName());
-		if (optionalUser.isPresent()) {
-			User user = optionalUser.get();
-			
-			// Delete routines from exercises
-			for (Routine routine : user.getRoutines()) {
-				for (Exercise exercise : exerciseServices.findAll()) {
-					exercise.getRoutine().remove(routine);
-					exerciseServices.save(exercise);
-				}
-			}
-
-			// Delete all routines
-			routineServices.deleteAllRoutines(user);
-			
-			// Delete user
-			userServices.deleteById(user.getId());
-			
-			model.addAttribute("message", "Cuenta eliminada con éxito");
-			return "account/accountMessage";
-		} else {
+		if (!optionalUser.isPresent()) {
 			model.addAttribute("message", "Usuario no encontrado");
 			return "account/accountMessage";
 		}
+		User user = optionalUser.get();
+
+		// Delete routines from exercises
+		exerciseServices.deleteRoutinesFromExercise(user);
+		// Delete all routines
+		routineServices.deleteAllRoutines(user);
+		// Delete user
+		userServices.deleteById(user.getId());
+		
+		model.addAttribute("message", "Cuenta eliminada con éxito");
+		return "account/accountMessage";
 	}
+
+	
 	@PostMapping("/account/image")
 	public String changeImage(Model model, @RequestParam MultipartFile image) throws IOException {
 		Optional<User> user = userServices.findByName(userSession.getName());

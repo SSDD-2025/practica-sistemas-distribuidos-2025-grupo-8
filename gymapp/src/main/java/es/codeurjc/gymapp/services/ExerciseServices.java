@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
+import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.ExerciseRepository;
 
 @Service
@@ -92,4 +93,12 @@ public class ExerciseServices implements CommandLineRunner{
         exercise.setMaterial(material);
         exerciseRepository.save(exercise);
     }
+    public void deleteRoutinesFromExercise(User user) {
+		for (Routine routine : user.getRoutines()) {
+			for (Exercise exercise : this.findAll()) {
+				exercise.getRoutine().remove(routine);
+				this.save(exercise);
+			}
+		}
+	}
 }
