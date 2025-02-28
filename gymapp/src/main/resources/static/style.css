@@ -183,3 +183,20 @@ li{
 #no_userImage{
     background-image: url('images/no_image.jpg');
 }
+
+input {
+    margin: 3px; 
+    padding: 10px 15px; 
+    background-color: #DADADA; 
+    color: black;
+    padding: 10px 20px;
+    font-size: 16px; 
+    border: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+input:hover {
+    background-color: #B0B0B0; 
+}
