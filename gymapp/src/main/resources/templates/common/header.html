@@ -2,45 +2,42 @@
     <div id="supHeader">
         <div>
             <form action="/" method="get">
-                <input type="submit" value = "Inicio">
+                <input class="imagesHeader" id="home" type="submit" value="">
             </form>
         </div>
-        <div>
-            <h1>{{name}}</h1>
-            {{#hasImage}}
-                <img src="/user/image">
-            {{/hasImage}}
 
-            {{^hasImage}}
-                <img src="images/no_image.jpg" alt="noImage">
-            {{/hasImage}}
-        </div>
-        
         <div>
             <form action="/account" method="post">
-                <input type="submit" value = "Cuenta">
+                {{#hasImage}}
+                    <input class="imagesHeader" id="userImage" type="submit" value="">
+                {{/hasImage}}
+
+                {{^hasImage}}
+                    <input class="imagesHeader" id="no_userImage" type="submit" value="">
+                {{/hasImage}}
+                <h1 id = "textAccount">{{name}}</h1>
             </form>
         </div>
     </div>
     <div id="infHeader">
         <div>
             <form action="/facilities" method="post">
-                <input type="submit" value = "Instalaciones">
+                <input class="buttonsHeader" type="submit" value = "Instalaciones">
             </form>
         </div>
         <div>
             <form action="/machinery" method="post">
-                <input type="submit" value = "Maquinaria">
+                <input class="buttonsHeader" type="submit" value = "Maquinaria">
             </form>
         </div>
         <div>
             <form action="/routine" method="post">
-                <input type="submit" value = "Rutinas">
+                <input class="buttonsHeader" type="submit" value = "Rutinas">
             </form> 
         </div>
         <div>
             <form action="/trainer" method="post">
-                <input type="submit" value = "Entrenadores">
+                <input class="buttonsHeader" type="submit" value = "Entrenadores">
             </form>
         </div>
     </div>
