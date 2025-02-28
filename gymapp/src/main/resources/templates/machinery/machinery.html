@@ -8,7 +8,11 @@
         {{>common/header}}
         <h1>Maquinaria</h1>
         {{#machineries}}
-            <a href="machinery/{{id}}">{{name}}</a><br>
+            <li>
+                <form action="/machinery/{{id}}" method="get">
+                    <button type="submit" class="button">{{name}}</button>
+                </form>
+            </li>
             {{#isAdmin}}
                 <form action="/machinery/delete/{{id}}" method="post">
                     <input type="submit" value="Borrar maquinaria">
