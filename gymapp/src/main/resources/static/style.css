@@ -114,6 +114,11 @@ li{
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.buttonsHeader:hover {
+    background-color: #555; 
 }
 
 .imagesHeader{
