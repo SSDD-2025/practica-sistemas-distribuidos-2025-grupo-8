@@ -7,15 +7,15 @@
     <body>
         {{>common/header}}
         <div class = "containerRoutine" >
-            <div class = "box" id = "divRoutines">
+            <div class = "routine" id = "divRoutines">
                 <h1>Rutinas</h1>
             </div>
-            <div class = "box" id = "divOptionsCreate">
+            <div class = "routine" id = "divOptionsCreate">
                 <form action="/routine/create" method="post">
                     <input type="submit" value = "Crear rutina">
                 </form>
             </div>
-            <div class = "box" id = "divOptionsShow">
+            <div class = "routine" id = "divOptionsShow">
                 <form action = "/routine/view" method = "post">
                     <input  type="submit" value = "Ver rutinas">
                 </form>
