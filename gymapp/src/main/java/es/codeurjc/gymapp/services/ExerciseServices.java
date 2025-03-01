@@ -23,6 +23,12 @@ public class ExerciseServices implements CommandLineRunner{
     @Autowired
     private ExerciseRepository exerciseRepository;
 
+    @Autowired
+    private RoutineServices routineServices;
+
+    @Autowired
+    private MaterialServices materialServices;
+
     @Override
     public void run(String... args) throws Exception {
         exerciseRepository.save(new Exercise("Curl de biceps con mancuernas", "De pie o sentado"));
@@ -48,7 +54,16 @@ public class ExerciseServices implements CommandLineRunner{
     }
 
     public void deleteById(Long id) {
-        exerciseRepository.deleteById(id);
+        Exercise exercise = exerciseRepository.findById(id).get();
+        List<Routine> routines = exercise.getRoutine();
+        if (!routines.isEmpty()){
+            routineServices.modifyRoutines(exercise);
+        }
+
+        if (exercise.getMaterial() != null){
+            materialServices.deleteExerciseFromMaterial(exercise.getMaterial(), exercise);
+        }
+        exerciseRepository.delete(exercise);
     }
 
     public List<Exercise> findAll() {

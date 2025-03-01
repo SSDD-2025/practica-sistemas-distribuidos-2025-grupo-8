@@ -2,6 +2,8 @@ package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -88,5 +90,14 @@ public class RoutineServices {
         this.saveExercises(routine.getExercises(), routine);
     }
 
-
+    public void modifyRoutines(Exercise exercise){
+        Set<Routine> routinesFromExercise = new HashSet<>(exercise.getRoutine());
+        for(Routine routine : routinesFromExercise){
+            Set<Exercise> exercisesFromRoutine = routine.getExercises();
+            exercisesFromRoutine.remove(exercise);
+            routine.setExercises(exercisesFromRoutine);
+            routineRepository.save(routine);
+        }
+        exercise.setRoutine(new ArrayList<>());
+    }
 }

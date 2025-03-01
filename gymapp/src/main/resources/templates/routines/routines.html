@@ -20,6 +20,15 @@
                     <input  type="submit" value = "Ver rutinas">
                 </form>
             </div>
+
+            {{#isAdmin}}
+            <form action = "/exercise/add" method="post">
+                <input type="submit" value = "Crear ejercicio">
+            </form>
+            <form action="/exercise/exercise_selectToDelete" method="post">
+                <input type="submit" value = "Eliminar ejercicio">
+            </form>
+            {{/isAdmin}}
         </div>
 
         {{>common/footer}}

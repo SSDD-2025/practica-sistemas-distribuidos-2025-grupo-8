@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -74,5 +75,14 @@ public class MaterialServices {
             materialRepository.save(material.get());
             materialRepository.delete(material.get());
         }
+    }
+
+    public void deleteExerciseFromMaterial(Material material, Exercise exercise) {
+        Set<Exercise> exercises = material.getExercises();
+        exercises.remove(exercise);
+        material.setExercises(exercises);
+        exercise.setMaterial(null);
+        materialRepository.save(material);
+        exerciseServices.save(exercise);
     }
 }

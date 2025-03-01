@@ -69,7 +69,7 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/save")
     public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
-    @RequestParam String day, @RequestParam Set<Exercise> exercise) {
+    @RequestParam String day, @RequestParam(required=false) Set<Exercise> exercise) {
         Routine routine;
         if(name.isEmpty()){
             model.addAttribute("message", "La rutina debe tener nombre");
@@ -79,7 +79,7 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("message", "La rutina debe contener algun día");
             return "error";
         }
-        if(exercise.isEmpty()){
+        if(exercise == null){
             model.addAttribute("message", "Al menos un ejercicio debe ser seleccionado");
             return "error";
         }
@@ -147,7 +147,7 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/modified")
     public String saveModifiedRoutine(Model model, @RequestParam Long id, @RequestParam String name, 
-    @RequestParam String description, @RequestParam String day, @RequestParam List<Long> exerciseIds) {
+    @RequestParam String description, @RequestParam String day, @RequestParam(required=false) List<Long> exerciseIds) {
         if(name.equals(null)){
             model.addAttribute("message", "El nombre de la rutina no puede estar vacio");
             return "error";
@@ -156,7 +156,7 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("message", "El día o los días de la rutina no puede/n estar vacio/s");
             return "error";
         }
-        if(exerciseIds.isEmpty()){
+        if(exerciseIds == null){
             model.addAttribute("message", "La rutina debe tener al menos un ejercicio");
             return "error";
         }
