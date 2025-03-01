@@ -1,42 +1,99 @@
-/* Natural tags */
+/* Start of natural tags */
+p, h1, h2, h3, h4, h5, h6 {
+    color: #fafafa;
+    font-family: 'Arial';
+    font-weight: 100;
+}
 body {
-    background-image: url('path/to/your/image.jpg');
+    background-color: #111111;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    margin: 0;
 }
 img {
     max-width: 100%;
     height: auto;
-    width: 30%;
+    width: 60%;
 }
 li{
     list-style-type:none;
 }
-/* Ids start here */
+
+/*End of natural tags*/
+
+
+/* Start of Ids */
 #header{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 #supHeader{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
-    background-color: #555;
+    background-color: #101515;
 }
+
+#supHeader > div{
+    flex: 1;
+    display: flex;
+}
+
+#supHeader > div form {
+    flex: 1; 
+    display: flex;
+}
+
+
 #infHeader{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #ccc;
+    padding: 0;
+    background-color: #1d1d1d;
 }
+
+#infHeader > div{
+    flex: 1;
+    display: flex;
+}
+
+#infHeader > div form {
+    flex: 1; 
+    display: flex;
+}
+
+#infHeader > div form input {
+    flex: 1; 
+    text-align: center;
+    padding: 15px 0;
+    font-size: 16px;
+}
+
 #textAccount{
-    font-size: 24px;
-    color: white;
+    background-color: transparent;
+    font-size: 33px;
+    flex: 1;
+    display: flex;
+    margin-left: 50%;
 }
+
+#logoText {
+    background-color: transparent;
+    font-size:65px;
+    flex: 1;
+    display: flex;
+    margin-right: 25%;
+}
+
+
+
+/* End of Ids*/
+
 /* Classes start here */
 .title{
     font-size: xx-large;
@@ -69,19 +126,30 @@ li{
     padding: auto;
 }
 /* Classes for the footer */
-.container {
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #1d1d1d;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-left: 5%;
-    margin-right: 5%;
-    width: auto;
+    margin: 0;
+    width: 100%;
 }
 
 .footer-section {
     flex: auto;
     display: flex;
     flex-direction: column;
+}
+
+.footer-section li{
+    color: rgb(216, 216, 216);
+}
+
+.footer-section a{
+    color:cornflowerblue
 }
 
 .button {
@@ -102,18 +170,15 @@ li{
 }
 
 /* Classes for the header */
-.buttonsHeader{
-    background-color: #000;
+.buttonsHeader {
+    background-color: transparent;
+    text-align: center;
     color: white;
     border: none;
     padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 4px;
     transition: background 0.3s;
 }
 
@@ -148,7 +213,7 @@ li{
     background-color: #555; 
 }
 
-//css for routines
+/*css for routines*/
 #backgroundRoutine{
     background-color: #555;
 }
@@ -176,23 +241,25 @@ li{
 }
 #home{
     background-image: url('images/Icone.png');
+    border-radius: 10%;
+    margin-left: 3%;
 }
 #userImage{
     background-image: url('user/image');
+    border-radius: 100%;
 }
 #no_userImage{
     background-image: url('images/no_image.jpg');
+    border-radius: 100%;
+    margin-right: 3%;
 }
 
 input {
     margin: 3px; 
     padding: 10px 15px; 
     background-color: #DADADA; 
-    color: black;
     padding: 10px 20px;
     font-size: 16px; 
-    border: auto;
-    border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
 }
