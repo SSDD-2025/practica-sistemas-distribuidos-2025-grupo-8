@@ -1,4 +1,4 @@
-ity[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/D1C1HU9V)
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/D1C1HU9V)
 # Nombre de la aplicación: GoldenGym 🏋️
 
 
@@ -21,6 +21,7 @@ ity[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-r
   - Administrador: permisos de usuario registrado + añadir entrenador, eliminar entrenador, añadir maquinaria y añadir ejercicios.
 - **Imágenes:** foto de perfil, fotos de entrenadores y de instalaciones.
 
+//TODO: Navigation diagram and screenshots
 - ## Capturas de pantalla: 
 
 - **Página de Inicio:**
@@ -184,3 +185,35 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
       - [Fichero 4](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/9ba8ceb2de68a6837ade7f39fcd49c01557702dd#diff-9a56d7ebf408981228e88504fc6d10c9b83b4be73c9b779c073ed1dd1d66b83f)
       - [Fichero 5](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/9ba8ceb2de68a6837ade7f39fcd49c01557702dd#diff-5878a5261aa1dc8515f97c246b866db57b23e535f7c4ca3ecb4aa14c286744b9)
 
+## Instrucciones de ejecución
+
+1. Descarga este repositorio y descomprímelo
+2. Descarga MySQL workBench 
+3. usuario: root contraseña: 123456789 puerto:3306
+4. Crea un esquema que se llame gymguru 
+  
+      ```sql
+      CREATE SCHEMA gymapp;
+      ```
+5. Run Application en VS 
+6. Ve https://localhost/8080/
+
+### Se necesita
+- Java: JDK 21 
+    - Windows: https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+    - Linux:  escribe en la terminal
+        ```shell
+        sudo apt install openjdk-21
+        ```
+
+- MySQL: v.8.0.33.0
+    - Windows: https://dev.mysql.com/downloads/
+    - Linux: escribe en la terminal
+        ```shell
+        sudo apt install mysql-server=8.0.33
+        ```
+
+- Maven: 4.0.0
+    - Windows: https://maven.apache.org/download.cgi
+- Spring Boot 3.4.2
+- VisualStudioCode + SpringBoot
