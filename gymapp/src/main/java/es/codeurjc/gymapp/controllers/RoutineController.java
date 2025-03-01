@@ -69,7 +69,7 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/save")
     public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
-    @RequestParam String day, @RequestParam Set<Exercise> exercise, HttpSession session) {
+    @RequestParam String day, @RequestParam Set<Exercise> exercise) {
         Routine routine;
         if(name.isEmpty()){
             model.addAttribute("message", "La rutina debe tener nombre");
@@ -87,10 +87,7 @@ public class RoutineController implements CommandLineRunner{
         routine = new Routine(name, description, day, exercise, user);
         userServices.addRoutine(user,routine);
         routineServices.save(routine);
-        for(Exercise ex : exercise){
-            exerciseServices.addRoutine(routine, ex);
-            exerciseServices.save(ex);
-        }
+        routineServices.saveExercises(exercise, routine);
         return "routines/routineSaved";
     }
     
@@ -104,9 +101,6 @@ public class RoutineController implements CommandLineRunner{
             return "routines/routineView";
         }
         model.addAttribute("isLogged", userSession.isLoggedIn());
-        /* 
-        routines.add((Routine) session.getAttribute("routines"));
-        model.addAttribute("routines", routines);*/
         return "routines/routineView";
     }
 
@@ -118,6 +112,7 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("isLogged", userSession.isLoggedIn());
             return "routines/routineViewer";
         } 
+        model.addAttribute("message", "No se ha encontrado la rutina");
         return "error";
     }
 
@@ -130,11 +125,7 @@ public class RoutineController implements CommandLineRunner{
                 User user = userServices.findByName(userSession.getName()).get();
                 userServices.deleteRoutine(user, routine);
                 routineServices.deleteUser(routine,user);
-                
-                for (Exercise exercise : routine.getExercises()) {
-                    exerciseServices.removeRoutine(routine, exercise);
-                    exerciseServices.save(exercise);
-                }
+                routineServices.removeExercises(routine);
                 routineServices.deleteById(id);
                 return "routines/routineDelete";
             }
@@ -150,8 +141,8 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
             return "routines/routineModify";
         }
-        //TODO: should now modify in case no user is logged in
-        return "routines/routineModify";
+        model.addAttribute("message", "No hay usuario registrado");
+        return "error";
     }
 
     @PostMapping("/routine/modified")
@@ -170,32 +161,19 @@ public class RoutineController implements CommandLineRunner{
             return "error";
         }
         Optional<Routine> optionalRoutine = routineServices.findById(id);
-        if (!optionalRoutine.isPresent()) return "error";
+        if (!optionalRoutine.isPresent()){
+            model.addAttribute("message", "No se ha encontrado la rutina");
+            return "error";
+        } 
 
         Routine routine = optionalRoutine.get();
         //Update of Not DataStructs
         routine.setName(name);
         routine.setDescription(description);
         routine.setDay(day);
-        //TODO: Correct update of exercises in the routine idk what does it
-                
-        for(Exercise ex : routine.getExercises()){
-            exerciseServices.removeRoutine(routine, ex);
-            exerciseServices.save(ex);
-        }
-        routineServices.deleteExercises(routine);
-
-        routineServices.addExercises(routine, exerciseServices.listToSet(exerciseServices.findAllById(exerciseIds)));
-        routineServices.save(routine);
-
-        for(Exercise ex : routine.getExercises()){
-            exerciseServices.addRoutine(routine, ex);
-            exerciseServices.save(ex);
-        }
-        
+        //Update the routine
+        routineServices.modifyRoutine(routine,exerciseIds);        
         return "redirect:/routine/view/" + id;
-        
-        
     }
      
 }

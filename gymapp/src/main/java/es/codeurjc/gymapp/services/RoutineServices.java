@@ -19,6 +19,9 @@ public class RoutineServices {
     @Autowired
     private RoutineRepository routineRepository;
 
+    @Autowired
+    private ExerciseServices exerciseServices;
+
     public RoutineServices() {
         // routineRepository.save(new Routine());
         // routineRepository.save(new Routine());
@@ -62,5 +65,28 @@ public class RoutineServices {
     public void deleteAllRoutines(User user){
         routineRepository.deleteAll(user.getRoutines());
     }
+
+    public void saveExercises(Set<Exercise> exercise, Routine routine){
+        for(Exercise ex : exercise){
+            exerciseServices.addRoutine(routine, ex);
+            exerciseServices.save(ex);
+        }
+    }
+
+    public void removeExercises(Routine routine){
+        for (Exercise exercise : routine.getExercises()) {
+            exerciseServices.removeRoutine(routine, exercise);
+            exerciseServices.save(exercise);
+        }
+    }
+
+    public void modifyRoutine(Routine routine, List<Long> exerciseIds){
+        this.removeExercises(routine);
+        this.deleteExercises(routine);
+        this.addExercises(routine, exerciseServices.listToSet(exerciseServices.findAllById(exerciseIds)));
+        this.save(routine);
+        this.saveExercises(routine.getExercises(), routine);
+    }
+
 
 }
