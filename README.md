@@ -1,4 +1,4 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/D1C1HU9V)
+ity[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/D1C1HU9V)
 # Nombre de la aplicación: GoldenGym 🏋️
 
 
@@ -13,7 +13,7 @@
 ## Aspectos principales:
 - **Entidades:** user, trainer, comment, routine, exercise, material.
 
-  <img src="readmeImages/Diagrama de entidades.jpg" width="600" /> 
+  <img src="readmeImages/entityDiagram.jpg" width="600" /> 
 
 - **Permisos de usuario:**
   - Usuario registrado: cerrar sesión, borrar cuenta, cambiar imagen de perfil, ver entrenadores, elegir entrenador, ver comentarios del entrenador, comentar entrenador, crear rutina, ver rutina, ver maquinaria, ver instalaciones.
@@ -122,10 +122,10 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
 <img src="READMEImages/navegation.png" width="1000" /> 
 
 ## Diagrama con las entidades de la base de datos: 
-<img src="readmeImages/entidadesBasededatos.png" width="1000" /> 
+<img src="readmeImages/dataBaseEntityDiagram.png" width="1000" /> 
 
 ## Diagrama de clases y templates: 
-<img src="READMEImages/template_class_diagram.png" width="1000" /> 
+<img src="readmeImages/classDiagramAndTemplates.png" width="1000" /> 
 
 
 ## Participación
