@@ -190,7 +190,7 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
 1. Descarga este repositorio y descomprímelo
 2. Descarga MySQL workBench 
 3. usuario: root contraseña: 123456789 puerto:3306
-4. Crea un esquema que se llame gymguru 
+4. Crea un esquema que se llame gymapp 
   
       ```sql
       CREATE SCHEMA gymapp;
@@ -200,7 +200,7 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
 
 ### Se necesita
 - Java: JDK 21 
-    - Windows: https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+    - Windows: https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html
     - Linux:  escribe en la terminal
         ```shell
         sudo apt install openjdk-21
