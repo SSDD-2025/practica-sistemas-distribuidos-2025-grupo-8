@@ -13,7 +13,7 @@
 ## Aspectos principales:
 - **Entidades:** user, trainer, comment, routine, exercise, material.
 
-  <img src="readmeImages/arnold.png" width="400" /> 
+  <img src="readmeImages/Diagrama de entidades.jpg" width="600" /> 
 
 - **Permisos de usuario:**
   - Usuario registrado: cerrar sesión, borrar cuenta, cambiar imagen de perfil, ver entrenadores, elegir entrenador, ver comentarios del entrenador, comentar entrenador, crear rutina, ver rutina, ver maquinaria, ver instalaciones.
