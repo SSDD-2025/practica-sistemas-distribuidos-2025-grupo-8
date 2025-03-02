@@ -119,8 +119,8 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
 - **<span style="color:blue">Azul</span>:** Todos los usuarios.
 - **<span style="color:yellow">Amarillo</span>:** Usuarios Registrados y administrador.
 - **<span style="color:green">Verde</span>:** Administrador.
-- **Nota**: desde cualquier página puedes llegar a la página de error
-<img src="READMEImages/navegation.png" width="1000" /> 
+- **Nota**: Se puede llegar a index,account, machinery, facilities,routines y trainers desde cualquier página. Tambíen puedes llegar a la página de error desde cualquier página.
+<img src="readmeImages/navigationDiagram.png" width="1000" /> 
 
 ## Diagrama con las entidades de la base de datos: 
 <img src="readmeImages/dataBaseEntityDiagram.png" width="1000" /> 
