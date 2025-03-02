@@ -8,7 +8,7 @@
 | Iván Fernández Ruiz    | i.fernandezru.2022@alumnos.urjc.es |[Iván-Fernández](https://github.com/Ruben-Rodriguez-Redondo) |             |
 | Sergio Antón Berenguer | s.anton.2022@alumnos.urjc.es | [Sergio-Antón](https://github.com/AnthonyZY13)                             |
 | Andrés Korotkov Vorobey       | a.korotkov.2022@alumnos.urjc.es | [Andrés-korotkov](https://github.com/noeliaberzosa)              |
-| Jesús Pérez Madera | j.perezm.2022@alumnos.urjc.es | [Jesús-Pérez](https://github.com/v-orzaez)                             |
+| Jesús Pérez Madera | j.perezm.2022@alumnos.urjc.es | [Jesús-Pérez](https://github.com/JPM1919)                             |
 
 ## Aspectos principales:
 - **Entidades:** user, trainer, comment, routine, exercise, material.
@@ -130,20 +130,21 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
 
 
 ## Participación
-- **<span style="color:green">Victoria Orzáez </span>:** 
-    - Tareas: mostrar, editar perfil de usuario, puerto 8443, implementar la seguridad, el uso de token, invitado, loging y logout, ver rutina y comentarios, crear rutina, añadir ejercicios en la rutina, algoritmo ordenación, guardar las imágenes en la base de datos y pasarlas a una carpeta.
-     - 5 commits más significativos:
-       - [Commit 1](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/bf1cca24fba4a15697c2dbd5aa4a79b84e752f36)
-       - [Commit 2](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/faffc1128851bc304197540a9a087e6c619e7a2b)
-       - [Commit 3](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/aba70603416a418a1132c9a9c2639c8f94dbc1b3)
-       - [Commit 4](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/ccd6e840152937c801f2d07533ec6c3c77f4842b)
-       - [Commit 5](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/f95e6782f230fff13469218d1d0163d889e0f7bc)
+- **<span style="color:green">Jesús Pérez</span>:** 
+    - Tareas: creación de clase usuario, tipos de usuario: usuario anónimo, registrado y administrador, registro e inicio de sesión de usuarios, datos de sesión, foto de perfil, borrar cuenta, ver entrenadores, crear y borrar entrenadores, asignar entrenador a usuario, creación de todos los ficheros html relacionados.
+    - 5 commits más significativos:
+       - 5 commits más significativos:
+      - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/ddb328f66a0b82cb62ea27a3d75131b7d790901a)
+      - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/e23c3ade23a1c499a4db317ffa583dd88390edb1)
+      - [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/8cd1e25f323ce90b3cc5067d5371d4b075d23e97)
+      - [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/e64c8598e3e85d0a4b4ba3c7ebedc5d42cffcd84)
+      - [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/82732d9953e0a03938ec73b5fde80baa4b334bc8)
     - 5 ficheros en los que se ha participado:
-      - [PictureService.java](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/src/main/java/com/example/demo/service/PictureService.java)
-      - [ExRutine.java](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/model/ExRutine.java)
-      - [Picture.java](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/model/Picture.java)
-      - [app.js](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/src/main/java/com/example/demo/src/main/resources/static/js/app.js)
-      - [RutineController.java](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/controller/RutineController.java)
+      - [UserController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/UserController.java)
+      - [TrainerController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/TrainerController.java)
+      - [GlobalControllerAdvice](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/GlobalControllerAdvice.java)
+      - [User](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/model/User.java)
+      - [UserSession](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/model/UserSession.java)
 - **<span style="color:green">Sergio Antón </span>:** 
     - Tareas: gestión de rutinas (crear, borrar y modificar), trabajo en el routineController,en el routineServices y en la entidad rutina, pequeñas aportaciones al css, refactorización de código, creación de los ficheros html relacionados con las rutinas y con su gestión.
     - 5 commits más significativos:
