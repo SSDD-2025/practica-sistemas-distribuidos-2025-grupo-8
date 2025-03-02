@@ -175,4 +175,11 @@ public class UserController implements CommandLineRunner {
 		}
 	}
 
+	@PostMapping("/admin/users")
+	public String showUsers(Model model){
+		List<User> users = userServices.findAll();
+		model.addAttribute("users", users);
+		return "account/show_users";
+	}
+
 }

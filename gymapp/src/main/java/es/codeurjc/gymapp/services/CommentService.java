@@ -26,9 +26,15 @@ public class CommentService {
         commentsRepository.save(comment);
     }
 
-    public void delete(Long commentId, Trainer trainer) {
-        Comment comment = this.findById(commentId).get();
-        trainer.getComments().remove(comment);
-        commentsRepository.delete(comment);
+    public boolean delete(Long commentId, Trainer trainer) {
+        Optional<Comment> opComment = this.findById(commentId); 
+        Comment comment;
+        if (opComment.isPresent()) {
+            comment = opComment.get();
+            trainer.getComments().remove(comment);
+            commentsRepository.delete(comment);
+            return true;
+        }
+        return false;
     }
 }

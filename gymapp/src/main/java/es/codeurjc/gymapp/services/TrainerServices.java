@@ -56,4 +56,16 @@ public class TrainerServices {
         Comment comment = new Comment(message);
         commentServices.save(trainer, comment, user);
     }
+
+    public boolean deleteCommentFromTrainer(long trainerId, long commentId) {
+        Optional<Trainer> opTrainer = this.findById(trainerId);
+        Trainer trainer;
+        boolean commentDeleted = false;
+        if (opTrainer.isPresent()){
+            trainer = opTrainer.get();
+            commentDeleted = commentServices.delete(commentId, trainer);
+            trainerRepository.save(trainer);
+        }
+        return commentDeleted;
+    }
 }
