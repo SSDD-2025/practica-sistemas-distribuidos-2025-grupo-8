@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.boot.CommandLineRunner;
@@ -32,6 +33,7 @@ import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
+import es.codeurjc.gymapp.services.CommentService;
 import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
@@ -52,7 +54,10 @@ public class UserController implements CommandLineRunner {
 	@Autowired
 	private ExerciseServices exerciseServices;
 
-    @GetMapping("/")
+	@Autowired
+	private CommentService commentServices;
+
+    @RequestMapping("/")
 	public String init(Model model) {
 		return "index";
 	}
@@ -135,7 +140,7 @@ public class UserController implements CommandLineRunner {
 		Optional<User> optionalUser = userServices.findByName(userSession.getName());
 		if (!optionalUser.isPresent()) {
 			model.addAttribute("message", "Usuario no encontrado");
-			return "account/accountMessage";
+			return "error";
 		}
 		User user = optionalUser.get();
 
@@ -143,9 +148,11 @@ public class UserController implements CommandLineRunner {
 		exerciseServices.deleteRoutinesFromExercise(user);
 		// Delete all routines
 		routineServices.deleteAllRoutines(user);
+		// Delete all comments
+		commentServices.deleteAllComments(user);
 		// Delete user
 		userServices.deleteById(user.getId());
-		
+		userSession.logout();
 		model.addAttribute("message", "Cuenta eliminada con éxito");
 		return "account/accountMessage";
 	}

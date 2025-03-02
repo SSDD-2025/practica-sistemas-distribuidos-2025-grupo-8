@@ -27,6 +27,9 @@ public class User{
     private List<Routine> routines;
     private Boolean isAdmin;
 
+    @OneToMany(mappedBy="author")
+    private List<Comment> comments;
+
     public User(){
         
     }
@@ -106,5 +109,13 @@ public class User{
 
     public void deleteRoutine(Routine routine){
         this.routines.remove(routine);
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

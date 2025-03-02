@@ -68,7 +68,6 @@ public class TrainerServices {
         if (opTrainer.isPresent()){
             trainer = opTrainer.get();
             commentDeleted = commentServices.delete(commentId, trainer);
-            trainerRepository.save(trainer);
         }
         return commentDeleted;
     }

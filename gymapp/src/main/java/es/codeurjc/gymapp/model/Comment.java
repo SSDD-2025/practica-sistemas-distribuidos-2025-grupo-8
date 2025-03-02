@@ -18,6 +18,10 @@ public class Comment {
     @ManyToOne
     private User author;
 
+    @ManyToOne
+    private Trainer trainer;
+
+
     public Comment(){
 
     }
@@ -44,5 +48,13 @@ public class Comment {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
     }
 }
