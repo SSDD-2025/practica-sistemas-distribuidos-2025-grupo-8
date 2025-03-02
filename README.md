@@ -123,7 +123,7 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
 <img src="readmeImages/navigationDiagram.png" width="1000" /> 
 
 ## Diagrama con las entidades de la base de datos: 
-<img src="readmeImages/dataBaseEntityDiagram.png" width="1000" /> 
+<img src="readmeImages/dataBaseDiagram.png" width="1000" /> 
 
 ## Diagrama de clases y templates: 
 <img src="readmeImages/classDiagramAndTemplates.png" width="1000" /> 
