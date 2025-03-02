@@ -59,7 +59,9 @@ public class UserController implements CommandLineRunner {
 
 	@Override
     public void run(String... args) throws Exception {
-        userServices.save(new User("admin", "admin", true));
+		if(userServices.count() == 0){
+			userServices.save(new User("admin", "admin", true));
+		}
     }  
 	
     @PostMapping("/facilities")

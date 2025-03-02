@@ -318,4 +318,7 @@ select {
     background: transparent;
 }
 
+.bold{
+    font-weight: 750;
+}
 

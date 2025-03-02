@@ -24,6 +24,10 @@ public class UserServices {
         return userRepository.findById(id);
     }
 
+    public long count(){
+        return userRepository.count();
+    }
+
     public void save(User user, MultipartFile imageFile) throws IOException{
         if(!imageFile.isEmpty()) {
             user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(),

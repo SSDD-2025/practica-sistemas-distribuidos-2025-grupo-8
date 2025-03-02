@@ -49,17 +49,20 @@ public class TrainerController implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        // Trainer 1
-        Trainer arnold = new Trainer("Arnold Schwarzenegger", "Entrenador de culturismo");
-        arnold.setImageFile(loadImageAsBlob("static/images/arnold.png"));
+        if(trainerServices.count() == 0){
+            // Trainer 1
+            Trainer arnold = new Trainer("Arnold Schwarzenegger", "Entrenador de culturismo");
+            arnold.setImageFile(loadImageAsBlob("static/images/arnold.png"));
 
-        // Trainer 2
-        Trainer theRock = new Trainer("Dwayne Johnson", "Entrenador de lucha libre");
-        theRock.setImageFile(loadImageAsBlob("static/images/theRock.png"));
+            // Trainer 2
+            Trainer theRock = new Trainer("Dwayne Johnson", "Entrenador de lucha libre");
+            theRock.setImageFile(loadImageAsBlob("static/images/theRock.png"));
 
-        // Save trainers
-        trainerServices.save(arnold);
-        trainerServices.save(theRock);
+            // Save trainers
+            trainerServices.save(arnold);
+            trainerServices.save(theRock);
+        }
+
     }
 
 
