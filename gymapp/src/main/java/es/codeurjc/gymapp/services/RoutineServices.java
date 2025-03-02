@@ -22,6 +22,9 @@ public class RoutineServices {
     private RoutineRepository routineRepository;
 
     @Autowired
+    private UserServices userServices;
+    
+    @Autowired
     private ExerciseServices exerciseServices;
 
     public RoutineServices() {
@@ -66,6 +69,8 @@ public class RoutineServices {
 
     public void deleteAllRoutines(User user){
         routineRepository.deleteAll(user.getRoutines());
+        user.getRoutines().clear();
+        userServices.save(user);
     }
 
     public void saveExercises(Set<Exercise> exercise, Routine routine){
