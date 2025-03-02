@@ -52,6 +52,8 @@ public class RoutineController implements CommandLineRunner{
             materialServices.save(new Material("Barra de dominadas"));
         }
         if(exerciseServices.count() == 0){
+            exerciseServices.save(new Exercise("Curl de biceps con mancuernas", "De pie o sentado"));
+            exerciseServices.save(new Exercise("Press francés con mancuernas", "Ideal para el tríceps"));
             exerciseServices.save(new Exercise("Press de banca", "Pecho",materialServices.findByName("Banco").get()));
             exerciseServices.save(new Exercise("Sentadillas", "Piernas",materialServices.findByName("Barra").get()));
             exerciseServices.save(new Exercise("Dominadas", "Espalda",materialServices.findByName("Barra de dominadas").get()));

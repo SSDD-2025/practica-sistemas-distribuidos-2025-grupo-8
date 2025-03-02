@@ -18,7 +18,7 @@ import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.ExerciseRepository;
 
 @Service
-public class ExerciseServices implements CommandLineRunner{
+public class ExerciseServices{
 
     @Autowired
     private ExerciseRepository exerciseRepository;
@@ -29,13 +29,6 @@ public class ExerciseServices implements CommandLineRunner{
     @Autowired
     private MaterialServices materialServices;
 
-    @Override
-    public void run(String... args) throws Exception {
-        if (count() == 0) {
-            exerciseRepository.save(new Exercise("Curl de biceps con mancuernas", "De pie o sentado"));
-            exerciseRepository.save(new Exercise("Press francés con mancuernas", "Ideal para el tríceps"));
-        }
-    }
 
     public ExerciseServices() {
 		//exerciseRepository.save(new Exercise());
