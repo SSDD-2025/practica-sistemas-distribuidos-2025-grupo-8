@@ -31,31 +31,31 @@ A continuación, se muestra un recorrido por la página web con las principales 
 
 - **Pantalla registro de usuarios:**
 
-<img src="readmeImages/AccountRegister.png" width="1000" /> 
+<img src="readmeImages/Register.png" width="1000" /> 
 
 **Descripción**:Para registrarse debes elegir un nombre, contraseña y una foto de perfil (opcional).
 
 - **Página de tu Perfil:**
 
-<img src="readmeImages\Account.png" width="1000" /> 
+<img src="readmeImages/Account.png" width="1000" /> 
 
 **Descripción**: En la página del perfil del usuario, se presenta las siguientes funcionalidades: Añadir/Cambiar foto de perfil, cerrar sesión, borrar cuenta y ver usuarios (si eres el administrador).
 
 - **Página de Instalaciones:**
 
-<img src="readmeImages\Locations.png" width="1000" /> 
+<img src="readmeImages/Locations.png" width="1000" /> 
 
 **Descripción**: Esta página muestra las diferentes localizaciones en las que se encuentran los gimnasios con información relacionada a cada una de ellas.
 
 - **Página de Maquinaria:**
 
-<img src="readmeImages\Machinery.png" width="1000" /> 
+<img src="readmeImages/Machinery.png" width="1000" /> 
 
 **Descripción**:Esta página muestra todas las maquinarias disponibles. Si eres administrador, puedes crear y borrar maquinaria.
 
 - **Página de Rutinas:**
 
-<img src="readmeImages\Routine.png" width="1000" /> 
+<img src="readmeImages/Routine.png" width="1000" /> 
 
 **Descripción**:En esta página tienes la opción de crear y ver tus rutinas creadas. Si eres administrador, tienes la posibilidad de crear y eliminar ejercicios.
 
