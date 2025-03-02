@@ -31,8 +31,10 @@ public class ExerciseServices implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        exerciseRepository.save(new Exercise("Curl de biceps con mancuernas", "De pie o sentado"));
-        exerciseRepository.save(new Exercise("Press francés con mancuernas", "Ideal para el tríceps"));
+        if (count() == 0) {
+            exerciseRepository.save(new Exercise("Curl de biceps con mancuernas", "De pie o sentado"));
+            exerciseRepository.save(new Exercise("Press francés con mancuernas", "Ideal para el tríceps"));
+        }
     }
 
     public ExerciseServices() {
