@@ -7,18 +7,25 @@
     <body>
         {{>common/header}}
         <h1>Maquinaria</h1>
-        {{#machineries}}
-            <li>
-                <form action="/machinery/{{id}}" method="get">
-                    <button type="submit" class="button">{{name}}</button>
-                </form>
-            </li>
-            {{#isAdmin}}
-                <form action="/machinery/delete/{{id}}" method="post">
-                    <input type="submit" value="Borrar maquinaria">
-                </form>
-            {{/isAdmin}}
-        {{/machineries}}
+        <div class="inRows">
+            {{#machineries}}
+            <ul>
+                <li>
+                    <div class="alignItems">
+                        <form action="/machinery/{{id}}" method="get">
+                            <button type="submit" class="button">{{name}}</button>
+                        </form>
+                        {{#isAdmin}}
+                        <form action="/machinery/delete/{{id}}" method="post">
+                            <input type="submit" value="Borrar maquinaria">
+                        </form>
+                        {{/isAdmin}}
+                    </div>
+                </li>
+            </ul>
+            {{/machineries}}
+        </div>
+            
 
         {{^machineries}}
             <p>No hay maquinaria disponible actualmente.</p>
@@ -26,7 +33,9 @@
         
         {{#isAdmin}}
             <br>
-            <a href="/machinery/add">Añadir maquinaria</a>
+            <form action="/machinery/add" method="request">
+                <input type="submit" value="Añadir maquinaria">
+            </form>
         {{/isAdmin}}
         {{>common/footer}}
     </body>
