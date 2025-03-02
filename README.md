@@ -5,7 +5,7 @@
 ## Integrantes: 
 | Name | Email | Github |
 |-----------|-----------|-----------|
-| Iván Fernández Ruiz    | i.fernandezru.2022@alumnos.urjc.es |[Iván-Fernández](https://github.com/Ruben-Rodriguez-Redondo) |             |
+| Iván Fernández Ruiz    | i.fernandezru.2022@alumnos.urjc.es |[Iván-Fernández](https://github.com/ifernandezru22) |             |
 | Sergio Antón Berenguer | s.anton.2022@alumnos.urjc.es | [Sergio-Antón](https://github.com/AnthonyZY13)                             |
 | Andrés Korotkov Vorobey       | a.korotkov.2022@alumnos.urjc.es | [Andrés-korotkov](https://github.com/4ndresito3)              |
 | Jesús Pérez Madera | j.perezm.2022@alumnos.urjc.es | [Jesús-Pérez](https://github.com/JPM1919)                             |
@@ -13,7 +13,7 @@
 ## Aspectos principales:
 - **Entidades:** user, trainer, comment, routine, exercise, material.
 
-  <img src="readmeImages/entityDiagram.jpg" width="600" /> 
+  <img src="readmeImages/EntityDiagram.png" width="600" /> 
 
 - **Permisos de usuario:**
   - Usuario registrado: cerrar sesión, borrar cuenta, cambiar imagen de perfil, ver entrenadores, elegir entrenador, ver comentarios del entrenador, comentar entrenador, crear rutina, ver rutina, ver maquinaria, ver instalaciones.
