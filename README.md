@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/D1C1HU9V)
 # Nombre de la aplicación: GoldenGym 🏋️
 
 
@@ -24,96 +23,53 @@
 //TODO: Navigation diagram and screenshots
 - ## Capturas de pantalla: 
 
+A continuación, se muestra un recorrido por la página web con las principales páginas accesibles.
 - **Página de Inicio:**
-<img src="READMEImages\logPage.png" width="1000" /> 
+<img src="readmeImages/Home.png" width="1000" /> 
 
-**Descripción**: Es una pantalla de presentación. En esta página un usuario decide registrarse en la aplicación, iniciar sesión o entrar como invitado. 
+**Descripción**: Es la primera pantalla que ve el usuario al entrar en la página web. Desde esta pantalla puedes acceder a: Instalaciones, Maquinaria, Rutinas y Entrenadores. Además, puedes acceder a tu perfil pulsando en la foto de perfil. 
 
 - **Pantalla registro de usuarios:**
 
-<img src="READMEImages\registerPage.png" width="1000" /> 
+<img src="readmeImages/AccountRegister.png" width="1000" /> 
 
-**Descripción**:En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario. Esta pantalla sirve para que un usuario se de de alta en la aplicación.
-
-
-- **Página Principal:** 
-
-<img src="READMEImages\mainPage.png" width="1000" /> 
-
-**Descripción**: En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario.
-
-Debajo se encuentran un calendario con los últimos 7 días en los que puedes ver las rutinas que has subido. A su derecha se encuentra un botón para añadir rutina.
-
-Por último aparece una sección de novedades relacionadas con rutinas que han subido otras personas, nuevos ejercicios añadidos, etc.
+**Descripción**:Para registrarse debes elegir un nombre, contraseña y una foto de perfil (opcional).
 
 - **Página de tu Perfil:**
 
-<img src="READMEImages\personPage.png" width="1000" /> 
+<img src="readmeImages\Account.png" width="1000" /> 
 
-**Descripción**: En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario.
-Posteriormente, se encuentra la foto de perfil del usuario y su información personal guardada, en dicha página el usuario tiene la opción de modificar la información y de cerrar la sesión.
+**Descripción**: En la página del perfil del usuario, se presenta las siguientes funcionalidades: Añadir/Cambiar foto de perfil, cerrar sesión, borrar cuenta y ver usuarios (si eres el administrador).
 
-- **Página de tu Comunidad:**
+- **Página de Instalaciones:**
 
-<img src="READMEImages\comunityPage.png" width="1000" /> 
+<img src="readmeImages\Locations.png" width="1000" /> 
 
-**Descripción**: Barra superior similar a la Página Principal, un buscador para buscar usuarios a los que se podrá enviar una solicitud de amistad y en la zona derecha aparecerá tu lista de amigos.
+**Descripción**: Esta página muestra las diferentes localizaciones en las que se encuentran los gimnasios con información relacionada a cada una de ellas.
 
+- **Página de Maquinaria:**
 
-- **Página Progreso usuario:**
+<img src="readmeImages\Machinery.png" width="1000" /> 
 
-<img src="READMEImages\statisticsPage.png" width="1000" /> 
+**Descripción**:Esta página muestra todas las maquinarias disponibles. Si eres administrador, puedes crear y borrar maquinaria.
 
-**Descripción**:En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario.  Esta pantalla sirve para que el usuario vea su progreso; así como sus rutinas.
+- **Página de Rutinas:**
 
-- **Página de Rutina:**
+<img src="readmeImages\Routine.png" width="1000" /> 
 
-<img src="READMEImages\routineDetailsPage.png" width="1000" /> 
+**Descripción**:En esta página tienes la opción de crear y ver tus rutinas creadas. Si eres administrador, tienes la posibilidad de crear y eliminar ejercicios.
 
-**Descripción**: En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario.
-Posteriormente, se encuentra los del usuario que ha subido la rutina, así como una tabla donde se muestra toda la información relativa a la rutina, los ejercicios, el número de series por repetición y el peso.
-Por último, se pueden observar los comentarios que otros usuarios han publicado sobre la rutina y la posibilidad de comentar.
+- **Página de Entrenadores:**
 
-- **Añadir Rutina:**
+<img src="readmeImages/Trainers.png" width="1000" /> 
 
-<img src="READMEImages\addRoutinePage.png" width="1000" /> 
+**Descripción**: Esta página muestra todos los entrenadores disponibles. Si eres administrador, puedes añadir nuevos entrenadores.
 
-**Descripción**:En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario. Esta pantalla sirve para que un usuario pueda guardar una nueva rutina.
+- **Página del perfil de un entrenador:**
 
-- **Añadir ejercicio a la rutina:**
+<img src="readmeImages/TrainerProfile.png" width="1000" /> 
 
-<img src="READMEImages\newExerciseRoutinePage.png" width="1000" /> 
-
-**Descripción**:En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario. Esta pantalla sirve para que un usuario pueda añadir un ejercicio a su rutina.
-
-- **Página de Grupo Muscular:**
-
-<img src="READMEImages\muscleGroupPage.png" width="1000" /> 
-
-**Descripción**:En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario. Es la página previa a la lista de ejercicios almacenados por grupo muscular. En esta pantalla el usuario filtra por grupo muscular.
-
-- **Lista de ejercicios de un grupo muscular:**
-
-<img src="READMEImages\exerciseListPage.png" width="1000" /> 
-
-**Descripción**:Una lista de los ejercicios asociados a un grupo muscular.
-
-
-- **Página Detalle ejercicio:**
-
-<img src="READMEImages\detailsExPage.png" width="1000" /> 
-
-**Descripción**:En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario. En esta pantalla se especifica el ejercicio.
-- **Página Formulario nuevo ejercicio del Administrador:**
-
-<img src="READMEImages\newExFormPage.png" width="1000" /> 
-
-**Descripción**:En la barra superior de izquierda a derecha se encuentran los botones para: buscar ejercicio, página de estadísticas, notificaciones, comunidad y perfil de usuario. Esta pantalla únicamente es accesible por el administrado; y será utilizada cuando quiera incluir un nuevo ejercicio en la base de datos.
-
-- **Página Error:**
-
-<img src="READMEImages\errorPage.png" width="1000" /> 
-
+**Descripción**: Una vez pulsas en alguno de los entrenadores disponibles puedes seleccionarlo como entrenador, ver comentarios sobre la experiencia de otras personas con dicho entrenador (y añadir un comentario si has iniciado sesión).
 
 ## Diagrama de navegación: 
 - **<span style="color:blue">Azul</span>:** Todos los usuarios.
