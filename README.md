@@ -144,21 +144,21 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
       - [Picture.java](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/model/Picture.java)
       - [app.js](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/src/main/java/com/example/demo/src/main/resources/static/js/app.js)
       - [RutineController.java](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/controller/RutineController.java)
-- **<span style="color:green">Rubén Rodríguez </span>:** 
-    - Tareas: novedades (cargar novedades, spinner y paginación), calendario, notificaciones (ver solicitudes, aceptarlas/denegarlas), agregar/buscar amigo, comentar en la rutina, gráfica, borrar usuario administrador, organización de código, error, diagrama de EER, enlazar base de datos, mostrar amigos agregados
+- **<span style="color:green">Sergio Antón </span>:** 
+    - Tareas: gestión de rutinas (crear, borrar y modificar), trabajo en el routineController,en el routineServices y en la entidad rutina, pequeñas aportaciones al css, refactorización de código, creación de los ficheros html relacionados con las rutinas y con su gestión.
     - 5 commits más significativos:
        - 5 commits más significativos:
-      - [Commit 1](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/d43d115c54126bbea659668113ce30075586fc5f)
-      - [Commit 2](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/eb63d8deb5f1c782ed127bdba76759acfbb2453d)
-      - [Commit 3](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/8bf1f6ee88d91c28f6c4b0466f74de239223515d)
-      - [Commit 4](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/3a0d7a19d246ca3e4a045e9b87ed45ad1678a8cb)
-      - [Commit 5](https://github.com/CodeURJC-DAW-2023-24/webapp08/commit/c4c6ed78ae3ee092a6b7be3c3d713b3780f9d4a6)
+      - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/ce2ed89ad2ab75850f79414000222cf3ce1f16ba)
+      - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/6970a67bb99ae4ed7cd8995f08dd82d21f9f6a83)
+      - [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/3699889086afa79d04573d241e0c949c60be8b9b)
+      - [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/783765d6035a637ae58234469e856a6c5d384ff0)
+      - [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/b7a063c12fa434deef75b486f3430601a9e06bc2)
     - 5 ficheros en los que se ha participado:
-      - [WebController](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/src/main/java/com/example/demo/controller/WebController.java)
-      - [RoutineController](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/src/main/java/com/example/demo/controller/RutineController.java)
-      - [loadRoutine.js](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/src/main/resources/static/js/loadRutines.js)
-      - [community.js](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/src/main/resources/static/js/community.js)
-      - [AdminController](https://github.com/CodeURJC-DAW-2023-24/webapp08/blob/main/demo/src/main/java/com/example/demo/controller/AdminController.java)
+      - [RoutineController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/RoutineController.java)
+      - [Routine](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/model/Routine.java)
+      - [RoutineService](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/services/RoutineServices.java)
+      - [Routine.htmls](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/tree/main/gymapp/src/main/resources/templates/routines)
+      - [AdminController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blame/main/gymapp/src/main/resources/static/style.css)
 - **<span style="color:green">Noelia Berzosa</span>:** 
     - Tareas: registrar usuario, añadir ejercio adminstrador, login, paginación lista ejercios, detalles ejercicios (video, imagen), exportar rutina en PDF,lista ejercicios, buscador de ejercios, borrar ejercicio administrador, separar header, organización de código, error, diagrama navegación, diagrama clases y templates, logo en página web 
     - 5 commits más significativos:
