@@ -8,15 +8,16 @@
         {{>common/header}}
         {{#isLogged}}
             {{#routine}}
-                <p> {{name}} </p>
-                <p> {{description}} </p>
-                <p> {{day}} </p>
+                <p> <span class = "bold">Nombre rutina: </span>  {{name}} </p>
+                <p> <span class = "bold">Descripción: </span> {{description}} </p>
+                <p> <span class = "bold">Día </span> {{day}} </p>
+                <p> <span class = "bold">Ejercicios: </span> </p>
                 <ul>
                     {{#exercises}}
                         <li>
-                            <p> Ejercicio : {{name}}</p>
-                            <p> Descripción : {{description}}</p>
-                            <p> Material : {{material.name}} </p>
+                            <p> <span class = "bold">Ejercicio : </span>{{name}}</p>
+                            <p> <span class = "bold">Descripción : </span>{{description}}</p>
+                            <p> <span class = "bold">Material : </span> {{material.name}} </p>
                         </li>
                     {{/exercises}}
                 </ul>

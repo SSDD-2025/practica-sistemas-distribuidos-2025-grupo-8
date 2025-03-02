@@ -28,6 +28,10 @@ public class TrainerServices {
         // trainerRepository.save(new Trainer());
     }
 
+    public long count(){
+        return trainerRepository.count();
+    }
+
     public Optional<Trainer> findById(Long id) {
         return trainerRepository.findById(id);
     }

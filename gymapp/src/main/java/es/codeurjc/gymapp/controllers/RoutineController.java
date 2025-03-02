@@ -46,12 +46,16 @@ public class RoutineController implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        materialServices.save(new Material("Barra"));
-        materialServices.save(new Material("Banco"));
-        materialServices.save(new Material("Barra de dominadas"));
-        exerciseServices.save(new Exercise("Press de banca", "Pecho",materialServices.findByName("Banco").get()));
-        exerciseServices.save(new Exercise("Sentadillas", "Piernas",materialServices.findByName("Barra").get()));
-        exerciseServices.save(new Exercise("Dominadas", "Espalda",materialServices.findByName("Barra de dominadas").get()));
+        if(materialServices.count() == 0){
+            materialServices.save(new Material("Barra"));
+            materialServices.save(new Material("Banco"));
+            materialServices.save(new Material("Barra de dominadas"));
+        }
+        if(exerciseServices.count() == 0){
+            exerciseServices.save(new Exercise("Press de banca", "Pecho",materialServices.findByName("Banco").get()));
+            exerciseServices.save(new Exercise("Sentadillas", "Piernas",materialServices.findByName("Barra").get()));
+            exerciseServices.save(new Exercise("Dominadas", "Espalda",materialServices.findByName("Barra de dominadas").get()));
+        }
     }   
     
     @PostMapping("/routine")

@@ -25,8 +25,8 @@ public class UserServices {
         return userRepository.findById(id);
     }
 
-    public List<User> findAll(){
-        return userRepository.findAll();
+    public long count(){
+        return userRepository.count();
     }
 
     public void save(User user, MultipartFile imageFile) throws IOException{

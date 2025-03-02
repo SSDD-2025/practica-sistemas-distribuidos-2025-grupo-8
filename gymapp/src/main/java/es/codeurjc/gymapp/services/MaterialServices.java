@@ -26,6 +26,10 @@ public class MaterialServices {
         //materialRepository.save(new Material());
     }
 
+    public long count(){
+        return materialRepository.count();
+    }
+
     public Iterable<Material> findAll() {
         return materialRepository.findAll();
     }

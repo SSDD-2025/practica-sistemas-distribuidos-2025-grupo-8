@@ -7,7 +7,7 @@
 |-----------|-----------|-----------|
 | Iván Fernández Ruiz    | i.fernandezru.2022@alumnos.urjc.es |[Iván-Fernández](https://github.com/Ruben-Rodriguez-Redondo) |             |
 | Sergio Antón Berenguer | s.anton.2022@alumnos.urjc.es | [Sergio-Antón](https://github.com/AnthonyZY13)                             |
-| Andrés Korotkov Vorobey       | a.korotkov.2022@alumnos.urjc.es | [Andrés-korotkov](https://github.com/noeliaberzosa)              |
+| Andrés Korotkov Vorobey       | a.korotkov.2022@alumnos.urjc.es | [Andrés-korotkov](https://github.com/4ndresito3)              |
 | Jesús Pérez Madera | j.perezm.2022@alumnos.urjc.es | [Jesús-Pérez](https://github.com/JPM1919)                             |
 
 ## Aspectos principales:
@@ -119,8 +119,8 @@ Por último, se pueden observar los comentarios que otros usuarios han publicado
 - **<span style="color:blue">Azul</span>:** Todos los usuarios.
 - **<span style="color:yellow">Amarillo</span>:** Usuarios Registrados y administrador.
 - **<span style="color:green">Verde</span>:** Administrador.
-- **Nota**: desde cualquier página puedes llegar a la página de error
-<img src="READMEImages/navegation.png" width="1000" /> 
+- **Nota**: Se puede llegar a index,account, machinery, facilities,routines y trainers desde cualquier página. Tambíen puedes llegar a la página de error desde cualquier página.
+<img src="readmeImages/navigationDiagram.png" width="1000" /> 
 
 ## Diagrama con las entidades de la base de datos: 
 <img src="readmeImages/dataBaseEntityDiagram.png" width="1000" /> 

@@ -40,6 +40,10 @@ public class ExerciseServices implements CommandLineRunner{
 		//exerciseRepository.save(new Exercise());
 	}
 
+    public long count(){
+        return exerciseRepository.count();
+    }
+
     public Optional<Exercise> findById(Long id) {
         return exerciseRepository.findById(id);
     }
