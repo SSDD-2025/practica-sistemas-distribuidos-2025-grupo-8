@@ -20,7 +20,7 @@
   - Administrador: permisos de usuario registrado + añadir entrenador, eliminar entrenador, añadir maquinaria y añadir ejercicios.
 - **Imágenes:** foto de perfil, fotos de entrenadores y de instalaciones.
 
-//TODO: Navigation diagram and screenshots
+
 - ## Capturas de pantalla: 
 
 A continuación, se muestra un recorrido por la página web con las principales páginas accesibles.
