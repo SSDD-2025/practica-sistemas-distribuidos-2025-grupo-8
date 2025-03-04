@@ -86,7 +86,7 @@ A continuación, se muestra un recorrido por la página web con las principales 
 
 
 ## Participación
-- **<span style="color:green">Jesús Pérez</span>:** 
+- **<span style="color:green">Jesús Pérez Madera</span>:** 
     - Tareas: creación de clase usuario, tipos de usuario: usuario anónimo, registrado y administrador, registro e inicio de sesión de usuarios, datos de sesión, foto de perfil, borrar cuenta, ver entrenadores, crear y borrar entrenadores, asignar entrenador a usuario, creación de todos los ficheros html relacionados.
     - 5 commits más significativos:
        - 5 commits más significativos:
