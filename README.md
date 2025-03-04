@@ -132,7 +132,7 @@ A continuación, se muestra un recorrido por la página web con las principales 
       - [TrainerController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/TrainerController.java)
       
 - **<span style="color:green">Andrés Korotkov Vorobey</span>:**
-   - Tarea: enlace a página rutina (sin funcionalidad)
+   - Tareas: creacion de la funcionalidad de la clase material, aportaciones pequeñas al RoutineController, refactorizacion de codigo y lógica de negocio, creación y modificacion del archivo css, creacion y/o modificacion de plantillas common y estáticas como index y facilities ademas de la plantilla error, organización de templates en sus respectivas carpetas y añadidas imagenes a la entidad entrenador junto con entrenadores cargados de base
    - 5 commits más significativos:
       - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/b7b084e2cb885e0be6014af0ef4e5a30da62ef46)
       - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/aa8da6c830fc1e361d68b2d5ba73bf45dbf16d20)
