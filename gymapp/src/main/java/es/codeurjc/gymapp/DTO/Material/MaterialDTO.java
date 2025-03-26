@@ -1,8 +1,8 @@
-package es.codeurjc.DTO.Material;
+package es.codeurjc.gymapp.DTO.Material;
 
 import java.util.Set;
 
-import es.codeurjc.DTO.Exercise.ExerciseSimpleDTO;
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
 
 public record MaterialDTO(Long id, String name, Set<ExerciseSimpleDTO> exercises) {
 	
