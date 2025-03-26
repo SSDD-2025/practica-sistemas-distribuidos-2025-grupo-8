@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title> Mostrar usuarios</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
+    </head>
+    {{>common/header}}
+    <h1>Usuarios de Golden Gym</h1>
+     <body>
+        {{#users}}
+            <p>{{name}}</p>
+        {{/users}}
+        
+        <form action="/account" method="post">
+            <input type="submit" value = "Volver">
+        </form>
+     </body>
+</html>

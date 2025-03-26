@@ -1,6 +1,8 @@
 package es.codeurjc.gymapp.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -50,6 +52,14 @@ public class Routine{
 
     public Set<Exercise> getExercises() {
         return exercises;
+    }
+
+    public List<Long> getExercisesId(){
+        List<Long> exercisesId = new ArrayList<>();
+        for (Exercise exercise : exercises){
+            exercisesId.add(exercise.getId());
+        }
+        return exercisesId;
     }
 
     public void setExercises(Set<Exercise> exercises) {

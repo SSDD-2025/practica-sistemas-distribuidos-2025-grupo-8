@@ -13,6 +13,11 @@
             <input type='submit' value='Aceptar'/>
         </form>
         
+        {{#isAdmin}}
+        <form action="/admin/users" method="post">
+            <input type='submit' value='Ver usuarios'/>
+        </form>
+        {{/isAdmin}}
         <form action="/account/logout" method="post">
             <input type='submit' value='Cerrar sesión'/>
         </form>

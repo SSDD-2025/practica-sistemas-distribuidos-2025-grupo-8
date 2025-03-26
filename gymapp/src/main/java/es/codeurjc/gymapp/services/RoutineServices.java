@@ -2,6 +2,8 @@ package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -18,6 +20,12 @@ public class RoutineServices {
     
     @Autowired
     private RoutineRepository routineRepository;
+
+    @Autowired
+    private UserServices userServices;
+    
+    @Autowired
+    private ExerciseServices exerciseServices;
 
     public RoutineServices() {
         // routineRepository.save(new Routine());
@@ -61,6 +69,40 @@ public class RoutineServices {
 
     public void deleteAllRoutines(User user){
         routineRepository.deleteAll(user.getRoutines());
+        user.getRoutines().clear();
+        userServices.save(user);
     }
 
+    public void saveExercises(Set<Exercise> exercise, Routine routine){
+        for(Exercise ex : exercise){
+            exerciseServices.addRoutine(routine, ex);
+            exerciseServices.save(ex);
+        }
+    }
+
+    public void removeExercises(Routine routine){
+        for (Exercise exercise : routine.getExercises()) {
+            exerciseServices.removeRoutine(routine, exercise);
+            exerciseServices.save(exercise);
+        }
+    }
+
+    public void modifyRoutine(Routine routine, List<Long> exerciseIds){
+        this.removeExercises(routine);
+        this.deleteExercises(routine);
+        this.addExercises(routine, exerciseServices.listToSet(exerciseServices.findAllById(exerciseIds)));
+        this.save(routine);
+        this.saveExercises(routine.getExercises(), routine);
+    }
+
+    public void modifyRoutines(Exercise exercise){
+        Set<Routine> routinesFromExercise = new HashSet<>(exercise.getRoutine());
+        for(Routine routine : routinesFromExercise){
+            Set<Exercise> exercisesFromRoutine = routine.getExercises();
+            exercisesFromRoutine.remove(exercise);
+            routine.setExercises(exercisesFromRoutine);
+            routineRepository.save(routine);
+        }
+        exercise.setRoutine(new ArrayList<>());
+    }
 }

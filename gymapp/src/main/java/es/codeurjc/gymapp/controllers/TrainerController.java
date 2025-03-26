@@ -49,17 +49,20 @@ public class TrainerController implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        // Trainer 1
-        Trainer arnold = new Trainer("Arnold Schwarzenegger", "Entrenador de culturismo");
-        arnold.setImageFile(loadImageAsBlob("static/images/arnold.png"));
+        if(trainerServices.count() == 0){
+            // Trainer 1
+            Trainer arnold = new Trainer("Arnold Schwarzenegger", "Entrenador de culturismo");
+            arnold.setImageFile(loadImageAsBlob("static/images/arnold.png"));
 
-        // Trainer 2
-        Trainer theRock = new Trainer("Dwayne Johnson", "Entrenador de lucha libre");
-        theRock.setImageFile(loadImageAsBlob("static/images/theRock.png"));
+            // Trainer 2
+            Trainer theRock = new Trainer("Dwayne Johnson", "Entrenador de lucha libre");
+            theRock.setImageFile(loadImageAsBlob("static/images/theRock.png"));
 
-        // Save trainers
-        trainerServices.save(arnold);
-        trainerServices.save(theRock);
+            // Save trainers
+            trainerServices.save(arnold);
+            trainerServices.save(theRock);
+        }
+
     }
 
 
@@ -94,7 +97,7 @@ public class TrainerController implements CommandLineRunner {
 		return "trainers/trainersShow";
 	}
 
-    @GetMapping("/trainer/{id}")
+    @RequestMapping("/trainer/{id}")
     public String getTrainer(Model model, @PathVariable Long id) {
         Optional<Trainer> trainer = trainerServices.findById(id);
         model.addAttribute("trainer", trainer.get());
@@ -136,7 +139,8 @@ public class TrainerController implements CommandLineRunner {
         Optional<Trainer> opTrainer = trainerServices.findById(id);
         if (opTrainer.isPresent()){
             Trainer trainer = opTrainer.get();
-            model.addAttribute("id", id);
+            model.addAttribute("logged", userSession.isLoggedIn());
+            model.addAttribute("trainerId", id);
             model.addAttribute("comments", trainer.getComments());
             return "trainers/trainerComments";
         }
@@ -157,11 +161,11 @@ public class TrainerController implements CommandLineRunner {
     }
 
     @PostMapping("/trainer/{id}/comments/save")
-    public String saveComment(Model model, @PathVariable long id, @RequestParam String userName, @RequestParam String message){
+    public String saveComment(Model model, @PathVariable long id, @RequestParam String message){
         Optional<Trainer> opTrainer = trainerServices.findById(id);
         if (opTrainer.isPresent()){
             Comment comment = new Comment(message);
-            User user = userServices.findByName(userName).get();
+            User user = userServices.findByName(userSession.getName()).get();
             trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
             return "redirect:/trainer/{id}/comments";
         }
@@ -169,12 +173,30 @@ public class TrainerController implements CommandLineRunner {
         return "error";
     }
 
+    @PostMapping("/trainer/{trainerId}/comments/{commentId}/delete")
+    public String deleteComment(Model model, @PathVariable long trainerId, @PathVariable long commentId){
+        if(trainerServices.deleteCommentFromTrainer(trainerId, commentId)) {
+            return "redirect:/trainer/{trainerId}/comments";
+        }
+        model.addAttribute("message", "No se ha podido eliminar el comentario");
+        return "error";
+    }
+
 	@PostMapping("/trainer/add/form")
 	public String addTrainerForm(Model model, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile image) throws IOException {		
-		Trainer trainer = new Trainer(name, description);
-        trainerServices.save(trainer, image);
-        model.addAttribute("message", "Entrenador añadido correctamente");  
-		return "trainers/trainerMessage"; 
+		Trainer trainer;
+        if (!name.isEmpty() && !image.isEmpty()){
+            if (description.isEmpty()){
+                description = "No hay descripción acerca del entrenador.";
+            }
+            
+            trainer = new Trainer(name, description);
+            trainerServices.save(trainer, image);
+            model.addAttribute("message", "Entrenador añadido correctamente");  
+            return "trainers/trainerMessage"; 
+        }
+        model.addAttribute("message", "El nombre y la imagen del entrenador es obligatorio.");
+        return "error";
 	}
 
     @PostMapping("/trainer/image/{id}")

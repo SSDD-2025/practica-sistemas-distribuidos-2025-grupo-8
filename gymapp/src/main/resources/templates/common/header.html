@@ -1,13 +1,14 @@
 <div id="header">
     <div id="supHeader">
-        <div>
+        <div> 
             <form action="/" method="get">
                 <input class="imagesHeader" id="home" type="submit" value="">
+                <input class="button" id="logoText"type="submit" value="GOLDEN GYM">
             </form>
         </div>
-
         <div>
             <form action="/account" method="post">
+                <input class="button" id="textAccount" type="submit" value={{name}}>
                 {{#hasImage}}
                     <input class="imagesHeader" id="userImage" type="submit" value="">
                 {{/hasImage}}
@@ -15,8 +16,9 @@
                 {{^hasImage}}
                     <input class="imagesHeader" id="no_userImage" type="submit" value="">
                 {{/hasImage}}
-                <h1 id = "textAccount">{{name}}</h1>
+                
             </form>
+            
         </div>
     </div>
     <div id="infHeader">

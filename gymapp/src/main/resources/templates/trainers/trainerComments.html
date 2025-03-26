@@ -7,15 +7,28 @@
         {{>common/header}}
         <h1>Comentarios</h1>
         {{#comments}}
-        <b>{{author.name}}: </b>: {{message}}<br>
+            <b>{{author.name}}: </b>: {{message}}<br>
+        {{#isAdmin}}
+            <form action="/trainer/{{trainerId}}/comments/{{id}}/delete" method="post">
+                <input type="submit" value="Borrar comentario">
+            </form>
+        {{/isAdmin}}
         {{/comments}}
 
         {{^comments}}
         <p> No hay comentarios todavía.</p>
         {{/comments}}
-        <form action="/trainer/{{id}}/comments/add" method="post">
+        
+        {{#logged}}
+        <form action="/trainer/{{trainerId}}/comments/add" method="post">
             <input type="submit" value="Añadir comentario">
         </form>
+        {{/logged}}
+
+        <form action="/trainer/{{trainerId}}" method="post">
+            <input type="submit" value="Volver">
+        </form>
+        
         {{>common/footer}}
     </body>
 </html>

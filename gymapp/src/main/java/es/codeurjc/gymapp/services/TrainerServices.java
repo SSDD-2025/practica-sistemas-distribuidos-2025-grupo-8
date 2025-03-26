@@ -28,6 +28,10 @@ public class TrainerServices {
         // trainerRepository.save(new Trainer());
     }
 
+    public long count(){
+        return trainerRepository.count();
+    }
+
     public Optional<Trainer> findById(Long id) {
         return trainerRepository.findById(id);
     }
@@ -55,5 +59,16 @@ public class TrainerServices {
     public void addCommentToTrainer(Trainer trainer, User user, String message){
         Comment comment = new Comment(message);
         commentServices.save(trainer, comment, user);
+    }
+
+    public boolean deleteCommentFromTrainer(long trainerId, long commentId) {
+        Optional<Trainer> opTrainer = this.findById(trainerId);
+        Trainer trainer;
+        boolean commentDeleted = false;
+        if (opTrainer.isPresent()){
+            trainer = opTrainer.get();
+            commentDeleted = commentServices.delete(commentId, trainer);
+        }
+        return commentDeleted;
     }
 }

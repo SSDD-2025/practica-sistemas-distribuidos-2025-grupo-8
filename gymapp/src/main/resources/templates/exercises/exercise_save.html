@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title> Guardar ejercicio</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
+    </head>
+    {{>common/header}}
+    <h1>Ejercicio guardado</h1>
+    <body>
+        <p>El ejercicio se ha guardado correctamente.</p>
+        <form action="/machinery/add" method="post">
+            <input type="submit" value="Asignar maquinaria a ejercicio">
+        </form>
+    </body>
+    {{>common/footer}}
+</html>

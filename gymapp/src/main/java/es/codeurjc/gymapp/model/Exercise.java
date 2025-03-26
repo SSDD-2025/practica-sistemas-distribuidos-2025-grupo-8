@@ -21,6 +21,10 @@ public class Exercise{
     public Exercise() {
     }
 
+    public Exercise(String name){
+        this.name = name;
+    }
+    
     public Exercise(String name,String description, Material material) {
         this.name = name;
         this.description = description;

@@ -49,7 +49,7 @@ public class MaterialController {
         
     }
 
-    @GetMapping("/machinery/add")
+    @RequestMapping("/machinery/add")
     public String addMachinery(Model model) {
         model.addAttribute("exercises", exerciseServices.findExercisesNotAssigned());
         return "machinery/machinery_add";

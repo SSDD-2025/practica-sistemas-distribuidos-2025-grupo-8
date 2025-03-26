@@ -46,7 +46,7 @@ public class GlobalControllerAdvice {
         if (userSession.isLoggedIn()) {
             Optional<User> user = userServices.findByName(userSession.getName());
             if (user.isEmpty()) {
-                userSession.logout();  // 🔴 Cierra sesión si el usuario no existe
+                userSession.logout();  
                 return false;
             }
             return Boolean.TRUE.equals(user.get().getIsAdmin());

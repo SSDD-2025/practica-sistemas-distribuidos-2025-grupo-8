@@ -18,21 +18,26 @@ import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.ExerciseRepository;
 
 @Service
-public class ExerciseServices implements CommandLineRunner{
+public class ExerciseServices{
 
     @Autowired
     private ExerciseRepository exerciseRepository;
 
-    @Override
-    public void run(String... args) throws Exception {
-        exerciseRepository.save(new Exercise("Curl de biceps con mancuernas", "De pie o sentado"));
-        exerciseRepository.save(new Exercise("Press francés con mancuernas", "Ideal para el tríceps"));
-    }
+    @Autowired
+    private RoutineServices routineServices;
+
+    @Autowired
+    private MaterialServices materialServices;
+
 
     public ExerciseServices() {
 		//exerciseRepository.save(new Exercise());
 		//exerciseRepository.save(new Exercise());
 	}
+
+    public long count(){
+        return exerciseRepository.count();
+    }
 
     public Optional<Exercise> findById(Long id) {
         return exerciseRepository.findById(id);
@@ -42,8 +47,22 @@ public class ExerciseServices implements CommandLineRunner{
         exerciseRepository.save(exercise);
     }
 
+    public void save(String name, String description){
+        Exercise exercise = new Exercise(name, description);
+        exerciseRepository.save(exercise);
+    }
+
     public void deleteById(Long id) {
-        exerciseRepository.deleteById(id);
+        Exercise exercise = exerciseRepository.findById(id).get();
+        List<Routine> routines = exercise.getRoutine();
+        if (!routines.isEmpty()){
+            routineServices.modifyRoutines(exercise);
+        }
+
+        if (exercise.getMaterial() != null){
+            materialServices.deleteExerciseFromMaterial(exercise.getMaterial(), exercise);
+        }
+        exerciseRepository.delete(exercise);
     }
 
     public List<Exercise> findAll() {

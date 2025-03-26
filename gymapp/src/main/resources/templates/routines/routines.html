@@ -7,19 +7,31 @@
     <body>
         {{>common/header}}
         <div class = "containerRoutine" >
-            <div class = "box" id = "divRoutines">
+            <div class = "routine" id = "divRoutines">
                 <h1>Rutinas</h1>
             </div>
-            <div class = "box" id = "divOptionsCreate">
-                <form action="/routine/create" method="post">
-                    <input type="submit" value = "Crear rutina">
-                </form>
+            <div id="divOptions">
+                <div class = "routine" id = "divOptionsCreate">
+                    <form action="/routine/create" method="post">
+                        <input type="submit" value = "Crear rutina">
+                    </form>
+                </div>
+                <div class = "routine" id = "divOptionsShow">
+                    <form action = "/routine/view" method = "post">
+                        <input  type="submit" value = "Ver rutinas">
+                    </form>
+                </div>
             </div>
-            <div class = "box" id = "divOptionsShow">
-                <form action = "/routine/view" method = "post">
-                    <input  type="submit" value = "Ver rutinas">
-                </form>
-            </div>
+            
+
+            {{#isAdmin}}
+            <form action = "/exercise/add" method="post">
+                <input type="submit" value = "Crear ejercicio">
+            </form>
+            <form action="/exercise/exercise_selectToDelete" method="post">
+                <input type="submit" value = "Eliminar ejercicio">
+            </form>
+            {{/isAdmin}}
         </div>
 
         {{>common/footer}}
