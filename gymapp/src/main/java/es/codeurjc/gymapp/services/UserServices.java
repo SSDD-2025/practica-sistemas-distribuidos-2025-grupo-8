@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.DTO.User.UserMapper;
+import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
+import es.codeurjc.gymapp.DTO.Routine.RoutineMapper;
 import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.RoutineRepository;
@@ -25,6 +27,8 @@ public class UserServices {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RoutineMapper routineMapper;
 
     public Optional<UserDTO> findById(Long id) {
         return Optional.of(userMapper.toDTO(userRepository.findById(id).get()));
@@ -60,14 +64,16 @@ public class UserServices {
         return Optional.of(userMapper.toDTO(userRepository.findByName(name).get()));
     }
 
-    public void addRoutine(UserDTO userDTO, Routine routine) {
+    public void addRoutine(UserDTO userDTO, RoutineDTO routineDTO) {
         User user = userMapper.toDomain(userDTO);
+        Routine routine = routineMapper.toDomain(routineDTO);
         user.addRoutine(routine);
         userRepository.save(user);
     }
     
-    public void deleteRoutine(UserDTO userDTO, Routine routine){
+    public void deleteRoutine(UserDTO userDTO, RoutineDTO routineDTO){
         User user = userMapper.toDomain(userDTO);
+        Routine routine = routineMapper.toDomain(routineDTO);
         user.getRoutines().remove(routine);
         userRepository.save(user);
     }

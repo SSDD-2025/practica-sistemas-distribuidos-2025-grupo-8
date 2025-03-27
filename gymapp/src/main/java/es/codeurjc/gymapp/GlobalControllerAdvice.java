@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
+import es.codeurjc.gymapp.DTO.User.UserMapper;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.UserServices;
@@ -17,7 +18,8 @@ public class GlobalControllerAdvice {
 
     @Autowired
     private UserServices userServices;
-
+    @Autowired
+    private UserMapper userMapper;
 
     public GlobalControllerAdvice(UserSession userSession) {
         this.userSession = userSession;
@@ -31,7 +33,8 @@ public class GlobalControllerAdvice {
     @ModelAttribute("hasImage")
     public boolean addHasImageToModel() {
         if (userSession.isLoggedIn()) {
-            Optional<User> user = userServices.findByName(userSession.getName());
+            Optional<User> user = Optional.of(userMapper.toDomain(userServices
+                .findByName(userSession.getName()).get()));
     
             if (user.isPresent()) { 
                 return user.get().getImageFile() != null; //return true if the user has an image
@@ -45,7 +48,8 @@ public class GlobalControllerAdvice {
     @ModelAttribute("isAdmin")
     public boolean addIsAdminToModel() {
         if (userSession.isLoggedIn()) {
-            Optional<User> user = userServices.findByName(userSession.getName());
+            Optional<User> user = Optional.of(userMapper.toDomain(userServices
+            .findByName(userSession.getName()).get()));
             if (user.isEmpty()) {
                 userSession.logout();  
                 return false;
