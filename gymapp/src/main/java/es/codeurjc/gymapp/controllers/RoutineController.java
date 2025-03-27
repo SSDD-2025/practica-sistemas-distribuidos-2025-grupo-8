@@ -135,7 +135,7 @@ public class RoutineController implements CommandLineRunner{
             if (userSession.isLoggedIn()) {
                 UserDTO user = userServices.findByName(userSession.getName()).get();
                 userServices.deleteRoutine(user, routine);
-                routineServices.deleteUser(routine,user);
+                routineServices.deleteUser(routine);
                 routineServices.removeExercises(routine);
                 routineServices.deleteById(id);
                 return "routines/routineDelete";
@@ -146,7 +146,7 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/modify/{id}")
     public String modifyRoutine(Model model, @PathVariable Long id) {
-        Routine routine = routineServices.findById(id).get();
+        RoutineSimpleDTO routine = routineServices.findById(id).get();
         if(userSession.isLoggedIn()){
             model.addAttribute("routine", routine);
             model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
@@ -171,19 +171,22 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("message", "La rutina debe tener al menos un ejercicio");
             return "error";
         }
-        Optional<Routine> optionalRoutine = routineServices.findById(id);
+        Optional<RoutineSimpleDTO> optionalRoutine = routineServices.findById(id);
         if (!optionalRoutine.isPresent()){
             model.addAttribute("message", "No se ha encontrado la rutina");
             return "error";
         } 
 
-        Routine routine = optionalRoutine.get();
+        RoutineSimpleDTO routine = optionalRoutine.get();
         //Update of Not DataStructs
+        RoutineSimpleDTO routineSimpleDTO = new RoutineSimpleDTO(id, name, description, day);
+        RoutineDTO routineDTO = new RoutineDTO(id, name, description, day, null, null);
+        //TODO: I need to create a method that updates the value of the entity
         routine.setName(name);
         routine.setDescription(description);
         routine.setDay(day);
         //Update the routine
-        routineServices.modifyRoutine(routine,exerciseIds);        
+        routineServices.modifyRoutine(routineDTO,exerciseIds);        
         return "redirect:/routine/view/" + id;
     }
      

@@ -104,7 +104,7 @@ public class RoutineServices {
         }
     }
 
-    public void removeExercises(RoutineDTO routineDTO){
+    public void removeExercises(RoutineSimpleDTO routineDTO){
         Routine routine = mapperRoutine.toDomain(routineDTO);
         for (Exercise exercise : routine.getExercises()) {
             exerciseServices.removeRoutine(routine, exercise);
@@ -114,7 +114,7 @@ public class RoutineServices {
 
     public void modifyRoutine(RoutineDTO routineDTO, List<Long> exerciseIds){
         RoutineSimpleDTO routineSimpleDTO = mapperRoutine.toSimpleDTO(mapperRoutine.toDomain(routineDTO));
-        this.removeExercises(routineDTO);
+        this.removeExercises(routineSimpleDTO);
         this.deleteExercises(routineDTO);
         this.addExercises(routineDTO, exerciseServices.listToSet(mapperExercise.toSimpleDTOs(exerciseServices.findAllById(exerciseIds))));
         this.save(routineDTO);

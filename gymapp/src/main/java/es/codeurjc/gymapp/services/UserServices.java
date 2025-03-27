@@ -14,6 +14,7 @@ import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.DTO.User.UserMapper;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineMapper;
+import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
 import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.RoutineRepository;
@@ -71,7 +72,7 @@ public class UserServices {
         userRepository.save(user);
     }
     
-    public void deleteRoutine(UserDTO userDTO, RoutineDTO routineDTO){
+    public void deleteRoutine(UserDTO userDTO, RoutineSimpleDTO routineDTO){
         User user = userMapper.toDomain(userDTO);
         Routine routine = routineMapper.toDomain(routineDTO);
         user.getRoutines().remove(routine);
