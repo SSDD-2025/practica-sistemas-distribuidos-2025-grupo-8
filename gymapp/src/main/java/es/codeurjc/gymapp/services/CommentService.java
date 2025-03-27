@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.gymapp.DTO.User.UserDTO;
+import es.codeurjc.gymapp.DTO.User.UserMapper;
 import es.codeurjc.gymapp.model.Comment;
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
@@ -24,18 +26,22 @@ public class CommentService {
     @Autowired 
     private TrainerServices trainerServices;
 
-    public Optional<Comment> findById(long id){
-        return commentsRepository.findById(id);
-    }
-
-    public void save(Trainer trainerToComment, Comment comment, User user){
-        trainerToComment.getComments().add(comment);
-        comment.setAuthor(user);
-        comment.setTrainer(trainerToComment);
-        user.getComments().add(comment);
-        commentsRepository.save(comment);
-        userServices.save(user);
-        trainerServices.save(trainerToComment);
+    @Autowired
+    private UserMapper userMapper;
+    
+        public Optional<Comment> findById(long id){
+            return commentsRepository.findById(id);
+        }
+    
+        public void save(Trainer trainerToComment, Comment comment, UserDTO userDTO){
+            User user = userMapper.toDomain(userDTO);
+            trainerToComment.getComments().add(comment);
+            comment.setAuthor(user);
+            comment.setTrainer(trainerToComment);
+            user.getComments().add(comment);
+            commentsRepository.save(comment);
+            userServices.save(userDTO);
+            trainerServices.save(trainerToComment);
     }
 
     public boolean delete(Long commentId, Trainer trainer) {
@@ -47,7 +53,7 @@ public class CommentService {
             trainer.getComments().remove(comment);
             trainerServices.save(trainer);
             user.getComments().remove(comment);
-            userServices.save(user);
+            userServices.save(userMapper.toDTO(user));
             commentsRepository.flush();
             commentsRepository.delete(comment);
             return true;
