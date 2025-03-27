@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
+import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
@@ -75,8 +77,8 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/save")
     public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
-    @RequestParam String day, @RequestParam(required=false) Set<Exercise> exercise) {
-        Routine routine;
+    @RequestParam String day, @RequestParam(required=false) Set<ExerciseSimpleDTO> exercise) {
+        RoutineDTO routine;
         if(name.isEmpty()){
             model.addAttribute("message", "La rutina debe tener nombre");
             return "error";
@@ -90,7 +92,7 @@ public class RoutineController implements CommandLineRunner{
             return "error";
         }
         User user = userServices.findByName(userSession.getName()).get();
-        routine = new Routine(name, description, day, exercise, user);
+        routine = new RoutineDTO((long)0,name, description, day, exercise, user);
         userServices.addRoutine(user,routine);
         routineServices.save(routine);
         routineServices.saveExercises(exercise, routine);

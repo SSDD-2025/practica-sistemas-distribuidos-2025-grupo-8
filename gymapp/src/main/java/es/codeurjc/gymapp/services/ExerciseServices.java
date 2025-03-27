@@ -11,6 +11,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseMapper;
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
@@ -28,6 +30,9 @@ public class ExerciseServices{
 
     @Autowired
     private MaterialServices materialServices;
+
+    @Autowired
+    private ExerciseMapper mapperExercise;
 
 
     public ExerciseServices() {
@@ -56,7 +61,7 @@ public class ExerciseServices{
         Exercise exercise = exerciseRepository.findById(id).get();
         List<Routine> routines = exercise.getRoutine();
         if (!routines.isEmpty()){
-            routineServices.modifyRoutines(exercise);
+            routineServices.modifyRoutines(mapperExercise.toSimpleDTO(exercise));
         }
 
         if (exercise.getMaterial() != null){
@@ -81,12 +86,13 @@ public class ExerciseServices{
         return exerciseRepository.findAllById(id);
     }
 
-    public Set<Exercise> listToSet(List<Exercise> list){
+    public Set<ExerciseSimpleDTO> listToSet(List<ExerciseSimpleDTO> listDTO){
+        Set<Exercise> list = mapperExercise.toDomains(listDTO);
         Set<Exercise> set = new HashSet<>();
         for(Exercise elem : list){
             set.add(elem);
         }
-        return set;
+        return mapperExercise.toSimpleDTOsSet(set);
     }
 
     public void addRoutine(Routine routine, Exercise exercise){
