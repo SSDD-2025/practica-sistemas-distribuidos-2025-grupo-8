@@ -91,7 +91,7 @@ public class RoutineServices {
         User user = mapperUser.toDomain(userDTO);
         routineRepository.deleteAll(user.getRoutines());
         user.getRoutines().clear();
-        userServices.save(user);
+        userServices.save(userDTO);
     }
 
     public void saveExercises(Set<ExerciseSimpleDTO> exerciseDTO, RoutineSimpleDTO routineDTO){
