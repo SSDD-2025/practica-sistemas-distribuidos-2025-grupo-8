@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
+import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
+import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
@@ -78,7 +80,8 @@ public class RoutineController implements CommandLineRunner{
     @PostMapping("/routine/save")
     public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
     @RequestParam String day, @RequestParam(required=false) Set<ExerciseSimpleDTO> exercise) {
-        RoutineDTO routine;
+        RoutineDTO routineDTO;
+        RoutineSimpleDTO routineSimpleDTO;
         if(name.isEmpty()){
             model.addAttribute("message", "La rutina debe tener nombre");
             return "error";
@@ -91,17 +94,17 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("message", "Al menos un ejercicio debe ser seleccionado");
             return "error";
         }
-        User user = userServices.findByName(userSession.getName()).get();
-        routine = new RoutineDTO((long)0,name, description, day, exercise, user);
+        UserDTO user = userServices.findByName(userSession.getName()).get();
+        routineDTO = new RoutineDTO((long)0,name, description, day, exercise, user);
         userServices.addRoutine(user,routine);
-        routineServices.save(routine);
-        routineServices.saveExercises(exercise, routine);
+        routineServices.save(routineDTO);
+        routineServices.saveExercises(exercise, routineSimpleDTO);
         return "routines/routineSaved";
     }
     
     @PostMapping("/routine/view")
     public String viewRoutine(Model model,HttpSession session){
-        List<Routine> routines;
+        List<RoutineSimpleDTO> routines;
         if(userSession.isLoggedIn()){
             routines = routineServices.findByUser(userServices.findByName(userSession.getName()).get());
             model.addAttribute("routines", routines);
@@ -114,7 +117,7 @@ public class RoutineController implements CommandLineRunner{
 
     @GetMapping("/routine/view/{id}")
     public String routineViewer(Model model,@PathVariable Long id){
-        Optional<Routine> routine = routineServices.findById(id);
+        Optional<RoutineSimpleDTO> routine = routineServices.findById(id);
         if(routine.isPresent()){
             model.addAttribute("routine", routine.get());
             model.addAttribute("isLogged", userSession.isLoggedIn());
@@ -126,11 +129,11 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/delete/{id}")
     public String deleteRoutine(Model model, @PathVariable Long id) {
-        Optional<Routine> optionalRoutine = routineServices.findById(id);
+        Optional<RoutineSimpleDTO> optionalRoutine = routineServices.findById(id);
         if (optionalRoutine.isPresent()) {
-            Routine routine = optionalRoutine.get();
+            RoutineSimpleDTO routine = optionalRoutine.get();
             if (userSession.isLoggedIn()) {
-                User user = userServices.findByName(userSession.getName()).get();
+                UserDTO user = userServices.findByName(userSession.getName()).get();
                 userServices.deleteRoutine(user, routine);
                 routineServices.deleteUser(routine,user);
                 routineServices.removeExercises(routine);

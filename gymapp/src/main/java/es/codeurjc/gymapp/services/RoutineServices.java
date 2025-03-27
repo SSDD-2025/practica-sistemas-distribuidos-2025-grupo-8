@@ -64,7 +64,8 @@ public class RoutineServices {
         return mapperRoutine.toSimpleDTOs(routineRepository.findByName(name));
     }
 
-    public List<RoutineSimpleDTO> findByUser(User user){
+    public List<RoutineSimpleDTO> findByUser(UserDTO userDTO){
+        User user = mapperUser.toDomain(userDTO);
         return mapperRoutine.toSimpleDTOs(routineRepository.findByUserMember(user));
     }
 
@@ -91,7 +92,7 @@ public class RoutineServices {
         User user = mapperUser.toDomain(userDTO);
         routineRepository.deleteAll(user.getRoutines());
         user.getRoutines().clear();
-        userServices.save(user);
+        userServices.save(userDTO);
     }
 
     public void saveExercises(Set<ExerciseSimpleDTO> exerciseDTO, RoutineSimpleDTO routineDTO){
