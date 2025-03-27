@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.model.Comment;
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
@@ -56,7 +57,7 @@ public class TrainerServices {
         trainerRepository.save(trainer);
     }
 
-    public void addCommentToTrainer(Trainer trainer, User user, String message){
+    public void addCommentToTrainer(Trainer trainer, UserDTO user, String message){
         Comment comment = new Comment(message);
         commentServices.save(trainer, comment, user);
     }
