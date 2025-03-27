@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.boot.CommandLineRunner;
 
+import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
@@ -65,7 +66,8 @@ public class UserController implements CommandLineRunner {
 	@Override
     public void run(String... args) throws Exception {
 		if(userServices.count() == 0){
-			userServices.save(new User("admin", "admin", true));
+			UserDTO user = userServices.toDTO(new User("admin", "admin", true));
+			userServices.save(user);
 		}
     }  
 	
