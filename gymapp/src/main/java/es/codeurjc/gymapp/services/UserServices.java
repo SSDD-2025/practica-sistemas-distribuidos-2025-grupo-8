@@ -77,4 +77,7 @@ public class UserServices {
         user.getRoutines().remove(routine);
         userRepository.save(user);
     }
+    public UserDTO toDTO(User user){
+        return userMapper.toDTO(user);
+    }
 }
