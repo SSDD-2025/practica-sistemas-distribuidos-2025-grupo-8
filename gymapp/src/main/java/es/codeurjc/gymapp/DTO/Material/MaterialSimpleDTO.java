@@ -1,5 +1,5 @@
 package es.codeurjc.gymapp.DTO.Material;
 
-public record MaterialSimpleDTO(String name) {
+public record MaterialSimpleDTO(Long id, String name) {
 
 }

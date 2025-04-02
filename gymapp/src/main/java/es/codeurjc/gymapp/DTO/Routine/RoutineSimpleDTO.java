@@ -1,5 +1,5 @@
 package es.codeurjc.gymapp.DTO.Routine;
 
-public record RoutineSimpleDTO(String name, String description, String day) {
+public record RoutineSimpleDTO(Long id, String name, String description, String day) {
 
 }
