@@ -19,6 +19,7 @@ import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
+import es.codeurjc.gymapp.DTO.User.UserSimpleDTO;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
@@ -94,10 +95,11 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("message", "Al menos un ejercicio debe ser seleccionado");
             return "error";
         }
-        UserDTO user = userServices.findByName(userSession.getName()).get();
-        routineDTO = new RoutineDTO((long)0,name, description, day, exercise, user);
+        UserDTO userDTO = userServices.findByName(userSession.getName()).get();
+        UserSimpleDTO userSimpleDTO = userServices.findByNameSimple(userSession.getName()).get();
+        routineDTO = new RoutineDTO((long)0,name, description, day, exercise, userSimpleDTO);
         routineSimpleDTO = new RoutineSimpleDTO((long)0,name, description, day);
-        userServices.addRoutine(user,routineDTO);
+        userServices.addRoutine(userDTO,routineDTO);
         routineServices.save(routineDTO);
         routineServices.saveExercises(exercise, routineSimpleDTO);
         return "routines/routineSaved";

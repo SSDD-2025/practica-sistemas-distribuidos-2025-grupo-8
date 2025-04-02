@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.DTO.User.UserMapper;
+import es.codeurjc.gymapp.DTO.User.UserSimpleDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineMapper;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
@@ -63,6 +64,10 @@ public class UserServices {
 
     public Optional<UserDTO> findByName(String name) {
         return Optional.of(userMapper.toDTO(userRepository.findByName(name).get()));
+    }
+
+    public Optional<UserSimpleDTO> findByNameSimple(String name) {
+        return Optional.of(userMapper.toSimpleDTO(userRepository.findByName(name).get()));
     }
 
     public void addRoutine(UserDTO userDTO, RoutineDTO routineDTO) {

@@ -14,7 +14,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.DTO.Material.MaterialDTO;
-import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.MaterialServices;
 
