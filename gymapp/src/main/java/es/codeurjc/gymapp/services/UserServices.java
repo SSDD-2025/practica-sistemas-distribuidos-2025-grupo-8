@@ -57,6 +57,10 @@ public class UserServices {
         User user = userMapper.toDomain(userDTO);
         userRepository.save(user);
     }
+    
+    void save(User user){
+        userRepository.save(user);
+    }
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);

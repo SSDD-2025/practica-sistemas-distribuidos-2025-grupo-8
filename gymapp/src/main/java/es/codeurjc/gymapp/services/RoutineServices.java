@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseMapper;
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
@@ -121,7 +122,7 @@ public class RoutineServices {
         this.removeExercises(routineSimpleDTO);
         this.deleteExercises(routineDTO);
         HashSet<ExerciseSimpleDTO> exercises = new HashSet<ExerciseSimpleDTO>();
-        exercises.addAll(mapperExercise.toSimpleDTOs(exerciseServices.findAllById(exerciseIds)));
+        exercises.addAll(toSimple(exerciseServices.findAllById(exerciseIds)));
         this.addExercises(routineDTO, exercises);
         this.save(routineDTO);
         this.saveExercises(routineDTO.exercises(), routineSimpleDTO);
@@ -137,5 +138,10 @@ public class RoutineServices {
             routineRepository.save(routine);
         }
         exercise.setRoutine(new ArrayList<>());
+    }
+
+    private List<ExerciseSimpleDTO> toSimple(List<ExerciseDTO> ex){
+        List<Exercise> ex1 = mapperExercise.toDomainsDTO(ex);
+        return mapperExercise.toSimpleDTOs(ex1);
     }
 }

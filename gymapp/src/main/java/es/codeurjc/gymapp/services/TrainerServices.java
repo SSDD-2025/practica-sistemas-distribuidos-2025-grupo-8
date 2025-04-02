@@ -9,7 +9,10 @@ import java.util.Optional;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
+import es.codeurjc.gymapp.DTO.Trainer.TrainerMapper;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
+import es.codeurjc.gymapp.DTO.User.UserMapper;
 import es.codeurjc.gymapp.model.Comment;
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
@@ -24,6 +27,15 @@ public class TrainerServices {
     @Autowired
     private CommentService commentServices;
 
+    @Autowired
+    private UserServices userServices;
+
+    @Autowired
+    private UserMapper mapperUser;
+
+    @Autowired
+    private TrainerMapper mapperTrainer;
+
     public TrainerServices() {
         // trainerRepository.save(new Trainer());
         // trainerRepository.save(new Trainer());
@@ -33,8 +45,12 @@ public class TrainerServices {
         return trainerRepository.count();
     }
 
-    public Optional<Trainer> findById(Long id) {
+    Optional<Trainer> findById(Long id) {
         return trainerRepository.findById(id);
+    }
+
+    public Optional<TrainerDTO> findDTOById(Long id) {
+        return Optional.of(mapperTrainer.toDTO(trainerRepository.findById(id).get()));
     }
 
     public void save(Trainer trainer) {
@@ -57,7 +73,8 @@ public class TrainerServices {
         trainerRepository.save(trainer);
     }
 
-    public void addCommentToTrainer(Trainer trainer, UserDTO user, String message){
+    public void addCommentToTrainer(TrainerDTO trainerDTO, UserDTO user, String message){
+        Trainer trainer = mapperTrainer.toDomain(trainerDTO);
         Comment comment = new Comment(message);
         commentServices.save(trainer, comment, user);
     }
@@ -71,5 +88,32 @@ public class TrainerServices {
             commentDeleted = commentServices.delete(commentId, trainer);
         }
         return commentDeleted;
+    }
+
+    public void addOrReplace(UserDTO userDTO, TrainerDTO trainerDTO){
+        User user = mapperUser.toDomain(userDTO);
+        Trainer trainer = mapperTrainer.toDomain(trainerDTO);
+        user.setTrainer(trainer);
+        userServices.save(user);
+        trainer.addUser(user);
+        save(trainer);
+    }
+
+    public void deleteTrainer(TrainerDTO trainer, Long id){
+        for (User user : mapperUser.toDomainsFromSimple(trainer.users())) {
+            user.setTrainer(null);
+            userServices.save(user);
+        }
+        deleteById(id); 
+    }
+
+    public void setImageFile(TrainerDTO trainerDTO, MultipartFile image) throws IOException {
+        Trainer trainer = mapperTrainer.toDomain(trainerDTO);
+        if (image.isEmpty()) {
+            trainer.setImageFile(null);
+        } else {
+            trainer.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
+        }
+		save(trainer, image);
     }
 }

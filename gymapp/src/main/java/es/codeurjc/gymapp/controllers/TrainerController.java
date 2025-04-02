@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
+import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.model.Comment;
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
@@ -87,8 +89,8 @@ public class TrainerController implements CommandLineRunner {
         if(!iterable.iterator().hasNext()) return "trainers/noTrainer";
         model.addAttribute("trainers", iterable);
         if(userSession.isLoggedIn()) {
-            User user = userServices.findByName(userSession.getName()).get();
-            if(user.getTrainer() != null) model.addAttribute("personalTrainer", user.getTrainer().getName());
+            UserDTO user = userServices.findByName(userSession.getName()).get();
+            if(user.trainer() != null) model.addAttribute("personalTrainer", user.trainer().getName());
             else model.addAttribute("personalTrainer", "Ninguno, selecciona uno");
         }
         else{
@@ -99,7 +101,7 @@ public class TrainerController implements CommandLineRunner {
 
     @RequestMapping("/trainer/{id}")
     public String getTrainer(Model model, @PathVariable Long id) {
-        Optional<Trainer> trainer = trainerServices.findById(id);
+        Optional<TrainerDTO> trainer = trainerServices.findDTOById(id);
         model.addAttribute("trainer", trainer.get());
         model.addAttribute("logged", userSession.isLoggedIn());
         return "trainers/trainerDetails"; 
@@ -107,12 +109,9 @@ public class TrainerController implements CommandLineRunner {
 
     @PostMapping("/trainer/{id}/addOrReplace")
     public String addOrReplace(Model model, @PathVariable Long id) { //select personal trainer 
-        Optional<Trainer> trainer = trainerServices.findById(id);
-        User user = userServices.findByName(userSession.getName()).get();
-        user.setTrainer(trainer.get());
-        userServices.save(user);
-        trainer.get().addUser(user);
-        trainerServices.save(trainer.get()); 
+        Optional<TrainerDTO> trainer = trainerServices.findDTOById(id);
+        UserDTO user = userServices.findByName(userSession.getName()).get();
+        trainerServices.addOrReplace(user,trainer.get()); 
         model.addAttribute("message", "Entrenador personal cambiado correctamente");     
         return "trainers/trainerMessage"; 
     }
@@ -124,24 +123,20 @@ public class TrainerController implements CommandLineRunner {
 
     @PostMapping("/trainer/{id}/delete")
 	public String deleteTrainer(Model model, @PathVariable Long id) {		
-		Optional<Trainer> trainer = trainerServices.findById(id);
-        for (User user : trainer.get().getUsers()) {
-            user.setTrainer(null);
-            userServices.save(user);
-        }
-        trainerServices.deleteById(id); 
+		Optional<TrainerDTO> trainer = trainerServices.findDTOById(id);
+        trainerServices.deleteTrainer(trainer.get(),id);
         model.addAttribute("message", "Entrenador eliminado correctamente");  
         return "trainers/trainerMessage";
     }
 
     @RequestMapping("/trainer/{id}/comments")
     public String showComments(Model model, @PathVariable Long id) {
-        Optional<Trainer> opTrainer = trainerServices.findById(id);
+        Optional<TrainerDTO> opTrainer = trainerServices.findDTOById(id);
         if (opTrainer.isPresent()){
-            Trainer trainer = opTrainer.get();
+            TrainerDTO trainer = opTrainer.get();
             model.addAttribute("logged", userSession.isLoggedIn());
             model.addAttribute("trainerId", id);
-            model.addAttribute("comments", trainer.getComments());
+            model.addAttribute("comments", trainer.comments());
             return "trainers/trainerComments";
         }
         model.addAttribute("message", "No se ha encontrado el entrenador");
@@ -151,10 +146,10 @@ public class TrainerController implements CommandLineRunner {
 
     @PostMapping("/trainer/{id}/comments/add")
     public String addComment(Model model, @PathVariable Long id){
-        Optional<Trainer> opTrainer = trainerServices.findById(id);
+        Optional<TrainerDTO> opTrainer = trainerServices.findDTOById(id);
         if (opTrainer.isPresent()){
             model.addAttribute("id", id);
-            model.addAttribute("trainerName", opTrainer.get().getName());
+            model.addAttribute("trainerName", opTrainer.get().name());
             return "trainers/trainerComments_add";
         }
         return "error";
@@ -162,10 +157,10 @@ public class TrainerController implements CommandLineRunner {
 
     @PostMapping("/trainer/{id}/comments/save")
     public String saveComment(Model model, @PathVariable long id, @RequestParam String message){
-        Optional<Trainer> opTrainer = trainerServices.findById(id);
+        Optional<TrainerDTO> opTrainer = trainerServices.findDTOById(id);
         if (opTrainer.isPresent()){
             Comment comment = new Comment(message);
-            User user = userServices.findByName(userSession.getName()).get();
+            UserDTO user = userServices.findByName(userSession.getName()).get();
             trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
             return "redirect:/trainer/{id}/comments";
         }
@@ -201,22 +196,17 @@ public class TrainerController implements CommandLineRunner {
 
     @PostMapping("/trainer/image/{id}")
 	public String changeImage(Model model, @RequestParam MultipartFile image, @PathVariable Long id) throws IOException {
-		Optional<Trainer> trainer = trainerServices.findById(id);
-		if (image.isEmpty()) {
-            trainer.get().setImageFile(null);
-        } else {
-            trainer.get().setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
-        }
-		trainerServices.save(trainer.get(), image);
+		Optional<TrainerDTO> trainer = trainerServices.findDTOById(id);
+        trainerServices.setImageFile(trainer.get(), image);
 		return "index"; 
 	}
 
     @GetMapping("/trainer/image/{id}")
 	public ResponseEntity<Object> downloadImage(@PathVariable Long id) throws SQLException {
-        Optional<Trainer> trainer = trainerServices.findById(id);
+        Optional<TrainerDTO> trainer = trainerServices.findDTOById(id);
         if(!trainer.isPresent()) return ResponseEntity.notFound().build();
 
-        Blob image = trainer.get().getImageFile();
+        Blob image = trainer.get().imageFile();
         if(image == null) return ResponseEntity.notFound().build();
 
         Resource file = new InputStreamResource(image.getBinaryStream());

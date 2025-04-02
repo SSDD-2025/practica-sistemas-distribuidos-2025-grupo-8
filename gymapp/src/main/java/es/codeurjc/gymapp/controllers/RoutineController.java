@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
 import es.codeurjc.gymapp.DTO.Material.MaterialSimpleDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
@@ -58,11 +59,11 @@ public class RoutineController implements CommandLineRunner{
             materialServices.save(new MaterialSimpleDTO(0L, "Barra de dominadas"));
         }
         if(exerciseServices.count() == 0){
-            exerciseServices.save(new Exercise("Curl de biceps con mancuernas", "De pie o sentado"));
-            exerciseServices.save(new Exercise("Press francés con mancuernas", "Ideal para el tríceps"));
-            exerciseServices.save(new Exercise("Press de banca", "Pecho",materialServices.findByName("Banco").get()));
-            exerciseServices.save(new Exercise("Sentadillas", "Piernas",materialServices.findByName("Barra").get()));
-            exerciseServices.save(new Exercise("Dominadas", "Espalda",materialServices.findByName("Barra de dominadas").get()));
+            /*exerciseServices.save(new ExerciseDTO("Curl de biceps con mancuernas", "De pie o sentado"));
+            exerciseServices.save(new ExerciseDTO("Press francés con mancuernas", "Ideal para el tríceps"));
+            exerciseServices.save(new ExerciseDTO("Press de banca", "Pecho",materialServices.findByName("Banco").get()));
+            exerciseServices.save(new ExerciseDTO("Sentadillas", "Piernas",materialServices.findByName("Barra").get()));
+            exerciseServices.save(new ExerciseDTO("Dominadas", "Espalda",materialServices.findByName("Barra de dominadas").get()));*/
         }
     }   
     
@@ -73,7 +74,7 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/create")
     public String createRoutine(Model model) {
-        List<Exercise> exercises = exerciseServices.findByMaterialIsNotNull();
+        List<ExerciseDTO> exercises = exerciseServices.findByMaterialIsNotNull();
         model.addAttribute("isLogged", userSession.isLoggedIn());
         model.addAttribute("exercises", exercises);
         return "routines/routineCreate";
