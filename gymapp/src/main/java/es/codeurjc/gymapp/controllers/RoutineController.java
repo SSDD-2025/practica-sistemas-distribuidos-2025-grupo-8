@@ -1,7 +1,4 @@
 package es.codeurjc.gymapp.controllers;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,18 +19,12 @@ import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.DTO.User.UserSimpleDTO;
-import es.codeurjc.gymapp.model.Exercise;
-import es.codeurjc.gymapp.model.Material;
-import es.codeurjc.gymapp.model.Routine;
-import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.MaterialServices;
 import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
 import jakarta.servlet.http.HttpSession;
-
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
