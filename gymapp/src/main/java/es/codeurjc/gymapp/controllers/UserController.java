@@ -65,7 +65,7 @@ public class UserController implements CommandLineRunner {
 	@Override
     public void run(String... args) throws Exception {
 		if(userServices.count() == 0){
-			userServices.save(new User("admin", "admin", true));
+			userServices.save(new User("admin", "admin", true, List.of("ADMIN")));
 		}
     }  
 	
@@ -85,6 +85,7 @@ public class UserController implements CommandLineRunner {
 	}
 
 	@PostMapping("/account/login")
+		/*
 	public String sessionInit(Model model, @RequestParam String name, @RequestParam String password) {
 		if (name.isEmpty() || password.isEmpty()) {
 			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
@@ -104,6 +105,14 @@ public class UserController implements CommandLineRunner {
 		model.addAttribute("message", "Sesión iniciada con éxito");
 		return "account/accountMessage";
 	}
+		*/
+	public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+		if (error != null) {
+			model.addAttribute("error", true);
+		}
+		return "account"; // Renderiza login.mustache
+	}
+	
 
 	@GetMapping("/register/create")
 	public String register(Model model) {
@@ -130,9 +139,11 @@ public class UserController implements CommandLineRunner {
 
 	@PostMapping("/account/logout")
 	public String sessionExit(Model model) {
+		/* 
 		userSession.logout();
 		model.addAttribute("message", "Sesión cerrada");
-		return "account/accountMessage";
+		*/
+		return "account/logout";
 	}
 
 	@PostMapping("/account/deleteAccount")

@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 import java.nio.file.Path;
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Entity
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +20,7 @@ public class User{
     @Column(unique = true)
     private String name;
     private String password;
+    private String encodedPassword;
     @Lob
     private Blob imageFile;
     @ManyToOne
@@ -27,23 +29,24 @@ public class User{
     private List<Routine> routines;
     private Boolean isAdmin;
 
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
+
     @OneToMany(mappedBy="author")
     private List<Comment> comments;
 
-    public User(){
-        
-    }
     // Constructor
-    public User(String name, String password, Boolean isAdmin) {
+    public User(String name, String password, Boolean isAdmin, List<String> roles) {
         this.name = name;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.roles = roles;
         this.trainer = null;
         this.routines = new ArrayList<>();
     }
     
     public User(String name, String password) {
-        this(name, password, false);
+        this(name, password, false, new ArrayList<String>());
     }
 
     // Getters and Setters
@@ -117,5 +120,13 @@ public class User{
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+    
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public String getEncodedPassword() {
+        return encodedPassword;
     }
 }
