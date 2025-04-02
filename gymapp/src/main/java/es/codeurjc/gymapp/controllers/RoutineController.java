@@ -96,7 +96,7 @@ public class RoutineController implements CommandLineRunner{
         }
         UserDTO user = userServices.findByName(userSession.getName()).get();
         routineDTO = new RoutineDTO((long)0,name, description, day, exercise, user);
-        routineSimpleDTO = new RoutineSimpleDTO(name, description, day);
+        routineSimpleDTO = new RoutineSimpleDTO((long)0,name, description, day);
         userServices.addRoutine(user,routineDTO);
         routineServices.save(routineDTO);
         routineServices.saveExercises(exercise, routineSimpleDTO);
