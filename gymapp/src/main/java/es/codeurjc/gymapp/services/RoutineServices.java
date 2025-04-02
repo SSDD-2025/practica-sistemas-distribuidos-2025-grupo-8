@@ -52,6 +52,10 @@ public class RoutineServices {
         return Optional.of(mapperRoutine.toSimpleDTO(routineRepository.findById(id).get()));
     }
 
+    public Optional<RoutineDTO> findByIdNotSimple(Long id) {
+        return Optional.of(mapperRoutine.toDTO(routineRepository.findById(id).get()));
+    }
+
     public void save(RoutineDTO routine) {
         routineRepository.save(mapperRoutine.toDomain(routine));
     }

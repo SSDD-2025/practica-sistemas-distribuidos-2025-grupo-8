@@ -5,7 +5,8 @@ import java.util.List;
 
 import es.codeurjc.gymapp.model.*;
 
-public record UserDTO(Long id, String name, Blob imageFile, Trainer trainer
-                    , List<Routine> routines, Boolean isAdmin, List<Comment> comments) {
+public record UserDTO(Long id, String name, String password, Blob imageFile, 
+                        Trainer trainer, List<Routine> routines, Boolean isAdmin, 
+                        List<Comment> comments) {
 
 }
