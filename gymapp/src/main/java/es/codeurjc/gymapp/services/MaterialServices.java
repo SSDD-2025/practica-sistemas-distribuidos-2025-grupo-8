@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import es.codeurjc.gymapp.DTO.Material.MaterialDTO;
 import es.codeurjc.gymapp.DTO.Material.MaterialMapper;
+import es.codeurjc.gymapp.DTO.Material.MaterialSimpleDTO;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.repositories.MaterialRepository;
@@ -55,6 +56,11 @@ public class MaterialServices {
     }
 
     public void save(MaterialDTO materialDTO) {
+        Material material = toDomain(materialDTO);
+        materialRepository.save(material);
+    }
+
+    public void save(MaterialSimpleDTO materialDTO) {
         Material material = toDomain(materialDTO);
         materialRepository.save(material);
     }
@@ -105,6 +111,9 @@ public class MaterialServices {
     }
 
     private Material toDomain(MaterialDTO materialDTO) {
+        return materialMapper.toDomain(materialDTO);
+    }
+    private Material toDomain(MaterialSimpleDTO materialDTO) {
         return materialMapper.toDomain(materialDTO);
     }
 }

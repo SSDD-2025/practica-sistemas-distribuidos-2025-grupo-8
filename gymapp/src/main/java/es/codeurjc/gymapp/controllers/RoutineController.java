@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
+import es.codeurjc.gymapp.DTO.Material.MaterialSimpleDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
@@ -52,9 +53,9 @@ public class RoutineController implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
         if(materialServices.count() == 0){
-            materialServices.save(new Material("Barra"));
-            materialServices.save(new Material("Banco"));
-            materialServices.save(new Material("Barra de dominadas"));
+            materialServices.save(new MaterialSimpleDTO(0L, "Barra"));
+            materialServices.save(new MaterialSimpleDTO(0L, "Banco"));
+            materialServices.save(new MaterialSimpleDTO(0L, "Barra de dominadas"));
         }
         if(exerciseServices.count() == 0){
             exerciseServices.save(new Exercise("Curl de biceps con mancuernas", "De pie o sentado"));
