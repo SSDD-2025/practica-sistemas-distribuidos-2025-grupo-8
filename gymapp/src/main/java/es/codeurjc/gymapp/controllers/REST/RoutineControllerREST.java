@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.RESTcontrollers;
+package es.codeurjc.gymapp.controllers.REST;
 
 import java.net.URI;
 import java.util.Collection;
