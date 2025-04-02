@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -88,8 +87,7 @@ public class MaterialServices {
         }
     }
 
-    public void deleteExerciseFromMaterial(MaterialDTO materialDTO, Long exerciseId) {
-        Material material = toDomain(materialDTO);
+    public void deleteExerciseFromMaterial(Material material, Long exerciseId) {
         Exercise exercise = exerciseServices.findById(exerciseId).orElseThrow(() -> 
             new IllegalArgumentException("Exercise with ID " + exerciseId + " not found"));
         material.getExercises().remove(exercise);

@@ -77,7 +77,7 @@ public class RoutineServices {
 
     public void addExercises(RoutineDTO routineDTO , Set<ExerciseSimpleDTO> exercisesDTO){
         Routine routine = mapperRoutine.toDomain(routineDTO);
-        Set<Exercise> exercises = mapperExercise.toDomains(exercisesDTO);
+        Set<Exercise> exercises = new HashSet<Exercise>(mapperExercise.toDomains(exercisesDTO));
         routine.addExercises(exercises);
         routineRepository.save(routine);
     }
@@ -96,7 +96,7 @@ public class RoutineServices {
     }
 
     public void saveExercises(Set<ExerciseSimpleDTO> exerciseDTO, RoutineSimpleDTO routineDTO){
-        Set<Exercise> exercise = mapperExercise.toDomains(exerciseDTO);
+        List<Exercise> exercise = mapperExercise.toDomains(exerciseDTO);
         Routine routine = mapperRoutine.toDomain(routineDTO);
         for(Exercise ex : exercise){
             exerciseServices.addRoutine(routine, ex);
@@ -116,7 +116,9 @@ public class RoutineServices {
         RoutineSimpleDTO routineSimpleDTO = mapperRoutine.toSimpleDTO(mapperRoutine.toDomain(routineDTO));
         this.removeExercises(routineSimpleDTO);
         this.deleteExercises(routineDTO);
-        this.addExercises(routineDTO, exerciseServices.listToSet(mapperExercise.toSimpleDTOs(exerciseServices.findAllById(exerciseIds))));
+        HashSet<ExerciseSimpleDTO> exercises = new HashSet<ExerciseSimpleDTO>();
+        exercises.addAll(mapperExercise.toSimpleDTOs(exerciseServices.findAllById(exerciseIds)));
+        this.addExercises(routineDTO, exercises);
         this.save(routineDTO);
         this.saveExercises(routineDTO.exercises(), routineSimpleDTO);
     }
@@ -131,9 +133,5 @@ public class RoutineServices {
             routineRepository.save(routine);
         }
         exercise.setRoutine(new ArrayList<>());
-    }
-
-    public void updateValues(RoutineSimpleDTO routineSimpleDTO, String name, String description, String day){
-        routineSimpleDTO.day() = day;
     }
 }

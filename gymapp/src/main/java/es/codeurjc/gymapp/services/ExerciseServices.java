@@ -3,16 +3,12 @@ package es.codeurjc.gymapp.services;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseMapper;
-import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
@@ -65,7 +61,7 @@ public class ExerciseServices{
         }
 
         if (exercise.getMaterial() != null){
-            materialServices.deleteExerciseFromMaterial(exercise.getMaterial(), exercise);
+            materialServices.deleteExerciseFromMaterial(exercise.getMaterial(), exercise.getId());
         }
         exerciseRepository.delete(exercise);
     }
@@ -84,15 +80,6 @@ public class ExerciseServices{
 
     public List<Exercise> findAllById(List<Long> id){
         return exerciseRepository.findAllById(id);
-    }
-
-    public Set<ExerciseSimpleDTO> listToSet(List<ExerciseSimpleDTO> listDTO){
-        Set<Exercise> list = mapperExercise.toDomains(listDTO);
-        Set<Exercise> set = new HashSet<>();
-        for(Exercise elem : list){
-            set.add(elem);
-        }
-        return mapperExercise.toSimpleDTOsSet(set);
     }
 
     public void addRoutine(Routine routine, Exercise exercise){
