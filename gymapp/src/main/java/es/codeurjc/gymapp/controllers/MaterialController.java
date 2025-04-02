@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.DTO.Material.MaterialDTO;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.MaterialServices;
@@ -32,10 +34,15 @@ public class MaterialController {
 
     @GetMapping("/machinery/{id}")
     public String showMachinery(Model model, @PathVariable long id) {
-        Material material =  materialServices.findById(id).get();
-        model.addAttribute("machinery", material);
-        model.addAttribute("exercises", material.getExercises());
-        return "machinery/machinery_show";
+        Optional<MaterialDTO> opMaterial = materialServices.findById(id);
+        if (opMaterial.isPresent()){
+            MaterialDTO material = opMaterial.get();
+            model.addAttribute("machinery", material);
+            model.addAttribute("exercises", material.exercises());
+            return "machinery/machinery_show";
+        }
+        model.addAttribute("message", "No se ha encontrado la maquinaria");
+        return "error";
     }
 
     @PostMapping("/machinery/save")

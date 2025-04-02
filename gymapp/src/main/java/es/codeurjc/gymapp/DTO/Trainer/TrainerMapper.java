@@ -10,5 +10,11 @@ import es.codeurjc.gymapp.model.Trainer;
 public interface TrainerMapper {
     TrainerDTO toDTO(Trainer trainer);
     List<TrainerDTO> toDTOs(Collection<Trainer> trainers);
+    TrainerSimpleDTO toSimpleDTO(Trainer trainer);
+    List<TrainerSimpleDTO> toSimpleDTOs(Collection<Trainer> trainers);
+
     Trainer toDomain(TrainerDTO trainerDTO);
+    Trainer toDomain(TrainerSimpleDTO trainerSimpleDTO);
+    List<Trainer> toDomains(Collection<TrainerDTO> trainerDTOs);
+    List<Trainer> toDomainsSimple(Collection<TrainerSimpleDTO> trainerSimpleDTOs);
 }

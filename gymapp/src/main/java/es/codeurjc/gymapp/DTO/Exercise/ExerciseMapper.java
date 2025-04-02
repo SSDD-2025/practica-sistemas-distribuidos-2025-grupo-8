@@ -9,9 +9,15 @@ import es.codeurjc.gymapp.model.Exercise;
 public interface ExerciseMapper {
 
     ExerciseSimpleDTO toSimpleDTO(Exercise exercise);
-    
-    Exercise toDomain(ExerciseSimpleDTO exerciseSimpleDTO);
-    Set<Exercise> toDomains(Collection<ExerciseSimpleDTO> exercisesDTO);
     List<ExerciseSimpleDTO> toSimpleDTOs(Collection<Exercise> exercises);
     Set<ExerciseSimpleDTO> toSimpleDTOsSet(Collection<Exercise> exercises);
+    
+    ExerciseDTO toDTO(Exercise exercise);
+    List<ExerciseDTO> toDTOs(Collection<Exercise> exercises);
+
+    Exercise toDomain(ExerciseSimpleDTO exerciseSimpleDTO);
+    List<Exercise> toDomains(Collection<ExerciseSimpleDTO> exercisesDTO);
+
+    Exercise toDomain(ExerciseDTO exerciseSimpleDTO);
+    List<Exercise> toDomainsDTO(Collection<ExerciseDTO> exercisesDTO);
 }
