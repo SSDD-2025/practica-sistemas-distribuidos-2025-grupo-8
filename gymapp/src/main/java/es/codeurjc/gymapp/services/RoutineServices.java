@@ -132,4 +132,8 @@ public class RoutineServices {
         }
         exercise.setRoutine(new ArrayList<>());
     }
+
+    public void updateValues(RoutineSimpleDTO routineSimpleDTO, String name, String description, String day){
+        routineSimpleDTO.day() = day;
+    }
 }

@@ -96,7 +96,8 @@ public class RoutineController implements CommandLineRunner{
         }
         UserDTO user = userServices.findByName(userSession.getName()).get();
         routineDTO = new RoutineDTO((long)0,name, description, day, exercise, user);
-        userServices.addRoutine(user,routine);
+        routineSimpleDTO = new RoutineSimpleDTO(name, description, day);
+        userServices.addRoutine(user,routineDTO);
         routineServices.save(routineDTO);
         routineServices.saveExercises(exercise, routineSimpleDTO);
         return "routines/routineSaved";
@@ -179,12 +180,7 @@ public class RoutineController implements CommandLineRunner{
 
         RoutineSimpleDTO routine = optionalRoutine.get();
         //Update of Not DataStructs
-        RoutineSimpleDTO routineSimpleDTO = new RoutineSimpleDTO(id, name, description, day);
         RoutineDTO routineDTO = new RoutineDTO(id, name, description, day, null, null);
-        //TODO: I need to create a method that updates the value of the entity
-        routine.setName(name);
-        routine.setDescription(description);
-        routine.setDay(day);
         //Update the routine
         routineServices.modifyRoutine(routineDTO,exerciseIds);        
         return "redirect:/routine/view/" + id;
