@@ -4,8 +4,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.mapstruct.Mapper;
+
 import es.codeurjc.gymapp.model.Exercise;
 
+@Mapper(componentModel = "spring")
 public interface ExerciseMapper {
 
     ExerciseSimpleDTO toSimpleDTO(Exercise exercise);

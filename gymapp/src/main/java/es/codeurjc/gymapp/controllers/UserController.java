@@ -93,12 +93,12 @@ public class UserController implements CommandLineRunner {
 			return "error";
 		}
 		// name is supposed to be unique as a username
-		Optional<User> user = userServices.findByName(name); 
+		Optional<UserDTO> user = userServices.findByName(name); 
 		if(!user.isPresent()) {
 			model.addAttribute("message", "Usuario no encontrado");
 			return "error";
 		}
-		if(!user.get().getPassword().equals(password)) {
+		if(!user.get().password().equals(password)) {
 			model.addAttribute("message", "Contraseña incorrecta");
 			return "error";
 		}
@@ -118,13 +118,13 @@ public class UserController implements CommandLineRunner {
 			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
 			return "error";
 		}
-		Optional<User> user = userServices.findByName(name);
+		Optional<UserDTO> user = userServices.findByName(name);
 		if(user.isPresent()){
 			model.addAttribute("message", "El usuario ya existe");
 			return "error"; //user was already registered
 		}
 		userSession.setName(name);
-		User newUser = new User(name, password);
+		UserDTO newUser = new UserDTO(null,name, password,null,null,null,null,null);
     	userServices.save(newUser, image);
 		model.addAttribute("message", "Usuario registrado con éxito");
 		return "account/accountMessage";
@@ -139,12 +139,12 @@ public class UserController implements CommandLineRunner {
 
 	@PostMapping("/account/deleteAccount")
 	public String sessionDelete(Model model) {
-		Optional<User> optionalUser = userServices.findByName(userSession.getName());
+		Optional<UserDTO> optionalUser = userServices.findByName(userSession.getName());
 		if (!optionalUser.isPresent()) {
 			model.addAttribute("message", "Usuario no encontrado");
 			return "error";
 		}
-		User user = optionalUser.get();
+		UserDTO user = optionalUser.get();
 
 		// Delete routines from exercises
 		exerciseServices.deleteRoutinesFromExercise(user);
@@ -153,7 +153,7 @@ public class UserController implements CommandLineRunner {
 		// Delete all comments
 		commentServices.deleteAllComments(user);
 		// Delete user
-		userServices.deleteById(user.getId());
+		userServices.deleteById(user.id());
 		userSession.logout();
 		model.addAttribute("message", "Cuenta eliminada con éxito");
 		return "account/accountMessage";
@@ -162,22 +162,17 @@ public class UserController implements CommandLineRunner {
 	
 	@PostMapping("/account/image")
 	public String changeImage(Model model, @RequestParam MultipartFile image) throws IOException {
-		Optional<User> user = userServices.findByName(userSession.getName());
-		if (image.isEmpty()) {
-            user.get().setImageFile(null);
-        } else {
-            user.get().setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
-        }
-		userServices.save(user.get(), image);
+		Optional<UserDTO> user = userServices.findByName(userSession.getName());
+		userServices.setImageFile(user.get(), image);
 		model.addAttribute("message", "Imagen cambiada con éxito");
 		return "account/accountMessage"; 
 	}
 
 	@GetMapping("/user/image")
 	public ResponseEntity<Object> downloadImage() throws SQLException {;		
-		Optional<User> user = userServices.findByName(userSession.getName());
-		if (user.isPresent() && user.get().getImageFile() != null) {			
-			Blob image = user.get().getImageFile();
+		Optional<UserDTO> user = userServices.findByName(userSession.getName());
+		if (user.isPresent() && user.get().imageFile() != null) {			
+			Blob image = user.get().imageFile();
 			Resource file = new InputStreamResource(image.getBinaryStream());
 			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
 					.contentLength(image.length()).body(file);
@@ -188,7 +183,7 @@ public class UserController implements CommandLineRunner {
 
 	@PostMapping("/admin/users")
 	public String showUsers(Model model){
-		List<User> users = userServices.findAll();
+		List<UserDTO> users = userServices.findAll();
 		model.addAttribute("users", users);
 		return "account/show_users";
 	}

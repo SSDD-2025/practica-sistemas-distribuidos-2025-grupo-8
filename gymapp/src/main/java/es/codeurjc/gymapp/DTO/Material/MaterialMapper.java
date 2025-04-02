@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface MaterialMapper {
     Material toDomain(MaterialDTO materialDTO);
     Material toDomain(MaterialSimpleDTO materialSimpleDTO);

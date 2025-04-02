@@ -16,7 +16,9 @@ import es.codeurjc.gymapp.DTO.User.UserSimpleDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineMapper;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
+import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.model.Routine;
+import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.repositories.RoutineRepository;
 import es.codeurjc.gymapp.repositories.UserRepository;
@@ -29,6 +31,7 @@ public class UserServices {
 
     @Autowired
     private UserMapper userMapper;
+    
     @Autowired
     private RoutineMapper routineMapper;
 
@@ -46,6 +49,14 @@ public class UserServices {
 
     public void save(UserDTO userDTO, MultipartFile imageFile) throws IOException{
         User user = userMapper.toDomain(userDTO);
+        if(!imageFile.isEmpty()) {
+            user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(),
+            imageFile.getSize()));
+        }
+        userRepository.save(user);
+    }
+
+    void save(User user, MultipartFile imageFile) throws IOException{
         if(!imageFile.isEmpty()) {
             user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(),
             imageFile.getSize()));
@@ -89,5 +100,15 @@ public class UserServices {
     }
     public UserDTO toDTO(User user){
         return userMapper.toDTO(user);
+    }
+
+    public void setImageFile(UserDTO userDTO, MultipartFile image) throws IOException {
+        User user = userMapper.toDomain(userDTO);
+        if (image.isEmpty()) {
+            user.setImageFile(null);
+        } else {
+            user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
+        }
+		save(user, image);
     }
 }

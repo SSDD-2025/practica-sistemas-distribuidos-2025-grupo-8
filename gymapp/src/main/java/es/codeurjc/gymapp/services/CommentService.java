@@ -61,7 +61,8 @@ public class CommentService {
         return false;
     }
 
-    public void deleteAllComments(User user) {
+    public void deleteAllComments(UserDTO userDTO) {
+        User user = userMapper.toDomain(userDTO);
         List<Comment> commentsCopy = new ArrayList<>(user.getComments());
         for (Comment comment : commentsCopy){
             this.delete(comment.getId(), comment.getTrainer());
