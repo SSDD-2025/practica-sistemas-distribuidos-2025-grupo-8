@@ -35,15 +35,15 @@ public class MaterialServices {
     }
 
     public Iterable<MaterialDTO> findAll() {
-        return toDtos(materialRepository.findAll());
+        return toDTOs(materialRepository.findAll());
     }
 
     public Optional<MaterialDTO> findById(Long id) {
-        return materialRepository.findById(id).map(this::toDto);
+        return materialRepository.findById(id).map(this::toDTO);
     }
 
     public Optional<MaterialDTO> findByName(String name) {
-        return materialRepository.findByName(name).map(this::toDto);
+        return materialRepository.findByName(name).map(this::toDTO);
     }
 
     public void save(MaterialDTO materialDTO, List<Long> exercises) {
@@ -98,12 +98,12 @@ public class MaterialServices {
         exerciseServices.save(exercise);
     }
 
-    private MaterialDTO toDto(Material material) {
-        return materialMapper.toDto(material);
+    private MaterialDTO toDTO(Material material) {
+        return materialMapper.toDTO(material);
     }
 
-    private List<MaterialDTO> toDtos(Collection<Material> materials) {
-        return materialMapper.toDtos(materials);
+    private List<MaterialDTO> toDTOs(Collection<Material> materials) {
+        return materialMapper.toDTOs(materials);
     }
 
     private Material toDomain(MaterialDTO materialDTO) {
