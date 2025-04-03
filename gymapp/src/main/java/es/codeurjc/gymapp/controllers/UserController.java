@@ -14,6 +14,10 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -40,7 +44,7 @@ import es.codeurjc.gymapp.services.UserServices;
 
 
 @Controller
-public class UserController implements CommandLineRunner {
+public class UserController /*implements CommandLineRunner*/ {
     
 	@Autowired
 	private UserSession userSession;
@@ -62,12 +66,13 @@ public class UserController implements CommandLineRunner {
 		return "index";
 	}
 
-	@Override
+	/*@Override
     public void run(String... args) throws Exception {
 		if(userServices.count() == 0){
 			userServices.save(new User("admin", "admin", true, List.of("ADMIN")));
 		}
-    }  
+    }
+	*/
 	
     @PostMapping("/facilities")
 	public String facilities(Model model) {
@@ -83,9 +88,8 @@ public class UserController implements CommandLineRunner {
 		model.addAttribute("name", userSession.getName()); //maybe add more info about the user
 		return "account/logged";
 	}
-
+	/*
 	@PostMapping("/account/login")
-		/*
 	public String sessionInit(Model model, @RequestParam String name, @RequestParam String password) {
 		if (name.isEmpty() || password.isEmpty()) {
 			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
@@ -106,11 +110,12 @@ public class UserController implements CommandLineRunner {
 		return "account/accountMessage";
 	}
 		*/
+	@PostMapping("/account/login")
 	public String login(@RequestParam(value = "error", required = false) String error, Model model) {
 		if (error != null) {
 			model.addAttribute("error", true);
 		}
-		return "account"; // Renderiza login.mustache
+		return "account"; // Render login.mustache
 	}
 	
 
@@ -130,9 +135,9 @@ public class UserController implements CommandLineRunner {
 			model.addAttribute("message", "El usuario ya existe");
 			return "error"; //user was already registered
 		}
-		userSession.setName(name);
 		User newUser = new User(name, password);
     	userServices.save(newUser, image);
+		userSession.setName(name, password);
 		model.addAttribute("message", "Usuario registrado con éxito");
 		return "account/accountMessage";
 	}

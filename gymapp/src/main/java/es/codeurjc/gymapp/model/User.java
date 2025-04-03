@@ -11,7 +11,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-@Entity
+@Entity(name = "USERS")
 public class User {
 
     @Id
@@ -27,7 +27,7 @@ public class User {
     private Trainer trainer;
     @OneToMany(mappedBy="userMember")
     private List<Routine> routines;
-    private Boolean isAdmin;
+    //private Boolean isAdmin;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
@@ -35,18 +35,25 @@ public class User {
     @OneToMany(mappedBy="author")
     private List<Comment> comments;
 
-    // Constructor
-    public User(String name, String password, Boolean isAdmin, List<String> roles) {
+    //CAMBIAR
+    public User(String name, String password, /*Boolean isAdmin,*/ List<String> roles) {
         this.name = name;
         this.password = password;
-        this.isAdmin = isAdmin;
+        //this.isAdmin = isAdmin;
         this.roles = roles;
         this.trainer = null;
         this.routines = new ArrayList<>();
     }
-    
+
+    public User(String name, String encodedPassword, String... roles) {
+        this.name = name;
+        this.encodedPassword = encodedPassword;
+        this.roles = List.of(roles); // Convertir el array de roles en una lista
+    }
+
+    //CAMBIAR
     public User(String name, String password) {
-        this(name, password, false, new ArrayList<String>());
+        this(name, password, /*false,*/ new ArrayList<String>());
     }
 
     // Getters and Setters
@@ -98,13 +105,13 @@ public class User {
         this.imageFile = imageFile;
     }
     
-    public Boolean getIsAdmin() {
+    /*public Boolean getIsAdmin() {
         return isAdmin;
     }
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
-    }
+    }*/
 
     public void addRoutine(Routine routine) {
         this.routines.add(routine);
@@ -126,7 +133,15 @@ public class User {
         return roles;
     }
 
+    public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
     public String getEncodedPassword() {
         return encodedPassword;
+    }
+
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
     }
 }

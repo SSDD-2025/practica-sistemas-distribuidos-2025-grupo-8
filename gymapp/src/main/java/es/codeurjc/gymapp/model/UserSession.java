@@ -1,31 +1,41 @@
 package es.codeurjc.gymapp.model;
-import java.sql.Blob;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
-
-import jakarta.persistence.Lob;
 
 @Component
-@SessionScope
-public class UserSession { //separate class to manage the user session
+public class UserSession {
 
-    private String name;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    public String getName(){ 
-        return name; 
-    }
-    public void setName(String username){ 
-        this.name = username; 
-    }
-
-    public boolean isLoggedIn(){ 
-        return name != null; 
-    }
-
-    public void logout(){ 
-        this.name = null; 
+    public String getName() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
     }
 
+    public boolean isLoggedIn() {
+        return getName() != null || getName() != "";
+    }
+
+    public void logout() {
+        SecurityContextHolder.clearContext(); 
+    }
+
+    public void setName(String name, String password) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(name, password);  // Autenticación con el nombre y la contraseña
+		Authentication authenticatedUser = authenticationManager.authenticate(authentication); // Realiza la autenticación
+		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+    }
 }
-
