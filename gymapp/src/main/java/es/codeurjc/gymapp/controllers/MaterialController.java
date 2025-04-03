@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,15 +33,15 @@ public class MaterialController {
 
     @GetMapping("/machinery/{id}")
     public String showMachinery(Model model, @PathVariable long id) {
-        Optional<MaterialDTO> opMaterial = materialServices.findById(id);
-        if (opMaterial.isPresent()){
-            MaterialDTO material = opMaterial.get();
+        try {
+            MaterialDTO material = materialServices.findById(id);
             model.addAttribute("machinery", material);
             model.addAttribute("exercises", material.exercises());
             return "machinery/machinery_show";
+        } catch(IllegalArgumentException e) {
+            model.addAttribute("message", "No se ha encontrado la maquinaria con id: " + id);
+            return "error";
         }
-        model.addAttribute("message", "No se ha encontrado la maquinaria");
-        return "error";
     }
 
     @PostMapping("/machinery/save")

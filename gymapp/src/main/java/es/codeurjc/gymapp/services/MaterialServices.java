@@ -34,12 +34,16 @@ public class MaterialServices {
         return materialRepository.count();
     }
 
-    public Iterable<MaterialDTO> findAll() {
+    public Collection<MaterialDTO> findAll() {
         return toDTOs(materialRepository.findAll());
     }
 
-    public Optional<MaterialDTO> findById(Long id) {
-        return materialRepository.findById(id).map(this::toDTO);
+    public MaterialDTO findById(Long id) {
+        Optional<Material> op = materialRepository.findById(id);
+        if (op.isPresent()) {
+            return toDTO(op.get());
+        }
+        throw new IllegalArgumentException("Material with ID" + id + "not found");
     }
 
     public Optional<MaterialDTO> findByName(String name) {
@@ -55,9 +59,10 @@ public class MaterialServices {
         materialRepository.save(material);
     }
 
-    public void save(MaterialDTO materialDTO) {
+    public MaterialDTO save(MaterialDTO materialDTO) {
         Material material = toDomain(materialDTO);
         materialRepository.save(material);
+        return toDTO(material);
     }
 
     public void save(MaterialSimpleDTO materialDTO) {
@@ -76,20 +81,25 @@ public class MaterialServices {
         materialRepository.save(material);
     }
 
-    public void deleteById(Long id) {
+    public MaterialDTO deleteById(Long id) throws IllegalArgumentException{
+        Material material = toDomain(this.findById(id));
         materialRepository.deleteById(id);
+        return toDTO(material);
     }
 
     public void safeDelete(Long id) {
-        Optional<Material> material = materialRepository.findById(id);
-        if (material.isPresent()) {
-            for (Exercise exercise : material.get().getExercises()) {
+        Material material;
+        try {
+            material= toDomain(this.findById(id));
+            for (Exercise exercise : material.getExercises()) {
                 exercise.setMaterial(null);
                 exerciseServices.save(exercise);
             }
-            material.get().setExercises(new HashSet<>());
-            materialRepository.save(material.get());
-            materialRepository.delete(material.get());
+            material.setExercises(new HashSet<>());
+            materialRepository.save(material);
+            materialRepository.delete(material);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Material with ID " + id + " not found");
         }
     }
 
