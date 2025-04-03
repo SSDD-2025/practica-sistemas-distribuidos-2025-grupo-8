@@ -32,7 +32,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 @RestController
-@RequestMapping("/routine")
+@RequestMapping("/api/routines")
 public class RoutineControllerREST {
     
     @Autowired
@@ -68,12 +68,12 @@ public class RoutineControllerREST {
 
     @PostMapping("/")
     public ResponseEntity<RoutineDTO> createRoutine(@RequestBody RoutineDTO routineDTO) {
-        routineServices.save(routineDTO);
+        RoutineDTO newRoutine = routineServices.save(routineDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-            .buildAndExpand(routineDTO.id()).toUri();
+            .buildAndExpand(newRoutine.id()).toUri();
         
-        return ResponseEntity.created(location).body(routineDTO);
+        return ResponseEntity.created(location).body(newRoutine);
     }
 
     @PutMapping("/{id}")
