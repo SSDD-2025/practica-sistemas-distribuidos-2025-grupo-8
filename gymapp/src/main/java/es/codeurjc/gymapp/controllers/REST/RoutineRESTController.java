@@ -33,7 +33,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/routine")
-public class RoutineControllerREST {
+public class RoutineRESTController {
     
     @Autowired
     private UserSession userSession;

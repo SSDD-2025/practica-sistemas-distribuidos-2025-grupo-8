@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.controllers;
+package es.codeurjc.gymapp.controllers.WEB;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

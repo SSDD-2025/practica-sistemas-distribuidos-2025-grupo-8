@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.controllers;
+package es.codeurjc.gymapp.controllers.WEB;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

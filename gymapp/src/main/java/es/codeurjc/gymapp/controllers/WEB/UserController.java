@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.controllers;
+package es.codeurjc.gymapp.controllers.WEB;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
