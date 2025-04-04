@@ -89,7 +89,7 @@ public class TrainerController implements CommandLineRunner {
         model.addAttribute("trainers", iterable);
         if(userSession.isLoggedIn()) {
             UserDTO user = userServices.findByName(userSession.getName()).get();
-            if(user.trainer() != null) model.addAttribute("personalTrainer", user.trainer().getName());
+            if(user.trainer() != null) model.addAttribute("personalTrainer", user.trainer().name());
             else model.addAttribute("personalTrainer", "Ninguno, selecciona uno");
         }
         else{
