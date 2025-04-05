@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.controllers;
+package es.codeurjc.gymapp.controllers.WEB;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -28,7 +28,6 @@ import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.model.Comment;
 import es.codeurjc.gymapp.model.Trainer;
-import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.CommentService;
 import es.codeurjc.gymapp.services.TrainerServices;
@@ -90,7 +89,7 @@ public class TrainerController implements CommandLineRunner {
         model.addAttribute("trainers", iterable);
         if(userSession.isLoggedIn()) {
             UserDTO user = userServices.findByName(userSession.getName()).get();
-            if(user.trainer() != null) model.addAttribute("personalTrainer", user.trainer().getName());
+            if(user.trainer() != null) model.addAttribute("personalTrainer", user.trainer().name());
             else model.addAttribute("personalTrainer", "Ninguno, selecciona uno");
         }
         else{
