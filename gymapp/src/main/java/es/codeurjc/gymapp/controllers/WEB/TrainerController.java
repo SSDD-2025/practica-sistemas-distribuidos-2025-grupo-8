@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -52,12 +53,12 @@ public class TrainerController implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if(trainerServices.count() == 0){
             // Trainer 1
-            Trainer arnold = new Trainer("Arnold Schwarzenegger", "Entrenador de culturismo");
-            arnold.setImageFile(loadImageAsBlob("static/images/arnold.png"));
+            TrainerDTO arnold = new TrainerDTO(0L, "Arnold Schwarzenegger","Entrenador de culturismo", 
+                loadImageAsBlob("static/images/arnold.png"), null, null);
 
             // Trainer 2
-            Trainer theRock = new Trainer("Dwayne Johnson", "Entrenador de lucha libre");
-            theRock.setImageFile(loadImageAsBlob("static/images/theRock.png"));
+            TrainerDTO theRock = new TrainerDTO(0L,"Dwayne Johnson", "Entrenador de lucha libre",
+                loadImageAsBlob("static/images/theRock.png"), null, null);
 
             // Save trainers
             trainerServices.save(arnold);
@@ -84,7 +85,7 @@ public class TrainerController implements CommandLineRunner {
 
     @PostMapping("/trainer")
 	public String trainers(Model model) {
-        Iterable<Trainer> iterable = trainerServices.findAll();
+        Iterable<TrainerDTO> iterable = trainerServices.findAll();
         if(!iterable.iterator().hasNext()) return "trainers/noTrainer";
         model.addAttribute("trainers", iterable);
         if(userSession.isLoggedIn()) {
