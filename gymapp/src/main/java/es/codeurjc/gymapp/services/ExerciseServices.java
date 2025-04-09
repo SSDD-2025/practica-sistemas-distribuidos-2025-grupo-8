@@ -122,7 +122,7 @@ public class ExerciseServices {
     public void deleteRoutinesFromExercise(UserDTO userDTO) {
         User user = mapperUser.toDomain(userDTO);
         for (Routine routine : user.getRoutines()) {
-            for (Exercise exercise : mapperExercise.toDomainsDTO(this.findAll())) {
+            for (Exercise exercise : mapperExercise.toDomains(this.findAll())) {
                 exercise.getRoutine().remove(routine);
                 this.save(exercise);
             }

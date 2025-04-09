@@ -112,7 +112,7 @@ public class TrainerServices {
     }
 
     public void deleteTrainer(TrainerDTO trainer, Long id){
-        for (User user : mapperUser.toDomainsFromSimple(trainer.users())) {
+        for (User user : mapperUser.toDomainsSimple(trainer.users())) {
             user.setTrainer(null);
             userServices.save(user);
         }

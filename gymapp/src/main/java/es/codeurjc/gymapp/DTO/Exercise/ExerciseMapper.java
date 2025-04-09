@@ -19,8 +19,8 @@ public interface ExerciseMapper {
     List<ExerciseDTO> toDTOs(Collection<Exercise> exercises);
 
     Exercise toDomain(ExerciseSimpleDTO exerciseSimpleDTO);
-    List<Exercise> toDomains(Collection<ExerciseSimpleDTO> exercisesDTO);
+    List<Exercise> toDomainsSimple(Collection<ExerciseSimpleDTO> exercisesDTO);
 
     Exercise toDomain(ExerciseDTO exerciseSimpleDTO);
-    List<Exercise> toDomainsDTO(Collection<ExerciseDTO> exercisesDTO);
+    List<Exercise> toDomains(Collection<ExerciseDTO> exercisesDTO);
 }
