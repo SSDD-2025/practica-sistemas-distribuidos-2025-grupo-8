@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -27,10 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
-import es.codeurjc.gymapp.model.Comment;
 import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.UserSession;
-import es.codeurjc.gymapp.services.CommentService;
 import es.codeurjc.gymapp.services.TrainerServices;
 import es.codeurjc.gymapp.services.UserServices;
 
@@ -45,9 +42,6 @@ public class TrainerController implements CommandLineRunner {
 
     @Autowired
 	private TrainerServices trainerServices;
-
-    @Autowired
-    private CommentService commentServices;
     
     @Override
     public void run(String... args) throws Exception {
@@ -86,14 +80,16 @@ public class TrainerController implements CommandLineRunner {
     @PostMapping("/trainer")
 	public String trainers(Model model) {
         Iterable<TrainerDTO> iterable = trainerServices.findAll();
-        if(!iterable.iterator().hasNext()) return "trainers/noTrainer";
+        if(!iterable.iterator().hasNext()) 
+            return "trainers/noTrainer";
         model.addAttribute("trainers", iterable);
         if(userSession.isLoggedIn()) {
             UserDTO user = userServices.findByName(userSession.getName()).get();
-            if(user.trainer() != null) model.addAttribute("personalTrainer", user.trainer().name());
-            else model.addAttribute("personalTrainer", "Ninguno, selecciona uno");
-        }
-        else{
+            if(user.trainer() != null) 
+                model.addAttribute("personalTrainer", user.trainer().name());
+            else 
+                model.addAttribute("personalTrainer", "Ninguno, selecciona uno");
+        }else{
             model.addAttribute("personalTrainer", "Inicia sesión para ver tu entrenador personal");
         }
 		return "trainers/trainersShow";
@@ -132,40 +128,40 @@ public class TrainerController implements CommandLineRunner {
     @RequestMapping("/trainer/{id}/comments")
     public String showComments(Model model, @PathVariable Long id) {
         Optional<TrainerDTO> opTrainer = trainerServices.findDTOById(id);
-        if (opTrainer.isPresent()){
-            TrainerDTO trainer = opTrainer.get();
-            model.addAttribute("logged", userSession.isLoggedIn());
-            model.addAttribute("trainerId", id);
-            model.addAttribute("comments", trainer.comments());
-            return "trainers/trainerComments";
+        if (opTrainer.isEmpty()){
+            model.addAttribute("message", "No se ha encontrado el entrenador");
+            return "error";
         }
-        model.addAttribute("message", "No se ha encontrado el entrenador");
-        return "error";
+        TrainerDTO trainer = opTrainer.get();
+        model.addAttribute("logged", userSession.isLoggedIn());
+        model.addAttribute("trainerId", id);
+        model.addAttribute("comments", trainer.comments());
+        return "trainers/trainerComments";
 
     }
 
     @PostMapping("/trainer/{id}/comments/add")
     public String addComment(Model model, @PathVariable Long id){
         Optional<TrainerDTO> opTrainer = trainerServices.findDTOById(id);
-        if (opTrainer.isPresent()){
-            model.addAttribute("id", id);
-            model.addAttribute("trainerName", opTrainer.get().name());
-            return "trainers/trainerComments_add";
+        if (opTrainer.isEmpty()){
+            model.addAttribute("message", "No se ha encontrado el entrenador");
+            return "error";
         }
-        return "error";
+        model.addAttribute("id", id);
+        model.addAttribute("trainerName", opTrainer.get().name());
+        return "trainers/trainerComments_add";
     }
 
     @PostMapping("/trainer/{id}/comments/save")
     public String saveComment(Model model, @PathVariable long id, @RequestParam String message){
         Optional<TrainerDTO> opTrainer = trainerServices.findDTOById(id);
-        if (opTrainer.isPresent()){
-            Comment comment = new Comment(message);
-            UserDTO user = userServices.findByName(userSession.getName()).get();
-            trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
-            return "redirect:/trainer/{id}/comments";
+        if (opTrainer.isEmpty()){
+            model.addAttribute("message", "Error al guardar el comentario");
+            return "error";
         }
-        model.addAttribute("message", "Error al guardar el comentario");
-        return "error";
+        UserDTO user = userServices.findByName(userSession.getName()).get();
+        trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
+        return "redirect:/trainer/{id}/comments";
     }
 
     @PostMapping("/trainer/{trainerId}/comments/{commentId}/delete")
@@ -180,18 +176,19 @@ public class TrainerController implements CommandLineRunner {
 	@PostMapping("/trainer/add/form")
 	public String addTrainerForm(Model model, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile image) throws IOException {		
 		Trainer trainer;
-        if (!name.isEmpty() && !image.isEmpty()){
-            if (description.isEmpty()){
-                description = "No hay descripción acerca del entrenador.";
-            }
-            
-            trainer = new Trainer(name, description);
-            trainerServices.save(trainer, image);
-            model.addAttribute("message", "Entrenador añadido correctamente");  
-            return "trainers/trainerMessage"; 
+        if (name.isEmpty() || image.isEmpty()){
+            model.addAttribute("message", "El nombre y la imagen del entrenador es obligatorio.");
+            return "error";
         }
-        model.addAttribute("message", "El nombre y la imagen del entrenador es obligatorio.");
-        return "error";
+        if (description.isEmpty()){
+            description = "No hay descripción acerca del entrenador.";
+        }
+        
+        trainer = new Trainer(name, description);
+        trainerServices.save(trainer, image);
+        model.addAttribute("message", "Entrenador añadido correctamente");  
+        return "trainers/trainerMessage"; 
+        
 	}
 
     @PostMapping("/trainer/image/{id}")
