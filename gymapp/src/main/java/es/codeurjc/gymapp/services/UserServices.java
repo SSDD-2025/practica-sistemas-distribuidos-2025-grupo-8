@@ -16,11 +16,8 @@ import es.codeurjc.gymapp.DTO.User.UserSimpleDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineMapper;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
-import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.model.Routine;
-import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.User;
-import es.codeurjc.gymapp.repositories.RoutineRepository;
 import es.codeurjc.gymapp.repositories.UserRepository;
 
 @Service

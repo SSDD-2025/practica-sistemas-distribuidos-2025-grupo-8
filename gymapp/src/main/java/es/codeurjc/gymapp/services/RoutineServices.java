@@ -84,7 +84,7 @@ public class RoutineServices {
 
     public void addExercises(RoutineDTO routineDTO , Set<ExerciseSimpleDTO> exercisesDTO){
         Routine routine = mapperRoutine.toDomain(routineDTO);
-        Set<Exercise> exercises = new HashSet<Exercise>(mapperExercise.toDomains(exercisesDTO));
+        Set<Exercise> exercises = new HashSet<Exercise>(mapperExercise.toDomainsSimple(exercisesDTO));
         routine.addExercises(exercises);
         routineRepository.save(routine);
     }
@@ -103,7 +103,7 @@ public class RoutineServices {
     }
 
     public void saveExercises(Set<ExerciseSimpleDTO> exerciseDTO, RoutineSimpleDTO routineDTO){
-        List<Exercise> exercise = mapperExercise.toDomains(exerciseDTO);
+        List<Exercise> exercise = mapperExercise.toDomainsSimple(exerciseDTO);
         Routine routine = mapperRoutine.toDomain(routineDTO);
         for(Exercise ex : exercise){
             exerciseServices.addRoutine(routine, ex);
@@ -143,7 +143,7 @@ public class RoutineServices {
     }
 
     private List<ExerciseSimpleDTO> toSimple(List<ExerciseDTO> ex){
-        List<Exercise> ex1 = mapperExercise.toDomainsDTO(ex);
+        List<Exercise> ex1 = mapperExercise.toDomains(ex);
         return mapperExercise.toSimpleDTOs(ex1);
     }
 }
