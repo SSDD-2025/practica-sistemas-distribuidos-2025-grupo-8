@@ -1,10 +1,6 @@
 package es.codeurjc.gymapp.controllers.WEB;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,25 +10,17 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.boot.CommandLineRunner;
 
 import es.codeurjc.gymapp.DTO.User.UserDTO;
-import es.codeurjc.gymapp.model.Exercise;
-import es.codeurjc.gymapp.model.Material;
-import es.codeurjc.gymapp.model.Routine;
-import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.CommentService;
 import es.codeurjc.gymapp.services.ExerciseServices;
@@ -66,7 +54,8 @@ public class UserController implements CommandLineRunner {
 	@Override
     public void run(String... args) throws Exception {
 		if(userServices.count() == 0){
-			UserDTO user = userServices.toDTO(new User("admin", "admin", true));
+			UserDTO user = new UserDTO(0L,"admin", "admin", null,
+				null, null, true, null);
 			userServices.save(user);
 		}
     }  
@@ -124,7 +113,7 @@ public class UserController implements CommandLineRunner {
 			return "error"; //user was already registered
 		}
 		userSession.setName(name);
-		UserDTO newUser = new UserDTO(null,name, password,null,null,null,null,null);
+		UserDTO newUser = new UserDTO(0L,name, password,null,null,null,false,null);
     	userServices.save(newUser, image);
 		model.addAttribute("message", "Usuario registrado con éxito");
 		return "account/accountMessage";
@@ -140,12 +129,11 @@ public class UserController implements CommandLineRunner {
 	@PostMapping("/account/deleteAccount")
 	public String sessionDelete(Model model) {
 		Optional<UserDTO> optionalUser = userServices.findByName(userSession.getName());
-		if (!optionalUser.isPresent()) {
+		if (optionalUser.isEmpty()) {
 			model.addAttribute("message", "Usuario no encontrado");
 			return "error";
 		}
 		UserDTO user = optionalUser.get();
-
 		// Delete routines from exercises
 		exerciseServices.deleteRoutinesFromExercise(user);
 		// Delete all routines
@@ -163,6 +151,7 @@ public class UserController implements CommandLineRunner {
 	@PostMapping("/account/image")
 	public String changeImage(Model model, @RequestParam MultipartFile image) throws IOException {
 		Optional<UserDTO> user = userServices.findByName(userSession.getName());
+		//Needn't to check because to change image you have to be logged in
 		userServices.setImageFile(user.get(), image);
 		model.addAttribute("message", "Imagen cambiada con éxito");
 		return "account/accountMessage"; 
@@ -176,9 +165,8 @@ public class UserController implements CommandLineRunner {
 			Resource file = new InputStreamResource(image.getBinaryStream());
 			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
 					.contentLength(image.length()).body(file);
-		} else {
-			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.notFound().build();
 	}
 
 	@PostMapping("/admin/users")
