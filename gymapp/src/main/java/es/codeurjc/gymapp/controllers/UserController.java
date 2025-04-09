@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.boot.CommandLineRunner;
 
+import es.codeurjc.gymapp.SecurityConfiguration;
 import es.codeurjc.gymapp.model.Exercise;
 import es.codeurjc.gymapp.model.Material;
 import es.codeurjc.gymapp.model.Routine;
@@ -46,6 +47,9 @@ import es.codeurjc.gymapp.services.UserServices;
 @Controller
 public class UserController /*implements CommandLineRunner*/ {
     
+	@Autowired
+	private SecurityConfiguration securityConfiguration;
+
 	@Autowired
 	private UserSession userSession;
 
@@ -110,12 +114,16 @@ public class UserController /*implements CommandLineRunner*/ {
 		return "account/accountMessage";
 	}
 		*/
+
+	@GetMapping("/account/loginError")
+	public String getMethodName(Model model) {
+		model.addAttribute("message", "Usuario o contraseña incorrectos");
+		return "account/accountMessage";
+	}
+	
 	@PostMapping("/account/login")
-	public String login(@RequestParam(value = "error", required = false) String error, Model model) {
-		if (error != null) {
-			model.addAttribute("error", true);
-		}
-		return "account"; // Render login.mustache
+	public String login(Model model) {
+		return "account"; 
 	}
 	
 
@@ -135,9 +143,11 @@ public class UserController /*implements CommandLineRunner*/ {
 			model.addAttribute("message", "El usuario ya existe");
 			return "error"; //user was already registered
 		}
-		User newUser = new User(name, password);
+		String encodedPassword = securityConfiguration.passwordEncoder().encode(password);
+
+		User newUser = new User(name, encodedPassword,"USER");
     	userServices.save(newUser, image);
-		userSession.setName(name, password);
+		userSession.setName(name, encodedPassword);
 		model.addAttribute("message", "Usuario registrado con éxito");
 		return "account/accountMessage";
 	}

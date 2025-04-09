@@ -5,12 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>common/header}}
-
-        {{#error}}
-            <p style="color: red;">Usuario o contraseña incorrectos</p>
-        {{/error}}
-        
+        {{>common/header}}        
             <form action="/account/login" method="post">
                 <p>Nombre: </p>
                 <input type='text' name='username'/>

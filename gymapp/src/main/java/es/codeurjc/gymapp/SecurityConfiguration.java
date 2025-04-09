@@ -72,12 +72,12 @@ public class SecurityConfiguration {
 					.requestMatchers("/trainer/image/{id}").hasRole("ADMIN")
 					.requestMatchers("/admin/users").hasRole("ADMIN")
 			)
-			/* .formLogin(formLogin -> formLogin
+			.formLogin(formLogin -> formLogin
 					.loginPage("/account/login")
-					.failureUrl("/account/login?error") 
 					.defaultSuccessUrl("/account")
+					.failureUrl("/account/loginError") 
 					.permitAll()
-			)*/
+			)
 			.logout(logout -> logout
 					.logoutUrl("/account/logout")
 					.logoutSuccessUrl("/")

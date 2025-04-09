@@ -19,7 +19,6 @@ public class User {
     private Long id;
     @Column(unique = true)
     private String name;
-    private String password;
     private String encodedPassword;
     @Lob
     private Blob imageFile;
@@ -27,7 +26,7 @@ public class User {
     private Trainer trainer;
     @OneToMany(mappedBy="userMember")
     private List<Routine> routines;
-    //private Boolean isAdmin;
+
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
@@ -35,35 +34,18 @@ public class User {
     @OneToMany(mappedBy="author")
     private List<Comment> comments;
 
-    //CAMBIAR
-    public User(String name, String password, /*Boolean isAdmin,*/ List<String> roles) {
-        this.name = name;
-        this.password = password;
-        //this.isAdmin = isAdmin;
-        this.roles = roles;
-        this.trainer = null;
-        this.routines = new ArrayList<>();
+    public User(){
+        
     }
 
     public User(String name, String encodedPassword, String... roles) {
         this.name = name;
         this.encodedPassword = encodedPassword;
-        this.roles = List.of(roles); // Convertir el array de roles en una lista
+        this.trainer = null;
+        this.routines = new ArrayList<>();
+        this.roles = List.of(roles);
     }
 
-    //CAMBIAR
-    public User(String name, String password) {
-        this(name, password, /*false,*/ new ArrayList<String>());
-    }
-
-    // Getters and Setters
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public Trainer getTrainer() {
         return trainer;

@@ -26,7 +26,7 @@ public class UserSession {
     }
 
     public boolean isLoggedIn() {
-        return getName() != null || getName() != "";
+        return getName() != null && getName() != "anonymousUser";
     }
 
     public void logout() {
@@ -34,8 +34,8 @@ public class UserSession {
     }
 
     public void setName(String name, String password) {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(name, password);  // Autenticación con el nombre y la contraseña
-		Authentication authenticatedUser = authenticationManager.authenticate(authentication); // Realiza la autenticación
+        Authentication authentication = new UsernamePasswordAuthenticationToken(name, password);  
+		Authentication authenticatedUser = authenticationManager.authenticate(authentication); 
 		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
     }
 }
