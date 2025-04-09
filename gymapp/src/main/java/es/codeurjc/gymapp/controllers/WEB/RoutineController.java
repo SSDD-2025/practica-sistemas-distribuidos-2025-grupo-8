@@ -126,30 +126,33 @@ public class RoutineController implements CommandLineRunner{
     @PostMapping("/routine/delete/{id}")
     public String deleteRoutine(Model model, @PathVariable Long id) {
         Optional<RoutineSimpleDTO> optionalRoutine = routineServices.findById(id);
-        if (optionalRoutine.isPresent()) {
-            RoutineSimpleDTO routine = optionalRoutine.get();
-            if (userSession.isLoggedIn()) {
-                UserDTO user = userServices.findByName(userSession.getName()).get();
-                userServices.deleteRoutine(user, routine);
-                routineServices.deleteUser(routine);
-                routineServices.removeExercises(routine);
-                routineServices.deleteById(id);
-                return "routines/routineDelete";
-            }
+        if (!userSession.isLoggedIn()) {
+            model.addAttribute("message", "No hay usuario registrado");
+            return "error";
         }
-        return "error"; 
+        if(optionalRoutine.isEmpty()) {
+            model.addAttribute("message", "No se ha encontrado la rutina");
+            return "error"; 
+        }
+        RoutineSimpleDTO routine = optionalRoutine.get();
+        UserDTO user = userServices.findByName(userSession.getName()).get();
+        userServices.deleteRoutine(user, routine);
+        routineServices.deleteUser(routine);
+        routineServices.removeExercises(routine);
+        routineServices.deleteById(id);
+        return "routines/routineDelete";
     }
 
     @PostMapping("/routine/modify/{id}")
     public String modifyRoutine(Model model, @PathVariable Long id) {
-        RoutineSimpleDTO routine = routineServices.findById(id).get();
-        if(userSession.isLoggedIn()){
-            model.addAttribute("routine", routine);
-            model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
-            return "routines/routineModify";
+        if(!userSession.isLoggedIn()){
+            model.addAttribute("message", "No hay usuario registrado");
+            return "error";
         }
-        model.addAttribute("message", "No hay usuario registrado");
-        return "error";
+        RoutineSimpleDTO routine = routineServices.findById(id).get();
+        model.addAttribute("routine", routine);
+        model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
+        return "routines/routineModify";
     }
 
     @PostMapping("/routine/modified")
@@ -168,12 +171,11 @@ public class RoutineController implements CommandLineRunner{
             return "error";
         }
         Optional<RoutineSimpleDTO> optionalRoutine = routineServices.findById(id);
-        if (!optionalRoutine.isPresent()){
+        if (optionalRoutine.isEmpty()){
             model.addAttribute("message", "No se ha encontrado la rutina");
             return "error";
         } 
 
-        RoutineSimpleDTO routine = optionalRoutine.get();
         //Update of Not DataStructs
         RoutineDTO routineDTO = new RoutineDTO(id, name, description, day, null, null);
         //Update the routine
