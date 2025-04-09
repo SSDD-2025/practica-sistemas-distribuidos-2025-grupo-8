@@ -3,7 +3,6 @@ package es.codeurjc.gymapp.controllers.REST;
 import java.net.URI;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.Trainer.TrainerSimpleDTO;
-import es.codeurjc.gymapp.DTO.User.UserDTO;
-import es.codeurjc.gymapp.DTO.User.UserSimpleDTO;
-import es.codeurjc.gymapp.model.Trainer;
-import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.TrainerServices;
 
 @RestController
