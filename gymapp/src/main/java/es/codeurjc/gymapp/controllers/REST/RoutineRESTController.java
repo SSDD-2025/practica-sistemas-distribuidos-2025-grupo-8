@@ -24,7 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 @RestController
-@RequestMapping("/routine")
+@RequestMapping("/api/routine")
 public class RoutineRESTController {
     
     @Autowired
