@@ -3,8 +3,8 @@ package es.codeurjc.gymapp.services;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +36,7 @@ public class ExerciseServices {
     @Autowired
     private UserMapper mapperUser;
 
+
     public ExerciseServices() {
         // Default constructor
     }
@@ -44,11 +45,14 @@ public class ExerciseServices {
         return exerciseRepository.count();
     }
 
-    public Optional<Exercise> findById(Long id) {
-        return exerciseRepository.findById(id);
+    public ExerciseDTO findById(Long id) {
+        if (exerciseRepository.findById(id).isPresent()) {
+            return mapperExercise.toDTO(exerciseRepository.findById(id).get());
+        }
+        throw new IllegalArgumentException("Exercise with ID " + id + " not found");
     }
 
-    public void save(Exercise exercise) {
+    void save(Exercise exercise) {
         exerciseRepository.save(exercise);
     }
 
@@ -57,32 +61,28 @@ public class ExerciseServices {
         exerciseRepository.save(exercise);
     }
 
-    public void save(ExerciseDTO exerciseDTO) {
+    public ExerciseDTO save(ExerciseDTO exerciseDTO) {
         Exercise exercise = mapperExercise.toDomain(exerciseDTO);
         exerciseRepository.save(exercise);
+        return mapperExercise.toDTO(exercise);
     }
 
-    public void deleteById(Long id) {
-        Exercise exercise = exerciseRepository.findById(id).orElseThrow(() -> new RuntimeException("Exercise not found"));
+    public ExerciseDTO deleteById(Long id) throws IllegalArgumentException{
+        Exercise exercise = mapperExercise.toDomain(this.findById(id));
         List<Routine> routines = exercise.getRoutine();
         if (!routines.isEmpty()) {
             routineServices.modifyRoutines(mapperExercise.toSimpleDTO(exercise));
         }
-
+    
         if (exercise.getMaterial() != null) {
-            materialServices.deleteExerciseFromMaterial(exercise.getMaterial(), exercise.getId());
+             materialServices.deleteExerciseFromMaterial(exercise.getMaterial(), exercise.getId());
         }
         exerciseRepository.delete(exercise);
-    }
-
-    public List<ExerciseDTO> findAll() {
-        List<Exercise> exercises = exerciseRepository.findAll();
-        return mapperExercise.toDTOs(exercises);
-    }
-
-    public ExerciseDTO findByMaterial(Material material) {
-        Exercise exercise = exerciseRepository.findByMaterial(material);
         return mapperExercise.toDTO(exercise);
+        }
+
+    public Collection<ExerciseDTO> findAll() {
+        return mapperExercise.toDTOs(exerciseRepository.findAll());
     }
 
     public List<ExerciseDTO> findByMaterialIsNotNull() {

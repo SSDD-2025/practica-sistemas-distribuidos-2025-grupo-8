@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseMapper;
 import es.codeurjc.gymapp.DTO.Material.MaterialDTO;
 import es.codeurjc.gymapp.DTO.Material.MaterialMapper;
 import es.codeurjc.gymapp.DTO.Material.MaterialSimpleDTO;
@@ -25,6 +26,8 @@ public class MaterialServices {
     private ExerciseServices exerciseServices;
     @Autowired
     private MaterialMapper materialMapper;
+    @Autowired
+    private ExerciseMapper exerciseMapper;
 
     public MaterialServices() {
         // Constructor vacío
@@ -50,14 +53,16 @@ public class MaterialServices {
         return materialRepository.findByName(name).map(this::toDTO);
     }
 
-    public void save(MaterialDTO materialDTO, List<Long> exercises) {
+    public void save(MaterialDTO materialDTO, List<Long> exercises) throws IllegalArgumentException{
         Material material = toDomain(materialDTO);
         for (Long id : exercises) {
-            material.addExercise(exerciseServices.findById(id).orElseThrow(() -> 
-                new IllegalArgumentException("Exercise with ID " + id + " not found")));
+            Exercise exercise =  exerciseMapper.toDomain(exerciseServices.findById(id));
+            material.addExercise(exercise);
         }
+
         materialRepository.save(material);
-    }
+        }
+        
 
     public MaterialDTO save(MaterialDTO materialDTO) {
         Material material = toDomain(materialDTO);
@@ -70,18 +75,17 @@ public class MaterialServices {
         materialRepository.save(material);
     }
 
-    public void createAndSave(String name, List<Long> exercises) {
+    public void createAndSave(String name, List<Long> exercises) throws IllegalArgumentException{
         Material material = new Material(name);
         for (Long id : exercises) {
-            Exercise exercise = exerciseServices.findById(id).orElseThrow(() -> 
-                new IllegalArgumentException("Exercise with ID " + id + " not found"));
+            Exercise exercise = exerciseMapper.toDomain(exerciseServices.findById(id));
             material.addExercise(exercise);
             exerciseServices.setMaterialAndSave(exercise, material);
         }
         materialRepository.save(material);
     }
 
-    public MaterialDTO deleteById(Long id) throws IllegalArgumentException{
+    public MaterialDTO deleteById(Long id) throws IllegalArgumentException {
         Material material = toDomain(this.findById(id));
         materialRepository.deleteById(id);
         return toDTO(material);
@@ -103,9 +107,8 @@ public class MaterialServices {
         }
     }
 
-    public void deleteExerciseFromMaterial(Material material, Long exerciseId) {
-        Exercise exercise = exerciseServices.findById(exerciseId).orElseThrow(() -> 
-            new IllegalArgumentException("Exercise with ID " + exerciseId + " not found"));
+    public void deleteExerciseFromMaterial(Material material, Long exerciseId) throws IllegalArgumentException {
+        Exercise exercise = exerciseMapper.toDomain(exerciseServices.findById(exerciseId));
         material.getExercises().remove(exercise);
         exercise.setMaterial(null);
         materialRepository.save(material);
