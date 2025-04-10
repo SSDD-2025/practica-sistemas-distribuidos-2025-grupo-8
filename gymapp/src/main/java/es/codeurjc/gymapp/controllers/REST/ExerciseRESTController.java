@@ -24,34 +24,30 @@ public class ExerciseRESTController {
     private ExerciseServices exerciseServices;
 
     @GetMapping("/")
-    public ResponseEntity<Collection<ExerciseDTO>> getMaterials() {
-        return ResponseEntity.ok(exerciseServices.findAll());
+    public Collection<ExerciseDTO> getMaterials() {
+        return exerciseServices.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExerciseDTO> getMaterial(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(exerciseServices.findById(id));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ExerciseDTO getMaterial(@PathVariable Long id) {
+        return exerciseServices.findById(id).orElseThrow();
     }
 
     @PostMapping("/")
+    //TODO: Check if this method can be changed to return only an ExerciseDTO, can put @ResponseStatus()
+    //Dont know if location is necesary
     public ResponseEntity<ExerciseDTO> createExercise(@RequestBody ExerciseDTO exerciseDTO) {
         exerciseDTO = exerciseServices.save(exerciseDTO);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(exerciseDTO.id())
-        .toUri();
+        
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+            .buildAndExpand(exerciseDTO.id()).toUri();
+
         return ResponseEntity.created(location).body(exerciseDTO);
     }
 
     @DeleteMapping("/id")
-    public ResponseEntity<ExerciseDTO> deleteExercise(@PathVariable Long id){
-        try {
-            return ResponseEntity.ok(exerciseServices.deleteById(id));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ExerciseDTO deleteExercise(@PathVariable Long id){
+        return exerciseServices.deleteById(id);
     }
     
 }

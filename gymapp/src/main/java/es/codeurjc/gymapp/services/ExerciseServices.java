@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,11 +47,8 @@ public class ExerciseServices {
         return exerciseRepository.count();
     }
 
-    public ExerciseDTO findById(Long id) {
-        if (exerciseRepository.findById(id).isPresent()) {
-            return mapperExercise.toDTO(exerciseRepository.findById(id).get());
-        }
-        throw new IllegalArgumentException("Exercise with ID " + id + " not found");
+    public Optional<ExerciseDTO> findById(Long id) {
+        return Optional.of(mapperExercise.toDTO(exerciseRepository.findById(id).get()));
     }
 
     void save(Exercise exercise) {
@@ -67,8 +66,8 @@ public class ExerciseServices {
         return mapperExercise.toDTO(exercise);
     }
 
-    public ExerciseDTO deleteById(Long id) throws IllegalArgumentException{
-        Exercise exercise = mapperExercise.toDomain(this.findById(id));
+    public ExerciseDTO deleteById(Long id) throws NoSuchElementException{
+        Exercise exercise = mapperExercise.toDomain(this.findById(id).get());
         List<Routine> routines = exercise.getRoutine();
         if (!routines.isEmpty()) {
             routineServices.modifyRoutines(mapperExercise.toSimpleDTO(exercise));
@@ -79,7 +78,7 @@ public class ExerciseServices {
         }
         exerciseRepository.delete(exercise);
         return mapperExercise.toDTO(exercise);
-        }
+    }
 
     public Collection<ExerciseDTO> findAll() {
         return mapperExercise.toDTOs(exerciseRepository.findAll());

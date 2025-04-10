@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.controllers.REST;
+package es.codeurjc.gymapp.controllers.REST.ExceptionController;
 
 import java.util.NoSuchElementException;
 

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,22 +42,22 @@ public class MaterialServices {
         return toDTOs(materialRepository.findAll());
     }
 
-    public MaterialDTO findById(Long id) {
+    public Optional<MaterialDTO> findById(Long id) {
         Optional<Material> op = materialRepository.findById(id);
-        if (op.isPresent()) {
-            return toDTO(op.get());
+        if(op.isEmpty()) {
+            return Optional.empty();
         }
-        throw new IllegalArgumentException("Material with ID" + id + "not found");
+        return Optional.of(toDTO(op.get()));
     }
 
     public Optional<MaterialDTO> findByName(String name) {
         return materialRepository.findByName(name).map(this::toDTO);
     }
 
-    public void save(MaterialDTO materialDTO, List<Long> exercises) throws IllegalArgumentException{
+    public void save(MaterialDTO materialDTO, List<Long> exercises) throws NoSuchElementException{
         Material material = toDomain(materialDTO);
         for (Long id : exercises) {
-            Exercise exercise =  exerciseMapper.toDomain(exerciseServices.findById(id));
+            Exercise exercise =  exerciseMapper.toDomain(exerciseServices.findById(id).get());
             material.addExercise(exercise);
         }
 
@@ -75,26 +76,25 @@ public class MaterialServices {
         materialRepository.save(material);
     }
 
-    public void createAndSave(String name, List<Long> exercises) throws IllegalArgumentException{
+    public void createAndSave(String name, List<Long> exercises) throws NoSuchElementException{
         Material material = new Material(name);
         for (Long id : exercises) {
-            Exercise exercise = exerciseMapper.toDomain(exerciseServices.findById(id));
+            Exercise exercise = exerciseMapper.toDomain(exerciseServices.findById(id).get());
             material.addExercise(exercise);
             exerciseServices.setMaterialAndSave(exercise, material);
         }
         materialRepository.save(material);
     }
 
-    public MaterialDTO deleteById(Long id) throws IllegalArgumentException {
-        Material material = toDomain(this.findById(id));
+    public MaterialDTO deleteById(Long id) throws NoSuchElementException {
+        Material material = toDomain(this.findById(id).get());
         materialRepository.deleteById(id);
         return toDTO(material);
     }
 
     public void safeDelete(Long id) {
-        Material material;
         try {
-            material= toDomain(this.findById(id));
+            Material material= toDomain(this.findById(id).get());
             for (Exercise exercise : material.getExercises()) {
                 exercise.setMaterial(null);
                 exerciseServices.save(exercise);
@@ -107,8 +107,8 @@ public class MaterialServices {
         }
     }
 
-    public void deleteExerciseFromMaterial(Material material, Long exerciseId) throws IllegalArgumentException {
-        Exercise exercise = exerciseMapper.toDomain(exerciseServices.findById(exerciseId));
+    public void deleteExerciseFromMaterial(Material material, Long exerciseId) throws NoSuchElementException {
+        Exercise exercise = exerciseMapper.toDomain(exerciseServices.findById(exerciseId).get());
         material.getExercises().remove(exercise);
         exercise.setMaterial(null);
         materialRepository.save(material);
