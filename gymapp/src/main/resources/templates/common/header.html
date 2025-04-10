@@ -1,9 +1,10 @@
 <div id="header">
     <div id="supHeader">
         <div> 
-            <form action="/" method="get">
+            <form action="/" method="post">
                 <input class="imagesHeader" id="home" type="submit" value="">
                 <input class="button" id="logoText"type="submit" value="GOLDEN GYM">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
         <div>
@@ -16,7 +17,7 @@
                 {{^hasImage}}
                     <input class="imagesHeader" id="no_userImage" type="submit" value="">
                 {{/hasImage}}
-                
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             
         </div>
@@ -25,21 +26,25 @@
         <div>
             <form action="/facilities" method="post">
                 <input class="buttonsHeader" type="submit" value = "Instalaciones">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
         <div>
             <form action="/machinery" method="post">
                 <input class="buttonsHeader" type="submit" value = "Maquinaria">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
         <div>
             <form action="/routine" method="post">
                 <input class="buttonsHeader" type="submit" value = "Rutinas">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form> 
         </div>
         <div>
             <form action="/trainer" method="post">
                 <input class="buttonsHeader" type="submit" value = "Entrenadores">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
     </div>

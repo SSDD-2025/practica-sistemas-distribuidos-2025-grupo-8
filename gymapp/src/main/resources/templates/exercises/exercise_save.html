@@ -9,6 +9,7 @@
         <p>El ejercicio se ha guardado correctamente.</p>
         <form action="/machinery/add" method="post">
             <input type="submit" value="Asignar maquinaria a ejercicio">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
     </body>
     {{>common/footer}}

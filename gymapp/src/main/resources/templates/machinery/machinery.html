@@ -14,10 +14,12 @@
                     <div class="alignItems">
                         <form action="/machinery/{{id}}" method="get">
                             <button type="submit" class="button">{{name}}</button>
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
                         </form>
                         {{#isAdmin}}
                         <form action="/machinery/delete/{{id}}" method="post">
                             <input type="submit" value="Borrar maquinaria">
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
                         </form>
                         {{/isAdmin}}
                     </div>
@@ -35,6 +37,7 @@
             <br>
             <form action="/machinery/add" method="request">
                 <input type="submit" value="Añadir maquinaria">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         {{/isAdmin}}
         {{>common/footer}}

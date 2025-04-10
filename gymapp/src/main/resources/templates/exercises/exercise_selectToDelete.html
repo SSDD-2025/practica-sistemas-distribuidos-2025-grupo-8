@@ -14,6 +14,7 @@
                 {{/exercises}}
             </select><br><br>
             <input type="submit" value="Eliminar ejercicio">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
     </body>
     {{>common/footer}}
