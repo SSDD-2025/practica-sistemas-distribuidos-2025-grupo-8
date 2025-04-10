@@ -42,6 +42,7 @@ import es.codeurjc.gymapp.services.CommentService;
 import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -84,7 +85,7 @@ public class UserController /*implements CommandLineRunner*/ {
 		return "facilities";
 	}
 
-	@PostMapping("/account")
+	@RequestMapping("/account")
 	public String account(Model model) {
 		if(!userSession.isLoggedIn()){
 			return "account/account";
@@ -121,9 +122,9 @@ public class UserController /*implements CommandLineRunner*/ {
 		return "account/accountMessage";
 	}
 	
-	@PostMapping("/account/login")
+	@RequestMapping("/account/login")
 	public String login(Model model) {
-		return "account"; 
+		return "redirect:/account"; 
 	}
 	
 
@@ -133,7 +134,7 @@ public class UserController /*implements CommandLineRunner*/ {
 	}
 
 	@PostMapping("/account/register")
-	public String register(Model model, @RequestParam String name, @RequestParam String password, @RequestParam MultipartFile image) throws IOException {
+	public String register(Model model, @RequestParam String name, @RequestParam String password, @RequestParam MultipartFile image,HttpServletRequest request) throws IOException {
 		if (name.isEmpty() || password.isEmpty()) {
 			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
 			return "error";
@@ -145,9 +146,14 @@ public class UserController /*implements CommandLineRunner*/ {
 		}
 		String encodedPassword = securityConfiguration.passwordEncoder().encode(password);
 
-		User newUser = new User(name, encodedPassword,"USER");
+		User newUser;
+		if(image.isEmpty()){		
+			newUser = new User(name, encodedPassword,"USER");
+		}else{	
+			newUser = new User(name, encodedPassword,BlobProxy.generateProxy(image.getInputStream(),image.getSize()),"USER");
+		}
     	userServices.save(newUser, image);
-		userSession.setName(name, encodedPassword);
+		userSession.setName(name, encodedPassword, request);//the auto-login doesn't work
 		model.addAttribute("message", "Usuario registrado con éxito");
 		return "account/accountMessage";
 	}

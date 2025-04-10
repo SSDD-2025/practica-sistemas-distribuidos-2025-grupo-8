@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity(name = "USERS")
 public class User {
@@ -38,12 +39,17 @@ public class User {
         
     }
 
-    public User(String name, String encodedPassword, String... roles) {
+    public User(String name, String encodedPassword,  Blob image, String... roles) {
         this.name = name;
         this.encodedPassword = encodedPassword;
         this.trainer = null;
+        this.imageFile = image;
         this.routines = new ArrayList<>();
         this.roles = List.of(roles);
+    }
+
+    public User(String name, String encodedPassword, String... roles) {
+        this(name,encodedPassword,null,roles);
     }
 
 
