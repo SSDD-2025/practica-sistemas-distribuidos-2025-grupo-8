@@ -43,6 +43,7 @@ import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -168,7 +169,7 @@ public class UserController /*implements CommandLineRunner*/ {
 	}
 
 	@PostMapping("/account/deleteAccount")
-	public String sessionDelete(Model model) {
+	public String sessionDelete(Model model,HttpServletRequest request) {
 		Optional<User> optionalUser = userServices.findByName(userSession.getName());
 		if (!optionalUser.isPresent()) {
 			model.addAttribute("message", "Usuario no encontrado");
@@ -184,7 +185,7 @@ public class UserController /*implements CommandLineRunner*/ {
 		commentServices.deleteAllComments(user);
 		// Delete user
 		userServices.deleteById(user.getId());
-		userSession.logout();
+		userSession.logout(request);
 		model.addAttribute("message", "Cuenta eliminada con éxito");
 		return "account/accountMessage";
 	}

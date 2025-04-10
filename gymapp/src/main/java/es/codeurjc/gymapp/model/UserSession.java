@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import es.codeurjc.gymapp.repositories.RepositoryUserDetailsService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Component
 public class UserSession {
@@ -36,8 +38,14 @@ public class UserSession {
         return getName() != null && !getName().equals("anonymousUser");
     }
 
-    public void logout() {
-        SecurityContextHolder.clearContext(); 
+    public void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
+        }
+
+        SecurityContextHolder.clearContext();
     }
 
     public void setName(String name, String password, HttpServletRequest request) {
