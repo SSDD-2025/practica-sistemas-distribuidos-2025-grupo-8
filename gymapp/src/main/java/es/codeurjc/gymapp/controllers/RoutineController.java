@@ -114,9 +114,11 @@ public class RoutineController implements CommandLineRunner{
     public String routineViewer(Model model,@PathVariable Long id){
         Optional<Routine> routine = routineServices.findById(id);
         if(routine.isPresent()){
-            model.addAttribute("routine", routine.get());
-            model.addAttribute("isLogged", userSession.isLoggedIn());
-            return "routines/routineViewer";
+            if(routine.get().getUser().getName().equals(userSession.getName())){
+                model.addAttribute("routine", routine.get());
+                model.addAttribute("isLogged", userSession.isLoggedIn());
+                return "routines/routineViewer";
+            }
         } 
         model.addAttribute("message", "No se ha encontrado la rutina");
         return "error";

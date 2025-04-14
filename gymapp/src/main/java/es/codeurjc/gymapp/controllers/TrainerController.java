@@ -167,7 +167,10 @@ public class TrainerController implements CommandLineRunner {
             Comment comment = new Comment(message);
             User user = userServices.findByName(userSession.getName()).get();
             trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
-            return "redirect:/trainer/{id}/comments";
+            model.addAttribute("logged", userSession.isLoggedIn());
+            model.addAttribute("trainerId", id);
+            model.addAttribute("comments", opTrainer.get().getComments());
+            return "trainers/trainerComments";
         }
         model.addAttribute("message", "Error al guardar el comentario");
         return "error";

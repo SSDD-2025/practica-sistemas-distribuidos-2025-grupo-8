@@ -57,7 +57,7 @@ public class SecurityConfiguration {
 		
 		    http.authorizeHttpRequests(authorize -> authorize
 					// PUBLIC PAGES
-					.requestMatchers("/**").permitAll()
+					
 					// PRIVATE PAGES
 					//.requestMatchers("/exercise/add").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/exercise/add").hasRole("ADMIN")
@@ -69,11 +69,13 @@ public class SecurityConfiguration {
 					.requestMatchers("/trainer/add").hasRole("ADMIN")
 					.requestMatchers("/trainer/{id}/delete").hasRole("ADMIN")
 					.requestMatchers("/trainer/add/form").hasRole("ADMIN")
-					.requestMatchers("/trainer/image/{id}").hasRole("ADMIN")
+					//.requestMatchers("/trainer/image/{id}").hasRole("ADMIN")
 					.requestMatchers("/admin/users").hasRole("ADMIN")
+					.requestMatchers("/**").permitAll()
 			)
 			.formLogin(formLogin -> formLogin
-					.loginPage("/account/login")
+					.loginPage("/account")
+					.loginProcessingUrl("/account/login")
 					.defaultSuccessUrl("/account")
 					.failureUrl("/account/loginError") 
 					.permitAll()

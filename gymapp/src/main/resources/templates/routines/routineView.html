@@ -12,7 +12,6 @@
                 <li>
                     <form action="/routine/view/{{id}}" method="get">
                         <button type="submit" class="button">{{name}}</button>
-                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>               
                     <form action = "/routine/delete/{{id}}" method ="post">
                         <input type = "submit" value = "Borrar rutina">
