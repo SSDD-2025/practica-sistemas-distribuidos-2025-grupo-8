@@ -45,9 +45,9 @@ public class RoutineController implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
         if(materialServices.count() == 0){
-            materialServices.save(new MaterialSimpleDTO(0L, "Barra"));
-            materialServices.save(new MaterialSimpleDTO(0L, "Banco"));
-            materialServices.save(new MaterialSimpleDTO(0L, "Barra de dominadas"));
+            materialServices.save(new MaterialSimpleDTO(null, "Barra"));
+            materialServices.save(new MaterialSimpleDTO(null, "Banco"));
+            materialServices.save(new MaterialSimpleDTO(null, "Barra de dominadas"));
         }
         if(exerciseServices.count() == 0){
             /*exerciseServices.save(new ExerciseDTO("Curl de biceps con mancuernas", "De pie o sentado"));

@@ -17,7 +17,7 @@ public class Trainer{
     private Blob imageFile;
     @OneToMany(mappedBy = "trainer")
     private Set<User> users = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "trainer",cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
 
