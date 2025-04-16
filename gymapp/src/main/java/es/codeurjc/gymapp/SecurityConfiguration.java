@@ -75,7 +75,7 @@ public class SecurityConfiguration {
 			.userDetailsService(userDetailService)
 			.passwordEncoder(passwordEncoder())
 			.and()
-			.build(); 
+			.build();  
     }
 }
 
