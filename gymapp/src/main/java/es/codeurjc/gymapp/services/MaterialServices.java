@@ -59,6 +59,10 @@ public class MaterialServices {
         return materialRepository.findByName(name).map(this::toDTO);
     }
 
+    public Optional<MaterialSimpleDTO> findSimpleByName(String name){
+        return materialRepository.findByName(name).map(this::toSimpleDTO);
+    }
+
     public void save(MaterialDTO materialDTO, List<Long> exercises) throws IllegalArgumentException{
         Material material = toDomain(materialDTO);
         for (Long id : exercises) {
@@ -123,6 +127,10 @@ public class MaterialServices {
 
     private MaterialDTO toDTO(Material material) {
         return materialMapper.toDTO(material);
+    }
+
+    private MaterialSimpleDTO toSimpleDTO(Material material){
+        return materialMapper.toSimpleDTO(material);
     }
 
     private List<MaterialDTO> toDTOs(Collection<Material> materials) {
