@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseMapper;
@@ -83,6 +85,10 @@ public class ExerciseServices {
 
     public Collection<ExerciseDTO> findAll() {
         return mapperExercise.toDTOs(exerciseRepository.findAll());
+    }
+
+    public Page<ExerciseDTO> findAll(Pageable pageable) {
+        return exerciseRepository.findAll(pageable).map(mapperExercise::toDTO);
     }
 
     public List<ExerciseDTO> findByMaterialIsNotNull() {

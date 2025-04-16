@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseMapper;
 import es.codeurjc.gymapp.DTO.Material.MaterialDTO;
@@ -39,6 +41,10 @@ public class MaterialServices {
 
     public Collection<MaterialDTO> findAll() {
         return toDTOs(materialRepository.findAll());
+    }
+
+    public Page<MaterialDTO> findAll(Pageable pageable) {
+        return materialRepository.findAll(pageable).map(this::toDTO);
     }
 
     public MaterialDTO findById(Long id) {
