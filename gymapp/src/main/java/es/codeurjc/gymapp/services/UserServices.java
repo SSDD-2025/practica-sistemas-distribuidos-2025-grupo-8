@@ -75,7 +75,9 @@ public class UserServices {
     }
 
     public Optional<UserDTO> findByName(String name) {
-        return Optional.of(userMapper.toDTO(userRepository.findByName(name).get()));
+        Optional<User> user = userRepository.findByName(name);
+        if(user.isPresent()) return Optional.of(userMapper.toDTO(userRepository.findByName(name).get()));
+        else return Optional.empty();
     }
 
     public Optional<UserSimpleDTO> findByNameSimple(String name) {
