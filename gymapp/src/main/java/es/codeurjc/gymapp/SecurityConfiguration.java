@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import es.codeurjc.gymapp.repositories.RepositoryUserDetailsService;
@@ -34,32 +33,13 @@ public class SecurityConfiguration {
 		authProvider.setPasswordEncoder(passwordEncoder());
 		return authProvider;
 	}
-	/* 
-	@Bean
-	public InMemoryUserDetailsManager userDetailsService() {
-		UserDetails user = User.builder()
-				.username("user")
-				.password(passwordEncoder().encode("pass"))
-				.roles("USER")
-				.build();
-		UserDetails admin = User.builder()
-				.username("admin")
-				.password(passwordEncoder().encode("adminpass"))
-				.roles("USER","ADMIN")
-				.build();
-		return new InMemoryUserDetailsManager(user, admin);
-	}
-	*/
     @Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
 		http.authenticationProvider(authenticationProvider());
 		
 		    http.authorizeHttpRequests(authorize -> authorize
-					// PUBLIC PAGES
-					
 					// PRIVATE PAGES
-					//.requestMatchers("/exercise/add").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/exercise/add").hasRole("ADMIN")
 					.requestMatchers("/exercise/exercise_selectToDelete").hasRole("ADMIN")
 					.requestMatchers("/exercise/delete").hasRole("ADMIN")
@@ -69,8 +49,8 @@ public class SecurityConfiguration {
 					.requestMatchers("/trainer/add").hasRole("ADMIN")
 					.requestMatchers("/trainer/{id}/delete").hasRole("ADMIN")
 					.requestMatchers("/trainer/add/form").hasRole("ADMIN")
-					//.requestMatchers("/trainer/image/{id}").hasRole("ADMIN")
 					.requestMatchers("/admin/users").hasRole("ADMIN")
+					// PUBLIC PAGES
 					.requestMatchers("/**").permitAll()
 			)
 			.formLogin(formLogin -> formLogin

@@ -128,14 +128,16 @@ public class RoutineController implements CommandLineRunner{
     public String deleteRoutine(Model model, @PathVariable Long id) {
         Optional<Routine> optionalRoutine = routineServices.findById(id);
         if (optionalRoutine.isPresent()) {
-            Routine routine = optionalRoutine.get();
-            if (userSession.isLoggedIn()) {
-                User user = userServices.findByName(userSession.getName()).get();
-                userServices.deleteRoutine(user, routine);
-                routineServices.deleteUser(routine,user);
-                routineServices.removeExercises(routine);
-                routineServices.deleteById(id);
-                return "routines/routineDelete";
+            if(optionalRoutine.get().getUser().getName().equals(userSession.getName())){
+                Routine routine = optionalRoutine.get();
+                if (userSession.isLoggedIn()) {
+                    User user = userServices.findByName(userSession.getName()).get();
+                    userServices.deleteRoutine(user, routine);
+                    routineServices.deleteUser(routine,user);
+                    routineServices.removeExercises(routine);
+                    routineServices.deleteById(id);
+                    return "routines/routineDelete";
+                }
             }
         }
         return "error"; 
@@ -144,10 +146,12 @@ public class RoutineController implements CommandLineRunner{
     @PostMapping("/routine/modify/{id}")
     public String modifyRoutine(Model model, @PathVariable Long id) {
         Routine routine = routineServices.findById(id).get();
-        if(userSession.isLoggedIn()){
-            model.addAttribute("routine", routine);
-            model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
-            return "routines/routineModify";
+        if(routine.getUser().getName().equals(userSession.getName())){
+            if(userSession.isLoggedIn()){
+                model.addAttribute("routine", routine);
+                model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
+                return "routines/routineModify";
+            }
         }
         model.addAttribute("message", "No hay usuario registrado");
         return "error";

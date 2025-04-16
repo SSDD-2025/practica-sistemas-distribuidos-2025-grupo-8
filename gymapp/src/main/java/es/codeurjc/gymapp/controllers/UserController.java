@@ -1,10 +1,6 @@
 package es.codeurjc.gymapp.controllers;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,28 +10,17 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.boot.CommandLineRunner;
 
 import es.codeurjc.gymapp.SecurityConfiguration;
-import es.codeurjc.gymapp.model.Exercise;
-import es.codeurjc.gymapp.model.Material;
-import es.codeurjc.gymapp.model.Routine;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.CommentService;
@@ -43,11 +28,9 @@ import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 
 @Controller
-public class UserController /*implements CommandLineRunner*/ {
+public class UserController {
     
 	@Autowired
 	private SecurityConfiguration securityConfiguration;
@@ -71,14 +54,6 @@ public class UserController /*implements CommandLineRunner*/ {
 	public String init(Model model) {
 		return "index";
 	}
-
-	/*@Override
-    public void run(String... args) throws Exception {
-		if(userServices.count() == 0){
-			userServices.save(new User("admin", "admin", true, List.of("ADMIN")));
-		}
-    }
-	*/
 	
     @PostMapping("/facilities")
 	public String facilities(Model model) {
@@ -91,31 +66,9 @@ public class UserController /*implements CommandLineRunner*/ {
 		if(!userSession.isLoggedIn()){
 			return "account/account";
 		}
-		model.addAttribute("name", userSession.getName()); //maybe add more info about the user
+		model.addAttribute("name", userSession.getName()); 
 		return "account/logged";
 	}
-	/*
-	@PostMapping("/account/login")
-	public String sessionInit(Model model, @RequestParam String name, @RequestParam String password) {
-		if (name.isEmpty() || password.isEmpty()) {
-			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
-			return "error";
-		}
-		// name is supposed to be unique as a username
-		Optional<User> user = userServices.findByName(name); 
-		if(!user.isPresent()) {
-			model.addAttribute("message", "Usuario no encontrado");
-			return "error";
-		}
-		if(!user.get().getPassword().equals(password)) {
-			model.addAttribute("message", "Contraseña incorrecta");
-			return "error";
-		}
-		userSession.setName(name);
-		model.addAttribute("message", "Sesión iniciada con éxito");
-		return "account/accountMessage";
-	}
-		*/
 
 	@GetMapping("/account/loginError")
 	public String getMethodName(Model model) {
@@ -154,17 +107,13 @@ public class UserController /*implements CommandLineRunner*/ {
 			newUser = new User(name, encodedPassword,BlobProxy.generateProxy(image.getInputStream(),image.getSize()),"USER");
 		}
     	userServices.save(newUser, image);
-		userSession.setName(name, encodedPassword, request);//the auto-login doesn't work
+		userSession.setName(name, encodedPassword, request);
 		model.addAttribute("message", "Usuario registrado con éxito");
 		return "account/accountMessage";
 	}
 
 	@PostMapping("/account/logout")
 	public String sessionExit(Model model) {
-		/* 
-		userSession.logout();
-		model.addAttribute("message", "Sesión cerrada");
-		*/
 		return "account/logout";
 	}
 
