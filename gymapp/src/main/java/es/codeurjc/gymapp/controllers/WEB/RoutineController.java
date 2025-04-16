@@ -50,11 +50,11 @@ public class RoutineController implements CommandLineRunner{
             materialServices.save(new MaterialSimpleDTO(null, "Barra de dominadas"));
         }
         if(exerciseServices.count() == 0){
-            /*exerciseServices.save(new ExerciseDTO("Curl de biceps con mancuernas", "De pie o sentado"));
-            exerciseServices.save(new ExerciseDTO("Press francés con mancuernas", "Ideal para el tríceps"));
-            exerciseServices.save(new ExerciseDTO("Press de banca", "Pecho",materialServices.findByName("Banco").get()));
-            exerciseServices.save(new ExerciseDTO("Sentadillas", "Piernas",materialServices.findByName("Barra").get()));
-            exerciseServices.save(new ExerciseDTO("Dominadas", "Espalda",materialServices.findByName("Barra de dominadas").get()));*/
+            exerciseServices.save(new ExerciseDTO(null,"Curl de biceps con mancuernas", "De pie o sentado",null,null));
+            exerciseServices.save(new ExerciseDTO(null,"Press francés con mancuernas", "Ideal para el tríceps",null,null));
+            exerciseServices.save(new ExerciseDTO(null,"Press de banca", "Pecho",materialServices.findSimpleByName("Banco").get(),null));
+            exerciseServices.save(new ExerciseDTO(null,"Sentadillas", "Piernas",materialServices.findSimpleByName("Barra").get(),null));
+            exerciseServices.save(new ExerciseDTO(null,"Dominadas", "Espalda",materialServices.findSimpleByName("Barra de dominadas").get(),null));
         }
     }   
     
