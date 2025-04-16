@@ -161,7 +161,10 @@ public class TrainerController implements CommandLineRunner {
         }
         UserDTO user = userServices.findByName(userSession.getName()).get();
         trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
-        return "redirect:/trainer/{id}/comments";
+        model.addAttribute("logged", userSession.isLoggedIn());
+        model.addAttribute("trainerId", id);
+        model.addAttribute("comments", opTrainer.get().comments());
+        return "trainers/trainerComments";
     }
 
     @PostMapping("/trainer/{trainerId}/comments/{commentId}/delete")

@@ -18,6 +18,7 @@
                         {{#isAdmin}}
                         <form action="/machinery/delete/{{id}}" method="post">
                             <input type="submit" value="Borrar maquinaria">
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
                         </form>
                         {{/isAdmin}}
                     </div>
@@ -33,7 +34,7 @@
         
         {{#isAdmin}}
             <br>
-            <form action="/machinery/add" method="request">
+            <form action="/machinery/add" method="get">
                 <input type="submit" value="Añadir maquinaria">
             </form>
         {{/isAdmin}}

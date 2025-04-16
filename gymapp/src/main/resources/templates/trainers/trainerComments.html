@@ -11,6 +11,7 @@
         {{#isAdmin}}
             <form action="/trainer/{{trainerId}}/comments/{{id}}/delete" method="post">
                 <input type="submit" value="Borrar comentario">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         {{/isAdmin}}
         {{/comments}}
@@ -22,11 +23,13 @@
         {{#logged}}
         <form action="/trainer/{{trainerId}}/comments/add" method="post">
             <input type="submit" value="Añadir comentario">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
         {{/logged}}
 
         <form action="/trainer/{{trainerId}}" method="post">
             <input type="submit" value="Volver">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
         
         {{>common/footer}}

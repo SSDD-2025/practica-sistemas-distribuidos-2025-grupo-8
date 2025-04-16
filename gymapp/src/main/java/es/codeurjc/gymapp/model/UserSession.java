@@ -1,31 +1,68 @@
 package es.codeurjc.gymapp.model;
-import java.sql.Blob;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
 
-import jakarta.persistence.Lob;
+import es.codeurjc.gymapp.repositories.RepositoryUserDetailsService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Component
-@SessionScope
-public class UserSession { //separate class to manage the user session
+public class UserSession {
 
-    private String name;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    public String getName(){ 
-        return name; 
+    @Autowired
+    private RepositoryUserDetailsService userDetailsService;
+
+    public String getName() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
     }
-    public void setName(String username){ 
-        this.name = username; 
+
+    public boolean isLoggedIn() {
+        return getName() != null && !getName().equals("anonymousUser");
     }
 
-    public boolean isLoggedIn(){ 
-        return name != null; 
+    public void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
+        }
+
+        SecurityContextHolder.clearContext();
     }
 
-    public void logout(){ 
-        this.name = null; 
-    }
+    public void setName(String name, String password, HttpServletRequest request) {
+        /*Authentication authentication = new UsernamePasswordAuthenticationToken(name, password);  
+		Authentication authenticatedUser = authenticationManager.authenticate(authentication); 
+		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);*/
 
+        UserDetails userDetails = userDetailsService.loadUserByUsername(name);
+
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+            userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        request.getSession().setAttribute(
+            HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+            SecurityContextHolder.getContext());
+
+    }
 }
-

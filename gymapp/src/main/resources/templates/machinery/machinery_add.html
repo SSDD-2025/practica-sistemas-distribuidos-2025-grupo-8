@@ -17,10 +17,12 @@
                 {{/exercises}}
             </select>
             <input type="submit" value="Añadir Maquinaria">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
         <br>
         <form action="/exercise/add" method="request" clas="admin">
             <input type="submit" value="Añadir ejercicio que no este en la lista">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
         {{>common/footer}}
     </body>

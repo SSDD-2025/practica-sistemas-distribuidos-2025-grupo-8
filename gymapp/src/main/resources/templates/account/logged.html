@@ -11,19 +11,23 @@
             <p>Cambiar imagen de perfil:</p>
             <input type='file' name='image' accept=".jpg, .jpeg"/>
             <input type='submit' value='Aceptar'/>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
         
         {{#isAdmin}}
         <form action="/admin/users" method="post">
             <input type='submit' value='Ver usuarios'/>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
         {{/isAdmin}}
         <form action="/account/logout" method="post">
-            <input type='submit' value='Cerrar sesión'/>
+            <input type='submit' value='Cerrar Sesión'/>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
 
         <form action="/account/deleteAccount" method="post">
             <input type='submit' value='Borrar cuenta'/>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
 
         <form action="/" method="get">

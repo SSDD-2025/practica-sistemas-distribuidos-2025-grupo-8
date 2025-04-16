@@ -10,6 +10,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
@@ -20,17 +21,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.codeurjc.gymapp.SecurityConfiguration;
+import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.CommentService;
 import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
-
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class UserController implements CommandLineRunner {
+public class UserController {
     
+	@Autowired
+	private SecurityConfiguration securityConfiguration;
+
 	@Autowired
 	private UserSession userSession;
 
@@ -50,15 +56,6 @@ public class UserController implements CommandLineRunner {
 	public String init(Model model) {
 		return "index";
 	}
-
-	@Override
-    public void run(String... args) throws Exception {
-		if(userServices.count() == 0){
-			UserDTO user = new UserDTO(0L,"admin", "admin", null,
-				null, null, true, null);
-			userServices.save(user);
-		}
-    }  
 	
     @PostMapping("/facilities")
 	public String facilities(Model model) {
@@ -66,35 +63,26 @@ public class UserController implements CommandLineRunner {
 		return "facilities";
 	}
 
-	@PostMapping("/account")
+	@RequestMapping("/account")
 	public String account(Model model) {
 		if(!userSession.isLoggedIn()){
 			return "account/account";
 		}
-		model.addAttribute("name", userSession.getName()); //maybe add more info about the user
+		model.addAttribute("name", userSession.getName()); 
 		return "account/logged";
 	}
 
-	@PostMapping("/account/login")
-	public String sessionInit(Model model, @RequestParam String name, @RequestParam String password) {
-		if (name.isEmpty() || password.isEmpty()) {
-			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
-			return "error";
-		}
-		// name is supposed to be unique as a username
-		Optional<UserDTO> user = userServices.findByName(name); 
-		if(!user.isPresent()) {
-			model.addAttribute("message", "Usuario no encontrado");
-			return "error";
-		}
-		if(!user.get().password().equals(password)) {
-			model.addAttribute("message", "Contraseña incorrecta");
-			return "error";
-		}
-		userSession.setName(name);
-		model.addAttribute("message", "Sesión iniciada con éxito");
+	@GetMapping("/account/loginError")
+	public String getMethodName(Model model) {
+		model.addAttribute("message", "Usuario o contraseña incorrectos");
 		return "account/accountMessage";
 	}
+	
+	@RequestMapping("/account/login")
+	public String login(Model model) {
+		return "redirect:/account"; 
+	}
+	
 
 	@GetMapping("/register/create")
 	public String register(Model model) {
@@ -102,7 +90,7 @@ public class UserController implements CommandLineRunner {
 	}
 
 	@PostMapping("/account/register")
-	public String register(Model model, @RequestParam String name, @RequestParam String password, @RequestParam MultipartFile image) throws IOException {
+	public String register(Model model, @RequestParam String name, @RequestParam String password, @RequestParam MultipartFile image,HttpServletRequest request) throws IOException {
 		if (name.isEmpty() || password.isEmpty()) {
 			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
 			return "error";
@@ -112,22 +100,27 @@ public class UserController implements CommandLineRunner {
 			model.addAttribute("message", "El usuario ya existe");
 			return "error"; //user was already registered
 		}
-		userSession.setName(name);
-		UserDTO newUser = new UserDTO(0L,name, password,null,null,null,false,null);
+		String encodedPassword = securityConfiguration.passwordEncoder().encode(password);
+
+		UserDTO newUser;
+		if(image.isEmpty()){		
+			newUser = new UserDTO(0l, name, encodedPassword, null, null, null, false, null,  "USER");
+		}else{	
+			newUser = new UserDTO(0l, name, encodedPassword, BlobProxy.generateProxy(image.getInputStream(),image.getSize()), null, null, false,  null, "USER");
+		}
     	userServices.save(newUser, image);
+		userSession.setName(name, encodedPassword, request);
 		model.addAttribute("message", "Usuario registrado con éxito");
 		return "account/accountMessage";
 	}
 
 	@PostMapping("/account/logout")
 	public String sessionExit(Model model) {
-		userSession.logout();
-		model.addAttribute("message", "Sesión cerrada");
-		return "account/accountMessage";
+		return "account/logout";
 	}
 
 	@PostMapping("/account/deleteAccount")
-	public String sessionDelete(Model model) {
+	public String sessionDelete(Model model, HttpServletRequest request) {
 		Optional<UserDTO> optionalUser = userServices.findByName(userSession.getName());
 		if (optionalUser.isEmpty()) {
 			model.addAttribute("message", "Usuario no encontrado");
@@ -142,7 +135,7 @@ public class UserController implements CommandLineRunner {
 		commentServices.deleteAllComments(user);
 		// Delete user
 		userServices.deleteById(user.id());
-		userSession.logout();
+		userSession.logout(request);
 		model.addAttribute("message", "Cuenta eliminada con éxito");
 		return "account/accountMessage";
 	}
