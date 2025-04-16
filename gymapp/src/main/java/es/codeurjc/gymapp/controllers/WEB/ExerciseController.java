@@ -1,15 +1,13 @@
-package es.codeurjc.gymapp.controllers;
+package es.codeurjc.gymapp.controllers.WEB;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import es.codeurjc.gymapp.model.Exercise;
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
 import es.codeurjc.gymapp.services.ExerciseServices;
 
 @Controller
@@ -35,12 +33,13 @@ public class ExerciseController {
     }
 
     @PostMapping("/exercise/delete")
-    public String deleteExercise(Model model, @RequestParam Exercise exercise){
-        exerciseService.deleteById(exercise.getId());
-        if (!exerciseService.findById(exercise.getId()).isPresent()){
+    public String deleteExercise(Model model, @RequestParam ExerciseDTO exerciseDTO){
+        try {
+            exerciseService.deleteById(exerciseDTO.id());
             return "exercises/exercise_deleted";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("message", "No se ha podido borrar el ejercicio");
+            return "error";
         }
-        model.addAttribute("message", "No se ha podido borrar el ejercicio");
-        return "error";
     }
 }

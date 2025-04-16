@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.controllers;
+package es.codeurjc.gymapp.controllers.WEB;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import es.codeurjc.gymapp.model.Material;
+import es.codeurjc.gymapp.DTO.Material.MaterialDTO;
 import es.codeurjc.gymapp.services.ExerciseServices;
 import es.codeurjc.gymapp.services.MaterialServices;
 
@@ -32,10 +33,15 @@ public class MaterialController {
 
     @GetMapping("/machinery/{id}")
     public String showMachinery(Model model, @PathVariable long id) {
-        Material material =  materialServices.findById(id).get();
-        model.addAttribute("machinery", material);
-        model.addAttribute("exercises", material.getExercises());
-        return "machinery/machinery_show";
+        try {
+            MaterialDTO material = materialServices.findById(id);
+            model.addAttribute("machinery", material);
+            model.addAttribute("exercises", material.exercises());
+            return "machinery/machinery_show";
+        } catch(IllegalArgumentException e) {
+            model.addAttribute("message", "No se ha encontrado la maquinaria con id: " + id);
+            return "error";
+        }
     }
 
     @PostMapping("/machinery/save")

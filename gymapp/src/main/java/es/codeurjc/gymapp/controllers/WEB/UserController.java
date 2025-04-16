@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.controllers;
+package es.codeurjc.gymapp.controllers.WEB;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.gymapp.SecurityConfiguration;
 import es.codeurjc.gymapp.model.User;
+import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.CommentService;
 import es.codeurjc.gymapp.services.ExerciseServices;
@@ -93,18 +95,18 @@ public class UserController {
 			model.addAttribute("message", "Nombre de usuario o contraseña no pueden estar vacíos");
 			return "error";
 		}
-		Optional<User> user = userServices.findByName(name);
+		Optional<UserDTO> user = userServices.findByName(name);
 		if(user.isPresent()){
 			model.addAttribute("message", "El usuario ya existe");
 			return "error"; //user was already registered
 		}
 		String encodedPassword = securityConfiguration.passwordEncoder().encode(password);
 
-		User newUser;
+		UserDTO newUser;
 		if(image.isEmpty()){		
-			newUser = new User(name, encodedPassword,"USER");
+			newUser = new UserDTO(0l, name, encodedPassword, null, null, null, false, null,  "USER");
 		}else{	
-			newUser = new User(name, encodedPassword,BlobProxy.generateProxy(image.getInputStream(),image.getSize()),"USER");
+			newUser = new UserDTO(0l, name, encodedPassword, BlobProxy.generateProxy(image.getInputStream(),image.getSize()), null, null, false,  null, "USER");
 		}
     	userServices.save(newUser, image);
 		userSession.setName(name, encodedPassword, request);
@@ -118,14 +120,13 @@ public class UserController {
 	}
 
 	@PostMapping("/account/deleteAccount")
-	public String sessionDelete(Model model,HttpServletRequest request) {
-		Optional<User> optionalUser = userServices.findByName(userSession.getName());
-		if (!optionalUser.isPresent()) {
+	public String sessionDelete(Model model, HttpServletRequest request) {
+		Optional<UserDTO> optionalUser = userServices.findByName(userSession.getName());
+		if (optionalUser.isEmpty()) {
 			model.addAttribute("message", "Usuario no encontrado");
 			return "error";
 		}
-		User user = optionalUser.get();
-
+		UserDTO user = optionalUser.get();
 		// Delete routines from exercises
 		exerciseServices.deleteRoutinesFromExercise(user);
 		// Delete all routines
@@ -133,7 +134,7 @@ public class UserController {
 		// Delete all comments
 		commentServices.deleteAllComments(user);
 		// Delete user
-		userServices.deleteById(user.getId());
+		userServices.deleteById(user.id());
 		userSession.logout(request);
 		model.addAttribute("message", "Cuenta eliminada con éxito");
 		return "account/accountMessage";
@@ -142,33 +143,28 @@ public class UserController {
 	
 	@PostMapping("/account/image")
 	public String changeImage(Model model, @RequestParam MultipartFile image) throws IOException {
-		Optional<User> user = userServices.findByName(userSession.getName());
-		if (image.isEmpty()) {
-            user.get().setImageFile(null);
-        } else {
-            user.get().setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
-        }
-		userServices.save(user.get(), image);
+		Optional<UserDTO> user = userServices.findByName(userSession.getName());
+		//Needn't to check because to change image you have to be logged in
+		userServices.setImageFile(user.get(), image);
 		model.addAttribute("message", "Imagen cambiada con éxito");
 		return "account/accountMessage"; 
 	}
 
 	@GetMapping("/user/image")
 	public ResponseEntity<Object> downloadImage() throws SQLException {;		
-		Optional<User> user = userServices.findByName(userSession.getName());
-		if (user.isPresent() && user.get().getImageFile() != null) {			
-			Blob image = user.get().getImageFile();
+		Optional<UserDTO> user = userServices.findByName(userSession.getName());
+		if (user.isPresent() && user.get().imageFile() != null) {			
+			Blob image = user.get().imageFile();
 			Resource file = new InputStreamResource(image.getBinaryStream());
 			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
 					.contentLength(image.length()).body(file);
-		} else {
-			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.notFound().build();
 	}
 
 	@PostMapping("/admin/users")
 	public String showUsers(Model model){
-		List<User> users = userServices.findAll();
+		List<UserDTO> users = userServices.findAll();
 		model.addAttribute("users", users);
 		return "account/show_users";
 	}

@@ -9,6 +9,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
+import es.codeurjc.gymapp.DTO.User.UserDTO;
+import es.codeurjc.gymapp.DTO.User.UserMapper;
 import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.UserServices;
@@ -20,6 +22,8 @@ public class GlobalControllerAdvice {
 
     @Autowired
     private UserServices userServices;
+    @Autowired
+    private UserMapper userMapper;
 
     public GlobalControllerAdvice(UserSession userSession) {
         this.userSession = userSession;
@@ -33,9 +37,9 @@ public class GlobalControllerAdvice {
     @ModelAttribute("hasImage")
     public boolean addHasImageToModel() {
         if (userSession.isLoggedIn()) {
-            Optional<User> user = userServices.findByName(userSession.getName());
+            Optional<UserDTO> user = userServices.findByName(userSession.getName());
             if (user.isPresent()) { 
-                return user.get().getImageFile() != null; //return true if the user has an image
+                return user.get().imageFile() != null; //return true if the user has an image
             } else {
                 return false;  
             }
