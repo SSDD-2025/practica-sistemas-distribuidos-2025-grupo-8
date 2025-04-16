@@ -5,27 +5,32 @@ import jakarta.persistence.*;
 import java.nio.file.Path;
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.multipart.MultipartFile;
 
-@Entity
-public class User{
+@Entity(name = "USERS")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(unique = true)
     private String name;
-    private String password;
+    private String encodedPassword;
     @Lob
     private Blob imageFile;
     @ManyToOne
     private Trainer trainer;
     @OneToMany(mappedBy="userMember")
     private List<Routine> routines;
-    private Boolean isAdmin;
+
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
 
     @OneToMany(mappedBy="author")
     private List<Comment> comments;
@@ -33,27 +38,20 @@ public class User{
     public User(){
         
     }
-    // Constructor
-    public User(String name, String password, Boolean isAdmin) {
+
+    public User(String name, String encodedPassword,  Blob image, String... roles) {
         this.name = name;
-        this.password = password;
-        this.isAdmin = isAdmin;
+        this.encodedPassword = encodedPassword;
         this.trainer = null;
+        this.imageFile = image;
         this.routines = new ArrayList<>();
-    }
-    
-    public User(String name, String password) {
-        this(name, password, false);
+        this.roles = List.of(roles);
     }
 
-    // Getters and Setters
-    public String getPassword() {
-        return password;
+    public User(String name, String encodedPassword, String... roles) {
+        this(name,encodedPassword,null,roles);
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public Trainer getTrainer() {
         return trainer;
@@ -95,13 +93,13 @@ public class User{
         this.imageFile = imageFile;
     }
     
-    public Boolean getIsAdmin() {
+    /*public Boolean getIsAdmin() {
         return isAdmin;
     }
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
-    }
+    }*/
 
     public void addRoutine(Routine routine) {
         this.routines.add(routine);
@@ -117,5 +115,21 @@ public class User{
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+    
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+    public String getEncodedPassword() {
+        return encodedPassword;
+    }
+
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
     }
 }

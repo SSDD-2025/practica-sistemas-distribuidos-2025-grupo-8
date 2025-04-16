@@ -30,6 +30,7 @@
             <p>Debes estar logueado para ver una rutina</p>
             <form action="/login" method="post">
                 <input type="submit" value="Login">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         {{/isLogged}}
         {{>common/footer}}

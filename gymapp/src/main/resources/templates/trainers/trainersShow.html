@@ -18,6 +18,7 @@
             {{#isAdmin}}
             <form action="/trainer/add" method="post">
                 <input type="submit" value = "Añadir nuevo entrenador">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             {{/isAdmin}}
             

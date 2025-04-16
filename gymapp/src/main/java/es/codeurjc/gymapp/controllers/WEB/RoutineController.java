@@ -113,11 +113,13 @@ public class RoutineController implements CommandLineRunner{
 
     @GetMapping("/routine/view/{id}")
     public String routineViewer(Model model,@PathVariable Long id){
-        Optional<RoutineSimpleDTO> routine = routineServices.findById(id);
+        Optional<RoutineDTO> routine = routineServices.findByIdNotSimple(id);
         if(routine.isPresent()){
-            model.addAttribute("routine", routine.get());
-            model.addAttribute("isLogged", userSession.isLoggedIn());
-            return "routines/routineViewer";
+            if(routine.get().userMember().name().equals(userSession.getName())){
+                model.addAttribute("routine", routine.get());
+                model.addAttribute("isLogged", userSession.isLoggedIn());
+                return "routines/routineViewer";
+            }
         } 
         model.addAttribute("message", "No se ha encontrado la rutina");
         return "error";
@@ -125,34 +127,37 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/delete/{id}")
     public String deleteRoutine(Model model, @PathVariable Long id) {
-        Optional<RoutineSimpleDTO> optionalRoutine = routineServices.findById(id);
-        if (!userSession.isLoggedIn()) {
-            model.addAttribute("message", "No hay usuario registrado");
-            return "error";
-        }
-        if(optionalRoutine.isEmpty()) {
+        Optional<RoutineDTO> optionalRoutine = routineServices.findByIdNotSimple(id);
+        if (optionalRoutine.isPresent()) {
+            if(userSession.isLoggedIn() && optionalRoutine.get().userMember().name().equals(userSession.getName())){
+                RoutineSimpleDTO routine = routineServices.findById(id).get();
+                UserDTO user = userServices.findByName(userSession.getName()).get();
+                userServices.deleteRoutine(user, routine);
+                routineServices.deleteUser(routine);
+                routineServices.removeExercises(routine);
+                routineServices.deleteById(id);
+                return "routines/routineDelete";
+            }else {
+                model.addAttribute("message", "No tienes permiso para eliminar esta rutina");
+                return "error"; 
+            }
+        }else {
             model.addAttribute("message", "No se ha encontrado la rutina");
             return "error"; 
         }
-        RoutineSimpleDTO routine = optionalRoutine.get();
-        UserDTO user = userServices.findByName(userSession.getName()).get();
-        userServices.deleteRoutine(user, routine);
-        routineServices.deleteUser(routine);
-        routineServices.removeExercises(routine);
-        routineServices.deleteById(id);
-        return "routines/routineDelete";
     }
 
     @PostMapping("/routine/modify/{id}")
     public String modifyRoutine(Model model, @PathVariable Long id) {
-        if(!userSession.isLoggedIn()){
-            model.addAttribute("message", "No hay usuario registrado");
+        Optional<RoutineDTO>  routine = routineServices.findByIdNotSimple(id);
+        if(userSession.isLoggedIn() && routine.get().userMember().name().equals(userSession.getName())){
+            model.addAttribute("routine", routine);
+            model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
+            return "routines/routineModify";        
+        }else {
+            model.addAttribute("message", "No tienes permiso para modificar esta rutina");
             return "error";
-        }
-        RoutineSimpleDTO routine = routineServices.findById(id).get();
-        model.addAttribute("routine", routine);
-        model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
-        return "routines/routineModify";
+        }      
     }
 
     @PostMapping("/routine/modified")

@@ -5,13 +5,14 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>common/header}}
-            <form action="account/login" method="post">
+        {{>common/header}}        
+            <form action="/account/login" method="post">
                 <p>Nombre: </p>
-                <input type='text' name='name'/>
+                <input type='text' name='username'/>
                 <p>Contraseña:</p>
                 <input type='password' name='password'/>
                 <input type='submit' value='Iniciar sesión'/>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             <p>¿No tienes una cuenta? <a href="/register/create">Regístrate aquí</a></p>
         {{>common/footer}}

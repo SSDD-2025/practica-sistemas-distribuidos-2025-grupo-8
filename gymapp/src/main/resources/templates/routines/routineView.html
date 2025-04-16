@@ -15,9 +15,11 @@
                     </form>               
                     <form action = "/routine/delete/{{id}}" method ="post">
                         <input type = "submit" value = "Borrar rutina">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                     <form action = "/routine/modify/{{id}}" method ="post">
                         <input type = "submit" value = "Modificar rutina">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                 </li>
                 {{/routines}}
@@ -29,6 +31,7 @@
                 <li>Debes iniciar sesión para ver las rutinas</li>
                 <form action="/account" method="post">
                     <input type="submit" value="Iniciar sesión">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
             {{/isLogged}}
         </ul>

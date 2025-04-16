@@ -27,10 +27,12 @@
                     <p>Debes estar logueado para crear una rutina</p>
                     
                 {{/isLogged}}
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             {{^isLogged}}
             <form action="/account" method="post">
                 <input type="submit" value="Login">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             {{/isLogged}}
         {{>common/footer}}

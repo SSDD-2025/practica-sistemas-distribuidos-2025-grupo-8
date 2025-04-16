@@ -65,7 +65,7 @@ public class UserRESTController {
     public UserDTO putUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         if(userServices.findById(id).isEmpty())
             throw new NoSuchElementException();
-        UserDTO newUser = new UserDTO(id, userDTO.name(), userDTO.password(), 
+        UserDTO newUser = new UserDTO(id, userDTO.name(), userDTO.encodedPassword(), 
                     userDTO.imageFile(), userDTO.trainer(), userDTO.routines(), 
                     userDTO.isAdmin(), userDTO.comments());
         userServices.save(newUser);
