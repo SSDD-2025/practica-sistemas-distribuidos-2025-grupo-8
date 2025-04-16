@@ -47,11 +47,11 @@ public class TrainerController implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if(trainerServices.count() == 0){
             // Trainer 1
-            TrainerDTO arnold = new TrainerDTO(0L, "Arnold Schwarzenegger","Entrenador de culturismo", 
+            TrainerDTO arnold = new TrainerDTO(null, "Arnold Schwarzenegger","Entrenador de culturismo", 
                 loadImageAsBlob("static/images/arnold.png"), null, null);
 
             // Trainer 2
-            TrainerDTO theRock = new TrainerDTO(0L,"Dwayne Johnson", "Entrenador de lucha libre",
+            TrainerDTO theRock = new TrainerDTO(null,"Dwayne Johnson", "Entrenador de lucha libre",
                 loadImageAsBlob("static/images/theRock.png"), null, null);
 
             // Save trainers

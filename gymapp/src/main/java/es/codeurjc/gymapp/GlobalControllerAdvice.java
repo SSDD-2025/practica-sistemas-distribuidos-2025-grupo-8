@@ -22,8 +22,6 @@ public class GlobalControllerAdvice {
 
     @Autowired
     private UserServices userServices;
-    @Autowired
-    private UserMapper userMapper;
 
     public GlobalControllerAdvice(UserSession userSession) {
         this.userSession = userSession;

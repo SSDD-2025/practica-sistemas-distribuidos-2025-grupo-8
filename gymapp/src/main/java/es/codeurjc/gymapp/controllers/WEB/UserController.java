@@ -104,9 +104,9 @@ public class UserController {
 
 		UserDTO newUser;
 		if(image.isEmpty()){		
-			newUser = new UserDTO(0l, name, encodedPassword, null, null, null, false, null,  "USER");
+			newUser = new UserDTO(null, name, encodedPassword, null, null, null, false, null,  "USER");
 		}else{	
-			newUser = new UserDTO(0l, name, encodedPassword, BlobProxy.generateProxy(image.getInputStream(),image.getSize()), null, null, false,  null, "USER");
+			newUser = new UserDTO(null, name, encodedPassword, BlobProxy.generateProxy(image.getInputStream(),image.getSize()), null, null, false,  null, "USER");
 		}
     	userServices.save(newUser, image);
 		userSession.setName(name, encodedPassword, request);
