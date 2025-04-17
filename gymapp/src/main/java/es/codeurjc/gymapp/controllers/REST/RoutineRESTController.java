@@ -47,9 +47,11 @@ public class RoutineRESTController {
     @GetMapping("/{id}")
     public ResponseEntity<RoutineDTO> getRoutine(@PathVariable long id) {
         RoutineDTO routine;
-        if(userSession.isLoggedIn()){
-            routine = routineServices.findByIdNotSimple(id).get();
-            return ResponseEntity.ok(routine);
+        if(routineServices.findByIdNotSimple(id).isPresent()){
+            if(routineServices.findByIdNotSimple(id).get().userMember().name().equals(userSession.getName())){
+                routine = routineServices.findByIdNotSimple(id).get();
+                return ResponseEntity.ok(routine);
+            }
         }
         return ResponseEntity.notFound().build();
     }
@@ -66,10 +68,12 @@ public class RoutineRESTController {
 
     @PutMapping("/{id}")
     public ResponseEntity<RoutineDTO> modifyRoutine(@PathVariable long id,@RequestBody RoutineDTO routineDTO){
-        if(routineServices.findById(id).isPresent()){
-            RoutineDTO newRoutineDTO = new RoutineDTO(id, routineDTO.name(), routineDTO.description(), routineDTO.day(), routineDTO.exercises(), routineDTO.userMember());
-            routineServices.save(newRoutineDTO);
-            return ResponseEntity.ok(newRoutineDTO);
+        if(routineServices.findByIdNotSimple(id).isPresent()){
+            if(routineServices.findByIdNotSimple(id).get().userMember().name().equals(userSession.getName())){
+                RoutineDTO newRoutineDTO = new RoutineDTO(id, routineDTO.name(), routineDTO.description(), routineDTO.day(), routineDTO.exercises(), routineDTO.userMember());
+                routineServices.save(newRoutineDTO);
+                return ResponseEntity.ok(newRoutineDTO);
+            }
         }
         return ResponseEntity.notFound().build(); 
     }
@@ -78,9 +82,11 @@ public class RoutineRESTController {
     public ResponseEntity<RoutineDTO> deleteRoutine(@PathVariable long id){
         RoutineDTO routineDTO;
         if(routineServices.findByIdNotSimple(id).isPresent()){
-            routineDTO = routineServices.findByIdNotSimple(id).get();
-            routineServices.deleteById(id);
-            return ResponseEntity.ok(routineDTO);
+            if(routineServices.findByIdNotSimple(id).get().userMember().name().equals(userSession.getName())){
+                routineDTO = routineServices.findByIdNotSimple(id).get();
+                routineServices.deleteById(id);
+                return ResponseEntity.ok(routineDTO);
+            }
         }
         return ResponseEntity.notFound().build();
     }
