@@ -45,7 +45,7 @@ public class ExerciseRESTController {
         return ResponseEntity.created(location).body(exerciseDTO);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ExerciseDTO> deleteExercise(@PathVariable Long id){
         try {
             return ResponseEntity.ok(exerciseServices.deleteById(id));
