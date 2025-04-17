@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,9 +35,11 @@ public class UserRESTController {
     //TODO: Change name and implementation
     //Posible implementation Log in
     // For admin to see a dashboard maybe
-    public ResponseEntity<UserSimpleDTO> MethodName() {
-        
-        return null;
+    public ResponseEntity<List<UserSimpleDTO>> getUsers() {
+        if(userServices.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+        List<UserSimpleDTO> users = userServices.findAllSimple();
+        return ResponseEntity.ok(users);
     }
     
     @GetMapping("/{id}")

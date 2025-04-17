@@ -40,6 +40,10 @@ public class UserServices {
         return userMapper.toDTOs(userRepository.findAll());
     }
 
+    public List<UserSimpleDTO> findAllSimple(){
+        return userMapper.toSimpleDTOs(userRepository.findAll());
+    }
+
     public long count(){
         return userRepository.count();
     }
