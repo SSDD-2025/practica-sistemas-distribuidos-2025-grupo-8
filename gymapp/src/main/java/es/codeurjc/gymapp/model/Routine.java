@@ -17,7 +17,7 @@ public class Routine{
     private String description;
     private String day;
     @ManyToMany(mappedBy = "routine")
-    private Set<Exercise> exercises;
+    private Set<Exercise> exercises = new HashSet<>();
     @ManyToOne
     private User userMember;
 

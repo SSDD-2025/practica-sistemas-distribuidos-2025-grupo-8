@@ -46,7 +46,7 @@ public class MaterialRESTController {
         return ResponseEntity.created(location).body(materialDTO);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MaterialDTO> deleteMaterial(@PathVariable Long id){
         try {
             return ResponseEntity.ok(materialServices.deleteById(id));

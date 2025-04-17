@@ -8,7 +8,7 @@ import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
 import es.codeurjc.gymapp.DTO.Trainer.TrainerSimpleDTO;
 
 public record UserDTO(Long id, String name, String encodedPassword, Blob imageFile, 
-                        TrainerSimpleDTO trainer, List<RoutineSimpleDTO> routines, Boolean isAdmin, 
+                        TrainerSimpleDTO trainer, List<RoutineSimpleDTO> routines,
                         List<CommentSimpleDTO> comments, String... roles) {
 
 }

@@ -77,8 +77,8 @@ public class UserRESTController {
         if(userServices.findById(id).isEmpty())
             return ResponseEntity.notFound().build();
         UserDTO newUser = new UserDTO(id, userDTO.name(), userDTO.encodedPassword(), 
-                    userDTO.imageFile(), userDTO.trainer(), userDTO.routines(), 
-                    userDTO.isAdmin(), userDTO.comments());
+                    userDTO.imageFile(), userDTO.trainer(), userDTO.routines(),
+                     userDTO.comments(), userDTO.roles());
         userServices.save(newUser);
         return ResponseEntity.ok(newUser);
     }

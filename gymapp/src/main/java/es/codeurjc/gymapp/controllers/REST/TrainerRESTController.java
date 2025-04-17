@@ -30,9 +30,6 @@ public class TrainerRESTController {
     //GetMapping parts
     
     @GetMapping("/")
-    //TODO: Change name and implementation
-    //Posible implementation Log in
-    // For admin to see a dashboard maybe
     public ResponseEntity<List<TrainerSimpleDTO>> getTrainers() {
         if(trainerServices.findAllSimple().isEmpty())
             return ResponseEntity.notFound().build();
@@ -63,12 +60,13 @@ public class TrainerRESTController {
     //PutMapping parts
 
     @PutMapping("/{id}")
-    public TrainerDTO putTrainer(@PathVariable Long id, @RequestBody TrainerDTO trainerDTO) {
+    public ResponseEntity<TrainerDTO> putTrainer(@PathVariable Long id, @RequestBody TrainerDTO trainerDTO) {
         if(trainerServices.findDTOById(id).isEmpty())
             throw new NoSuchElementException();
         TrainerDTO newTrainer = new TrainerDTO(id, trainerDTO.name(), trainerDTO.description(), 
             trainerDTO.imageFile(), trainerDTO.users(), trainerDTO.comments());
-        return newTrainer;
+        trainerServices.save(newTrainer);
+        return ResponseEntity.ok(newTrainer);
     }
 
     //DeleteMapping parts
