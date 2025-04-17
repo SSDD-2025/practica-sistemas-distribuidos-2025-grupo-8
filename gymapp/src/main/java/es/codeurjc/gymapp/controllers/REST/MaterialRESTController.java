@@ -26,7 +26,7 @@ public class MaterialRESTController {
 
     @GetMapping("/")
     public ResponseEntity<Page<MaterialDTO>> getMaterials(Pageable pageable) {
-        return ResponseEntity.ok(materialServices.findAll(pageable));
+        return ResponseEntity.ok(materialServices.findAllPage(pageable));
     }
 
     @GetMapping("/{id}")

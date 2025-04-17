@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseMapper;
@@ -74,6 +76,11 @@ public class RoutineServices {
     public List<RoutineSimpleDTO> findByUser(UserDTO userDTO){
         User user = mapperUser.toDomain(userDTO);
         return mapperRoutine.toSimpleDTOs(routineRepository.findByUserMember(user));
+    }
+
+    public Page<Routine> findByUserPage(UserDTO userDTO, Pageable pageable){
+        User user = mapperUser.toDomain(userDTO);
+        return routineRepository.findByUserMember(user, pageable);
     }
 
     public void deleteExercises(RoutineDTO routineDTO){

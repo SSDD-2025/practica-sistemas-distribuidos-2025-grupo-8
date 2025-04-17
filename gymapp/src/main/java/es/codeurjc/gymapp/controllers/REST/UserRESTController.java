@@ -2,19 +2,19 @@ package es.codeurjc.gymapp.controllers.REST;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.codeurjc.gymapp.DTO.User.*;
+import es.codeurjc.gymapp.repositories.UserRepository;
 import es.codeurjc.gymapp.services.UserServices;
 
-import java.io.IOException;
 import java.net.URI;
-import java.sql.Blob;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +31,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class UserRESTController {
     @Autowired
     private UserServices userServices;
+
+    @Autowired
+	private UserRepository userRepository;
+
+    @Autowired
+    private UserMapper userMapper;
     //GetMapping parts
     
-    @GetMapping("/")
-    public ResponseEntity<List<UserSimpleDTO>> getUsers() {
+    @GetMapping
+    //TODO: Change name and implementation
+    //Posible implementation Log in
+    // For admin to see a dashboard maybe
+    public ResponseEntity<Page<UserSimpleDTO>> getUsers(Pageable pageable) {
         if(userServices.findAll().isEmpty())
             return ResponseEntity.notFound().build();
-        List<UserSimpleDTO> users = userServices.findAllSimple();
+        Page<UserSimpleDTO> users = userServices.findAllPage(pageable).map(userMapper::toSimpleDTO);
         return ResponseEntity.ok(users);
     }
     
@@ -47,15 +56,6 @@ public class UserRESTController {
         if(!userOp.isPresent())
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(userOp.get());
-    }
-
-    @GetMapping("/{id}/image")
-    //TODO: Review if this works when we have the postman collection done
-    public ResponseEntity<Blob> getImage(@PathVariable Long id) throws IOException {
-        if(userServices.findById(id).isEmpty())
-            return ResponseEntity.notFound().build();
-        UserDTO userDTO = userServices.findById(id).get();
-        return ResponseEntity.ok(userDTO.imageFile());
     }
 
     //PostMapping parts
@@ -73,23 +73,14 @@ public class UserRESTController {
     //PutMapping parts
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> putUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+    public UserDTO putUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         if(userServices.findById(id).isEmpty())
-            return ResponseEntity.notFound().build();
+            throw new NoSuchElementException();
         UserDTO newUser = new UserDTO(id, userDTO.name(), userDTO.encodedPassword(), 
                     userDTO.imageFile(), userDTO.trainer(), userDTO.routines(), 
                     userDTO.isAdmin(), userDTO.comments());
         userServices.save(newUser);
-        return ResponseEntity.ok(newUser);
-    }
-
-    @PutMapping("/{id}/image")
-    public ResponseEntity<UserDTO> putImage(@PathVariable Long id, @RequestBody MultipartFile imageFile) throws IOException {
-        if(userServices.findById(id).isEmpty())
-            return ResponseEntity.notFound().build();
-        UserDTO userDTO = userServices.findById(id).get();
-        userServices.save(userDTO, imageFile);
-        return ResponseEntity.ok(userDTO);
+        return newUser;
     }
 
     //DeleteMapping parts

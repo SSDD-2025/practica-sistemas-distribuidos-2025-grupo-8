@@ -87,7 +87,7 @@ public class ExerciseServices {
         return mapperExercise.toDTOs(exerciseRepository.findAll());
     }
 
-    public Page<ExerciseDTO> findAll(Pageable pageable) {
+    public Page<ExerciseDTO> findAllPage(Pageable pageable) {
         return exerciseRepository.findAll(pageable).map(mapperExercise::toDTO);
     }
 

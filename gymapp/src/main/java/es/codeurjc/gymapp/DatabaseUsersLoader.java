@@ -21,6 +21,7 @@ public class DatabaseUsersLoader {
     private void initDatabase() {
         if(userRepository.count()==0){
             userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
+            userRepository.save(new User("user2", passwordEncoder.encode("pass2"), "USER"));
             userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
         }
     }

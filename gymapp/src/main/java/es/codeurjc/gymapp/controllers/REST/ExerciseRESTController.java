@@ -25,7 +25,7 @@ public class ExerciseRESTController {
 
     @GetMapping("/")
     public ResponseEntity<Page<ExerciseDTO>> getExercises(Pageable pageable) {
-        return ResponseEntity.ok(exerciseServices.findAll(pageable));
+        return ResponseEntity.ok(exerciseServices.findAllPage(pageable));
     }
 
     @GetMapping("/{id}")

@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.DTO.User.UserMapper;
@@ -38,6 +40,10 @@ public class UserServices {
 
     public List<UserDTO> findAll(){
         return userMapper.toDTOs(userRepository.findAll());
+    }
+
+    public Page<User> findAllPage(Pageable pageable){
+        return userRepository.findAll(pageable);
     }
 
     public List<UserSimpleDTO> findAllSimple(){

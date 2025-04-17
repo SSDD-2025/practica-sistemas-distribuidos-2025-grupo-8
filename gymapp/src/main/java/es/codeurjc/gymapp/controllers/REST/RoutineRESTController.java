@@ -1,9 +1,10 @@
 package es.codeurjc.gymapp.controllers.REST;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
+import es.codeurjc.gymapp.DTO.Routine.RoutineMapper;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.RoutineServices;
@@ -31,14 +33,16 @@ public class RoutineRESTController {
     private UserSession userSession;
     @Autowired 
     private RoutineServices routineServices;
-    @Autowired
+    @Autowired 
     private UserServices userServices;
+    @Autowired
+    private RoutineMapper routineMapper;
 
     @GetMapping("/")
-    public ResponseEntity<List<RoutineSimpleDTO>> getRoutines() {
-        List<RoutineSimpleDTO> routines;
+    public ResponseEntity<Page<RoutineSimpleDTO>> getRoutines(Pageable pageable) {
+        
         if(userSession.isLoggedIn()){
-            routines = routineServices.findByUser(userServices.findByName(userSession.getName()).get());
+            Page<RoutineSimpleDTO> routines = routineServices.findByUserPage(userServices.findByName(userSession.getName()).get(), pageable).map(routineMapper::toSimpleDTO);
             return ResponseEntity.ok(routines);
         }
         return ResponseEntity.notFound().build();

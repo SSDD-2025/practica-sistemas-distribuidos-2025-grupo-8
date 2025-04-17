@@ -43,7 +43,7 @@ public class MaterialServices {
         return toDTOs(materialRepository.findAll());
     }
 
-    public Page<MaterialDTO> findAll(Pageable pageable) {
+    public Page<MaterialDTO> findAllPage(Pageable pageable) {
         return materialRepository.findAll(pageable).map(this::toDTO);
     }
 
