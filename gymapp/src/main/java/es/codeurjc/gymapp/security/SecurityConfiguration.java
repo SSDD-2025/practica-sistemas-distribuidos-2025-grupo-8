@@ -60,9 +60,29 @@ public class SecurityConfiguration {
 		http
 			.authorizeHttpRequests(authorize -> authorize
                     // PRIVATE ENDPOINTS /* 
-                    /* .requestMatchers(HttpMethod.POST,"/api/books/").hasRole("USER")
-                    .requestMatchers(HttpMethod.PUT,"/api/books/**").hasRole("USER")
-                    .requestMatchers(HttpMethod.DELETE,"/api/books/**").hasRole("ADMIN") */			
+					//exercises
+                    .requestMatchers(HttpMethod.GET,"/api/exercises/**").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/exercises").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/exercises/**").hasRole("ADMIN") 
+					//machineries
+					.requestMatchers(HttpMethod.GET,"/api/machineries/**").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/machineries").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/machineries/**").hasRole("ADMIN")
+					//routines
+					.requestMatchers(HttpMethod.GET,"/api/routines").hasAnyRole("USER","ADMIN")
+					.requestMatchers(HttpMethod.GET,"/api/routines/**").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/routines").hasAnyRole("USER","ADMIN")
+					.requestMatchers(HttpMethod.PUT,"/api/routines/**").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/routines/**").hasAnyRole("USER","ADMIN")  
+					//trainer				
+                    .requestMatchers(HttpMethod.POST,"/api/trainer").hasRole("ADMIN")
+					.requestMatchers(HttpMethod.PUT,"/api/trainer/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/trainer/**").hasRole("ADMIN") 
+					//user
+					//.requestMatchers(HttpMethod.GET,"/api/user").hasAnyRole("USER","ADMIN")
+					.requestMatchers(HttpMethod.GET,"/api/user/**").hasRole("ADMIN")
+					.requestMatchers(HttpMethod.PUT,"/api/user/**").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/user/**").hasAnyRole("USER","ADMIN") 
 					// PUBLIC ENDPOINTS 
 					.anyRequest().permitAll()
 			);
@@ -87,7 +107,7 @@ public class SecurityConfiguration {
 
     @Bean
 	@Order(2)
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
 		
 		http.authenticationProvider(authenticationProvider());
 		
