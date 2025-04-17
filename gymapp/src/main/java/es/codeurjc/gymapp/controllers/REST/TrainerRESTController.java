@@ -21,7 +21,7 @@ import es.codeurjc.gymapp.DTO.Trainer.TrainerSimpleDTO;
 import es.codeurjc.gymapp.services.TrainerServices;
 
 @RestController
-@RequestMapping("/api/trainer")
+@RequestMapping("/api/trainers")
 public class TrainerRESTController {
 
     @Autowired
