@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Maquinaria</title>
-        <link rel="stylesheet" type="text/css" href="/style.css">
-    </head>
-    <body>
-        {{>common/header}}
-        <h1>Maquinaria</h1>
-        <div class="inRows">
-            {{#machineries}}
-            <ul>
-                <li>
-                    <div class="alignItems">
-                        <form action="/machinery/{{id}}" method="get">
-                            <button type="submit" class="button">{{name}}</button>
-                        </form>
-                        {{#isAdmin}}
-                        <form action="/machinery/delete/{{id}}" method="post">
-                            <input type="submit" value="Borrar maquinaria">
-                            <input type="hidden" name="_csrf" value="{{token}}"/>
-                        </form>
-                        {{/isAdmin}}
-                    </div>
-                </li>
-            </ul>
-            {{/machineries}}
-        </div>
-            
+<head>
+    <title>Maquinaria</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+    {{>common/header}}
+    <h1>Maquinaria</h1>
 
-        {{^machineries}}
-            <p>No hay maquinaria disponible actualmente.</p>
-        {{/machineries}}
-        
-        {{#isAdmin}}
-            <br>
-            <form action="/machinery/add" method="get">
-                <input type="submit" value="Añadir maquinaria">
-            </form>
-        {{/isAdmin}}
-        {{>common/footer}}
-    </body>
+    <div id="machinery-list" class="inRows">
+        <!-- Aquí se cargará la maquinaria por AJAX -->
+    </div>
+
+    <!-- Controles de paginación -->
+    <div class="pagination">
+        <button onclick="cargarMaquinaria(paginaActual - 1)" id="prev-btn">Anterior</button>
+        <span id="pagina-actual"></span>
+        <button onclick="cargarMaquinaria(paginaActual + 1)" id="next-btn">Siguiente</button>
+    </div>
+
+    {{#isAdmin}}
+        <br>
+        <form action="/machinery/add" method="get">
+            <input type="submit" value="Añadir maquinaria">
+        </form>
+    {{/isAdmin}}
+
+    {{>common/footer}}
+
+    <script>
+        let paginaActual = 0;
+        const pageSize = 5;
+
+        function cargarMaquinaria(pagina) {
+            if (pagina < 0) return;
+
+            fetch(`/machinery/page?page=${pagina}&size=${pageSize}`)
+                .then(res => res.text())
+                .then(html => {
+                    const container = document.getElementById('machinery-list');
+                    container.innerHTML = html;
+
+                    paginaActual = pagina;
+                    document.getElementById('pagina-actual').textContent = `Página ${pagina + 1}`;
+                })
+                .catch(error => {
+                    console.error("Error al cargar maquinaria:", error);
+                    document.getElementById('machinery-list').innerHTML = '<p>Error al cargar maquinaria.</p>';
+                });
+        }
+
+        // Cargar la primera página al iniciar
+        window.onload = () => cargarMaquinaria(0);
+    </script>
+</body>
 </html>
