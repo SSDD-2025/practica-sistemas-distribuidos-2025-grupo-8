@@ -1,0 +1,700 @@
+{
+	"info": {
+		"_postman_id": "56b26e39-353c-4dd1-9c25-160894675ee7",
+		"name": "GymApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43578023",
+		"_collection_link": "https://inu-1693178.postman.co/workspace/INU's-Workspace~bd3f7b1c-57e4-4fcb-815a-35a9ee80f136/collection/43578023-56b26e39-353c-4dd1-9c25-160894675ee7?action=share&source=collection_link&creator=43578023"
+	},
+	"item": [
+		{
+			"name": "Exercise",
+			"item": [
+				{
+					"name": "Get Exercises",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/exercises/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exercises",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Exercise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/exercises/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exercises",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Exercise",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Sentadilla búlgara\",\r\n    \"description\":\"Sentiras el infierno\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/exercises/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exercises",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Exercise",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/exercises/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exercises",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Material",
+			"item": [
+				{
+					"name": "Get Materials",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/machineries/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"machineries",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Material",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/machineries/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"machineries",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Material",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Banco de abdominales\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/machineries/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"machineries",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Material",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/machineries/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"machineries",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Routines",
+			"item": [
+				{
+					"name": "Get Routines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/routines/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"routines",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Routine",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/routines/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"routines",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Routine",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Rompepiernas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/routines/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"routines",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Routine",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"name\":\"RompeMuelas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/routines/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"routines",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Routine",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/routines/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"routines",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trainers",
+			"item": [
+				{
+					"name": "Get Trainers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trainers/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trainer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trainers/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get TrainerImage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trainers/{{idTrainer}}/image",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								"{{idTrainer}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Trainer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Carolina del norte\",\r\n    \"description\":\"El peor capullo del barrio\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/trainers/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create TrainerImage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "postman-cloud:///1f01b8fb-8ab4-4230-b7e2-f9ae0cd14c87"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/trainers/{{idTrainer}}/image",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								"{{idTrainer}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Trainer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Parla\",\r\n    \"description\":\"A chu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/trainers/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update TrainerImage",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "postman-cloud:///1f01c3cf-f84e-43c0-9e28-f40313ec0e8e"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/trainers/{{idTrainer}}/image",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								"{{idTrainer}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Trainer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trainers/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get UserImage",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users/{{id}}/image",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Paco\",\r\n    \"roles\":[\r\n        \"USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create UserImage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "postman-cloud:///1f01b8fb-8ab4-4230-b7e2-f9ae0cd14c87"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/users/{{id}}/image",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Isaac\",\r\n    \"roles\":[\r\n        \"USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update UserImage",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "postman-cloud:///1f01c3cf-f84e-43c0-9e28-f40313ec0e8e"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/users/{{id}}/image",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
