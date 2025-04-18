@@ -1,6 +1,7 @@
 package es.codeurjc.gymapp;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import es.codeurjc.gymapp.DTO.User.UserDTO;
-import es.codeurjc.gymapp.DTO.User.UserMapper;
-import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.UserServices;
 
@@ -33,11 +32,11 @@ public class GlobalControllerAdvice {
     }
 
     @ModelAttribute("hasImage")
-    public boolean addHasImageToModel() {
+    public boolean addHasImageToModel() throws SQLException {
         if (userSession.isLoggedIn()) {
             Optional<UserDTO> user = userServices.findByName(userSession.getName());
             if (user.isPresent()) { 
-                return user.get().imageFile() != null; //return true if the user has an image
+                return userServices.getUserImage(user.get().id()) != null; //return true if the user has an image
             } else {
                 return false;  
             }

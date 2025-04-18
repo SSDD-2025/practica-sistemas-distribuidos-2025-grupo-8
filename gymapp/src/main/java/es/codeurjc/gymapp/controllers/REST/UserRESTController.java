@@ -10,11 +10,14 @@ import es.codeurjc.gymapp.services.UserServices;
 
 import java.io.IOException;
 import java.net.URI;
-import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,12 +53,12 @@ public class UserRESTController {
     }
 
     @GetMapping("/{id}/image")
-    //TODO: Review if this works when we have the postman collection done
-    public ResponseEntity<Blob> getImage(@PathVariable Long id) throws IOException {
-        if(userServices.findById(id).isEmpty())
-            return ResponseEntity.notFound().build();
-        UserDTO userDTO = userServices.findById(id).get();
-        return ResponseEntity.ok(userDTO.imageFile());
+    public ResponseEntity<Resource> getImage(@PathVariable Long id) throws SQLException{
+        Resource userImage = userServices.getUserImage(id);
+        return ResponseEntity
+                            .ok()
+                            .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                            .body(userImage);
     }
 
     //PostMapping parts
@@ -70,6 +73,15 @@ public class UserRESTController {
         return ResponseEntity.created(location).body(userDTO);
     }
 
+    @PostMapping("/{id}/image")
+    public ResponseEntity<UserDTO> postImage(@PathVariable Long id, @RequestBody MultipartFile imageFile) throws IOException {
+        if(userServices.findById(id).isEmpty())
+            return ResponseEntity.notFound().build();
+        UserDTO userDTO = userServices.findById(id).get();
+        userServices.save(userDTO, imageFile);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+    }
+
     //PutMapping parts
 
     @PutMapping("/{id}")
@@ -77,7 +89,7 @@ public class UserRESTController {
         if(userServices.findById(id).isEmpty())
             return ResponseEntity.notFound().build();
         UserDTO newUser = new UserDTO(id, userDTO.name(), userDTO.encodedPassword(), 
-                    userDTO.imageFile(), userDTO.trainer(), userDTO.routines(),
+                    /*userDTO.imageFile(),*/ userDTO.trainer(), userDTO.routines(),
                      userDTO.comments(), userDTO.roles());
         userServices.save(newUser);
         return ResponseEntity.ok(newUser);

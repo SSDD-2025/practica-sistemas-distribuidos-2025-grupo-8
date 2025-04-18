@@ -2,15 +2,9 @@ package es.codeurjc.gymapp.model;
 
 import jakarta.persistence.*;
 
-import java.nio.file.Path;
 import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity(name = "USERS")
 public class User {
@@ -21,6 +15,8 @@ public class User {
     @Column(unique = true)
     private String name;
     private String encodedPassword;
+
+
     @Lob
     private Blob imageFile;
     @ManyToOne
@@ -92,14 +88,6 @@ public class User {
     public void setImageFile(Blob imageFile) {
         this.imageFile = imageFile;
     }
-    
-    /*public Boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }*/
 
     public void addRoutine(Routine routine) {
         this.routines.add(routine);

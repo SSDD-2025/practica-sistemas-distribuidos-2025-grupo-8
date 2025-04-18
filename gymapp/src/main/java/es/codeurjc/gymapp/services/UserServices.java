@@ -4,11 +4,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.DTO.User.UserMapper;
@@ -113,5 +117,15 @@ public class UserServices {
             user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
         }
 		save(user, image);
+    }
+
+    public Resource getUserImage(Long id) throws SQLException {
+        User user = userRepository.findById(id).orElseThrow();
+
+		if (user.getImageFile() != null) {
+			return new InputStreamResource(user.getImageFile().getBinaryStream());
+		} else {
+			throw new NoSuchElementException();
+		}
     }
 }
