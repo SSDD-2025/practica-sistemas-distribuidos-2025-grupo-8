@@ -11,7 +11,6 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
-import es.codeurjc.gymapp.model.Trainer;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.services.TrainerServices;
 import es.codeurjc.gymapp.services.UserServices;
@@ -48,15 +46,15 @@ public class TrainerController implements CommandLineRunner {
         if(trainerServices.count() == 0){
             // Trainer 1
             TrainerDTO arnold = new TrainerDTO(null, "Arnold Schwarzenegger","Entrenador de culturismo", 
-                loadImageAsBlob("static/images/arnold.png"), null, null);
+                 null, null);
 
             // Trainer 2
             TrainerDTO theRock = new TrainerDTO(null,"Dwayne Johnson", "Entrenador de lucha libre",
-                loadImageAsBlob("static/images/theRock.png"), null, null);
+                null, null);
 
             // Save trainers
-            trainerServices.save(arnold);
-            trainerServices.save(theRock);
+            trainerServices.save(arnold, loadImageAsBlob("static/images/arnold.png"));
+            trainerServices.save(theRock, loadImageAsBlob("static/images/theRock.png"));
         }
 
     }
@@ -178,7 +176,6 @@ public class TrainerController implements CommandLineRunner {
 
 	@PostMapping("/trainer/add/form")
 	public String addTrainerForm(Model model, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile image) throws IOException {		
-		Trainer trainer;
         if (name.isEmpty() || image.isEmpty()){
             model.addAttribute("message", "El nombre y la imagen del entrenador es obligatorio.");
             return "error";
@@ -187,7 +184,7 @@ public class TrainerController implements CommandLineRunner {
             description = "No hay descripción acerca del entrenador.";
         }
         
-        trainer = new Trainer(name, description);
+        TrainerDTO trainer = new TrainerDTO(null,name, description,null, null);
         trainerServices.save(trainer, image);
         model.addAttribute("message", "Entrenador añadido correctamente");  
         return "trainers/trainerMessage"; 
@@ -206,12 +203,13 @@ public class TrainerController implements CommandLineRunner {
         Optional<TrainerDTO> trainer = trainerServices.findDTOById(id);
         if(!trainer.isPresent()) return ResponseEntity.notFound().build();
 
-        Blob image = trainer.get().imageFile();
+        Resource image = trainerServices.getTrainerImage(id);
         if(image == null) return ResponseEntity.notFound().build();
 
-        Resource file = new InputStreamResource(image.getBinaryStream());
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                .contentLength(image.length()).body(file);
+        return ResponseEntity
+                            .ok()
+                            .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                            .body(image);
 		
 	}
 }

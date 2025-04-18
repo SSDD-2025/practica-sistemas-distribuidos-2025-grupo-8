@@ -4,11 +4,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 
 import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.Trainer.TrainerMapper;
@@ -77,12 +83,26 @@ public class TrainerServices {
         return mapperTrainer.toSimpleDTOs(trainers);
     }
 
-    public void save(Trainer trainer, MultipartFile imageFile) throws IOException{
-        if(!imageFile.isEmpty()) {
-            trainer.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(),
-            imageFile.getSize()));
+    void save(Trainer trainer, Blob imageFile) throws IOException {
+        if (imageFile != null) {
+            trainer.setImageFile(imageFile);
         }
         trainerRepository.save(trainer);
+
+    }
+
+    void save(Trainer trainer, MultipartFile imageFile) throws IOException{
+        save(trainer, BlobProxy.generateProxy(
+                        imageFile.getInputStream(),
+                        imageFile.getSize()));
+    }
+
+    public void save(TrainerDTO trainer, MultipartFile imageFile) throws IOException{
+        save(mapperTrainer.toDomain(trainer), imageFile);
+    }
+
+    public void save(TrainerDTO trainer, Blob imageFile) throws IOException{
+        save(mapperTrainer.toDomain(trainer), imageFile);
     }
 
     public void addCommentToTrainer(TrainerDTO trainerDTO, UserDTO user, String message){
@@ -127,5 +147,15 @@ public class TrainerServices {
             trainer.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
         }
 		save(trainer, image);
+    }
+
+    public Resource getTrainerImage(Long id) throws SQLException {
+        Trainer trainer = trainerRepository.findById(id).orElseThrow();
+
+		if (trainer.getImageFile() != null) {
+			return new InputStreamResource(trainer.getImageFile().getBinaryStream());
+		} else {
+			throw new NoSuchElementException();
+		}
     }
 }

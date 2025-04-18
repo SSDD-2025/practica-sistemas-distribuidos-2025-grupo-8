@@ -1,18 +1,14 @@
 package es.codeurjc.gymapp.controllers.WEB;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.gymapp.model.User;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.model.UserSession;
 import es.codeurjc.gymapp.security.SecurityConfiguration;
@@ -104,9 +99,9 @@ public class UserController {
 
 		UserDTO newUser;
 		if(image.isEmpty()){		
-			newUser = new UserDTO(null, name, encodedPassword, null, null, null, null, "USER");
+			newUser = new UserDTO(null, name, encodedPassword, null, null, null, "USER");
 		}else{	
-			newUser = new UserDTO(null, name, encodedPassword, BlobProxy.generateProxy(image.getInputStream(),image.getSize()), null, null,  null, "USER");
+			newUser = new UserDTO(null, name, encodedPassword, null, null,  null, "USER");
 		}
     	userServices.save(newUser, image);
 		userSession.setName(name, encodedPassword, request);
@@ -153,13 +148,18 @@ public class UserController {
 	@GetMapping("/user/image")
 	public ResponseEntity<Object> downloadImage() throws SQLException {;		
 		Optional<UserDTO> user = userServices.findByName(userSession.getName());
-		if (user.isPresent() && user.get().imageFile() != null) {			
-			Blob image = user.get().imageFile();
-			Resource file = new InputStreamResource(image.getBinaryStream());
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-					.contentLength(image.length()).body(file);
+		if (user.isEmpty()) {
+			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.notFound().build();
+		UserDTO userDTO = user.get();
+		Resource image = userServices.getUserImage(userDTO.id());
+		if ( image == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity
+							.ok()
+							.header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+							.body(image);
 	}
 
 	@PostMapping("/admin/users")
