@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -125,7 +124,7 @@ public class UserServices {
 		if (user.getImageFile() != null) {
 			return new InputStreamResource(user.getImageFile().getBinaryStream());
 		} else {
-			throw new NoSuchElementException();
+			return null;
 		}
     }
 }
