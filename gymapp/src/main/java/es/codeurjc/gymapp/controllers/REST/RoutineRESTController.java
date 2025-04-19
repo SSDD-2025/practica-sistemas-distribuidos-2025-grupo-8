@@ -1,5 +1,6 @@
 package es.codeurjc.gymapp.controllers.REST;
 
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
 import es.codeurjc.gymapp.model.UserSession;
+import es.codeurjc.gymapp.services.DTOServices;
 import es.codeurjc.gymapp.services.RoutineServices;
 import es.codeurjc.gymapp.services.UserServices;
 
@@ -69,11 +71,12 @@ public class RoutineRESTController {
     @PutMapping("/{id}")
     public ResponseEntity<RoutineDTO> modifyRoutine(@PathVariable long id,@RequestBody RoutineDTO routineDTO){
         if(routineServices.findByIdNotSimple(id).isPresent()){
-            if(routineServices.findByIdNotSimple(id).get().userMember().name().equals(userSession.getName())){
-                RoutineDTO newRoutineDTO = new RoutineDTO(id, routineDTO.name(), routineDTO.description(), routineDTO.day(), routineDTO.exercises(), routineDTO.userMember());
-                routineServices.save(newRoutineDTO);
-                return ResponseEntity.ok(newRoutineDTO);
-            }
+            RoutineDTO oldRoutine = routineServices.findByIdNotSimple(id).get();
+            RoutineDTO newRoutineDTO = DTOServices.mergeRecords(oldRoutine, routineDTO);
+
+            routineServices.save(newRoutineDTO);
+            return ResponseEntity.ok(newRoutineDTO);
+
         }
         return ResponseEntity.notFound().build(); 
     }

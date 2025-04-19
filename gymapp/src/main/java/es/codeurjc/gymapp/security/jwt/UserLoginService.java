@@ -37,7 +37,6 @@ public class UserLoginService {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		
 		String username = loginRequest.getUsername();
 		UserDetails user = userDetailsService.loadUserByUsername(username);
 

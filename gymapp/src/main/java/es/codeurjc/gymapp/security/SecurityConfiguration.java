@@ -18,7 +18,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import es.codeurjc.gymapp.repositories.RepositoryUserDetailsService;
 import es.codeurjc.gymapp.security.jwt.JwtRequestFilter;
 import es.codeurjc.gymapp.security.jwt.UnauthorizedHandlerJwt;
 
@@ -63,24 +62,24 @@ public class SecurityConfiguration {
                     // PRIVATE ENDPOINTS /* 
 					//exercises
                     .requestMatchers(HttpMethod.GET,"/api/exercises/**").hasAnyRole("USER","ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/exercises").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/exercises/").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/exercises/**").hasRole("ADMIN") 
 					//machineries
 					.requestMatchers(HttpMethod.GET,"/api/machineries/**").hasAnyRole("USER","ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/machineries").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/machineries/").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/machineries/**").hasRole("ADMIN")
 					//routines
-					.requestMatchers(HttpMethod.GET,"/api/routines").hasAnyRole("USER","ADMIN")
+					.requestMatchers(HttpMethod.GET,"/api/routines/").hasAnyRole("USER","ADMIN")
 					.requestMatchers(HttpMethod.GET,"/api/routines/**").hasAnyRole("USER","ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/routines").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/routines/").hasAnyRole("USER","ADMIN")
 					.requestMatchers(HttpMethod.PUT,"/api/routines/**").hasAnyRole("USER","ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/routines/**").hasAnyRole("USER","ADMIN")  
 					//trainer				
-                    .requestMatchers(HttpMethod.POST,"/api/trainer").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/trainer/").hasRole("ADMIN")
 					.requestMatchers(HttpMethod.PUT,"/api/trainer/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/trainer/**").hasRole("ADMIN") 
 					//user
-					.requestMatchers(HttpMethod.GET,"/api/user").hasRole("ADMIN")
+					.requestMatchers(HttpMethod.GET,"/api/user/").hasRole("ADMIN")
 					.requestMatchers(HttpMethod.GET,"/api/user/**").hasRole("ADMIN")
 					.requestMatchers(HttpMethod.PUT,"/api/user/**").hasAnyRole("USER","ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/user/**").hasAnyRole("USER","ADMIN") 

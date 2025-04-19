@@ -8,11 +8,106 @@
 	},
 	"item": [
 		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"adminpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/auth/refresh",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Exercise",
 			"item": [
 				{
+					"name": "Create Exercise",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Sentadilla búlgara\",\r\n    \"description\":\"Sentiras el infierno\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/exercises/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exercises",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Exercises",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminpass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -47,33 +142,6 @@
 					"response": []
 				},
 				{
-					"name": "Create Exercise",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Sentadilla búlgara\",\r\n    \"description\":\"Sentiras el infierno\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/exercises/",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"exercises",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete Exercise",
 					"request": {
 						"method": "DELETE",
@@ -96,6 +164,33 @@
 		{
 			"name": "Material",
 			"item": [
+				{
+					"name": "Create Material",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Banco de abdominales\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/machineries/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"machineries",
+								""
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Get Materials",
 					"request": {
@@ -133,33 +228,6 @@
 					"response": []
 				},
 				{
-					"name": "Create Material",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Banco de abdominales\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/machineries/",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"machineries",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete Material",
 					"request": {
 						"method": "DELETE",
@@ -182,6 +250,33 @@
 		{
 			"name": "Routines",
 			"item": [
+				{
+					"name": "Create Routine",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Rutina fuerza\",\r\n  \"description\": \"Entrenamiento de fuerza\",\r\n  \"day\": \"Lunes\",\r\n  \"userMember\": {\r\n    \"id\": 2,\r\n    \"name\": \"admin\"\r\n  },\r\n  \"exercises\": []\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/routines/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"routines",
+								""
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Get Routines",
 					"request": {
@@ -219,40 +314,13 @@
 					"response": []
 				},
 				{
-					"name": "Create Routine",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Rompepiernas\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/routines/",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"routines",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Update Routine",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":1,\r\n    \"name\":\"RompeMuelas\"\r\n}",
+							"raw": "{\r\n    \"name\":\"RompeMuelas\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -296,61 +364,6 @@
 			"name": "Trainers",
 			"item": [
 				{
-					"name": "Get Trainers",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trainers/",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trainers",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Trainer",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trainers/{{id}}",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trainers",
-								"{{id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get TrainerImage",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trainers/{{idTrainer}}/image",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trainers",
-								"{{idTrainer}}",
-								"image"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Create Trainer",
 					"request": {
 						"method": "POST",
@@ -392,6 +405,61 @@
 								}
 							]
 						},
+						"url": {
+							"raw": "{{URL}}/trainers/{{idTrainer}}/image",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								"{{idTrainer}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trainers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trainers/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trainer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trainers/{{id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trainers",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get TrainerImage",
+					"request": {
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "{{URL}}/trainers/{{idTrainer}}/image",
 							"host": [
@@ -486,6 +554,62 @@
 			"name": "Users",
 			"item": [
 				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Paco\",\r\n    \"roles\":[\r\n        \"USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create UserImage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "postman-cloud:///1f01b8fb-8ab4-4230-b7e2-f9ae0cd14c87"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/users/{{id}}/image",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Users",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -549,62 +673,6 @@
 									"language": "json"
 								}
 							}
-						},
-						"url": {
-							"raw": "{{URL}}/users/{{id}}/image",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"users",
-								"{{id}}",
-								"image"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create User",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Paco\",\r\n    \"roles\":[\r\n        \"USER\"\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/users/",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"users",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create UserImage",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "imageFile",
-									"type": "file",
-									"src": "postman-cloud:///1f01b8fb-8ab4-4230-b7e2-f9ae0cd14c87"
-								}
-							]
 						},
 						"url": {
 							"raw": "{{URL}}/users/{{id}}/image",
@@ -695,6 +763,63 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/auth/logout",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "https://localhost:8443/api",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "idTrainer",
+			"value": "1",
+			"type": "string"
 		}
 	]
 }

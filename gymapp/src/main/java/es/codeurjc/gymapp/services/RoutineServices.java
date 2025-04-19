@@ -57,11 +57,12 @@ public class RoutineServices {
         return Optional.of(mapperRoutine.toDTO(routineRepository.findById(id).get()));
     }
 
-    public RoutineDTO save(RoutineDTO routineDTO) {
-        Routine routine = mapperRoutine.toDomain(routineDTO);
-        routineRepository.save(routine);
-        return mapperRoutine.toDTO(routine);
+    public RoutineDTO save(RoutineDTO dto) {
+        Routine routine = mapperRoutine.toDomain(dto);
+        Routine saved = routineRepository.save(routine);
+        return mapperRoutine.toDTO(saved);
     }
+    
 
     public void deleteById(Long id) {
         routineRepository.deleteById(id);

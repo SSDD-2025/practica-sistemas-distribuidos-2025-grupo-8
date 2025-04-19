@@ -1,4 +1,4 @@
-package es.codeurjc.gymapp.repositories;
+package es.codeurjc.gymapp.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.gymapp.model.User;
+import es.codeurjc.gymapp.repositories.UserRepository;
 
 @Service
 public class RepositoryUserDetailsService implements UserDetailsService {
