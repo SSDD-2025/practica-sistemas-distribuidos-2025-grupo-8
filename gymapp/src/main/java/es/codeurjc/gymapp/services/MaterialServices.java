@@ -87,6 +87,7 @@ public class MaterialServices {
 
     public void createAndSave(String name, List<Long> exercises) throws IllegalArgumentException{
         Material material = new Material(name);
+        materialRepository.save(material);
         for (Long id : exercises) {
             Exercise exercise = exerciseMapper.toDomain(exerciseServices.findById(id));
             material.addExercise(exercise);
