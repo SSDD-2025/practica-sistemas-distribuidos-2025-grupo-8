@@ -125,7 +125,7 @@ public class UserServices {
 		if (user.getImageFile() != null) {
 			return new InputStreamResource(user.getImageFile().getBinaryStream());
 		} else {
-			throw new NoSuchElementException();
+			return null;
 		}
     }
 }
