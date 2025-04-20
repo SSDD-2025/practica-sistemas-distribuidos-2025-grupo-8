@@ -79,7 +79,6 @@ public class RoutineController implements CommandLineRunner{
     public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
     @RequestParam String day, @RequestParam(required=false) Set<Long> exerciseIds) {
         RoutineDTO routineDTO;
-        RoutineSimpleDTO routineSimpleDTO;
         if(name.isEmpty()){
             model.addAttribute("message", "La rutina debe tener nombre");
             return "error";
@@ -99,7 +98,6 @@ public class RoutineController implements CommandLineRunner{
         UserSimpleDTO userSimpleDTO = userServices.findByNameSimple(userSession.getName()).get();
 
         routineDTO = new RoutineDTO(null ,name, description, day, exercisesSimple, userSimpleDTO);
-        routineSimpleDTO = new RoutineSimpleDTO(null ,name, description, day);
 
         RoutineDTO routineDTOsaved = routineServices.save(routineDTO);
 
@@ -127,13 +125,8 @@ public class RoutineController implements CommandLineRunner{
         if(routine.isPresent()){
             if(routine.get().userMember().name().equals(userSession.getName())){
                 model.addAttribute("routine", routine.get());
-                List<ExerciseDTO> ex = exerciseServices.getExercisesFromRoutine(routine.get());
 
-                for(ExerciseDTO e : ex){
-                    System.out.println("material : " + e.material().name());
-                }
-
-                model.addAttribute("exercises", ex);
+                model.addAttribute("exercises", routine.get().exercises());
 
                 model.addAttribute("isLogged", userSession.isLoggedIn());
                 return "routines/routineViewer";
