@@ -141,7 +141,7 @@ public class RoutineController implements CommandLineRunner{
         Optional<RoutineDTO> optionalRoutine = routineServices.findByIdNotSimple(id);
         if (optionalRoutine.isPresent()) {
             if(userSession.isLoggedIn() && optionalRoutine.get().userMember().name().equals(userSession.getName())){
-                RoutineSimpleDTO routine = routineServices.findById(id).get();
+                RoutineDTO routine = routineServices.findByIdNotSimple(id).get();
                 UserDTO user = userServices.findByName(userSession.getName()).get();
                 userServices.deleteRoutine(user, routine);
                 routineServices.deleteUser(routine);
@@ -162,9 +162,9 @@ public class RoutineController implements CommandLineRunner{
     public String modifyRoutine(Model model, @PathVariable Long id) {
         Optional<RoutineDTO>  routine = routineServices.findByIdNotSimple(id);
         if(userSession.isLoggedIn() && routine.get().userMember().name().equals(userSession.getName())){
-            model.addAttribute("routine", routine);
+            model.addAttribute("routine", routine.get());
             model.addAttribute("allExercises", exerciseServices.findByMaterialIsNotNull());
-            return "routines/routineModify";        
+            return "routines/routineModify";
         }else {
             model.addAttribute("message", "No tienes permiso para modificar esta rutina");
             return "error";
@@ -186,14 +186,15 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("message", "La rutina debe tener al menos un ejercicio");
             return "error";
         }
-        Optional<RoutineSimpleDTO> optionalRoutine = routineServices.findById(id);
+        Optional<RoutineDTO> optionalRoutine = routineServices.findByIdNotSimple(id);
         if (optionalRoutine.isEmpty()){
             model.addAttribute("message", "No se ha encontrado la rutina");
             return "error";
         } 
 
         //Update of Not DataStructs
-        RoutineDTO routineDTO = new RoutineDTO(id, name, description, day, null, null);
+        RoutineDTO routineDTO = new RoutineDTO(id, name, description, day, 
+                optionalRoutine.get().exercises(), optionalRoutine.get().userMember());
         //Update the routine
         routineServices.modifyRoutine(routineDTO,exerciseIds);        
         return "redirect:/routine/view/" + id;

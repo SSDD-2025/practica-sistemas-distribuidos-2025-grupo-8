@@ -101,6 +101,7 @@ public class TrainerController implements CommandLineRunner {
         return "trainers/trainerDetails"; 
     }
 
+
     @PostMapping("/trainer/{id}/addOrReplace")
     public String addOrReplace(Model model, @PathVariable Long id) { //select personal trainer 
         Optional<TrainerDTO> trainer = trainerServices.findDTOById(id);
@@ -157,8 +158,10 @@ public class TrainerController implements CommandLineRunner {
             model.addAttribute("message", "Error al guardar el comentario");
             return "error";
         }
+
         UserDTO user = userServices.findByName(userSession.getName()).get();
         trainerServices.addCommentToTrainer(opTrainer.get(), user, message);
+        opTrainer = trainerServices.findDTOById(id);
         model.addAttribute("logged", userSession.isLoggedIn());
         model.addAttribute("trainerId", id);
         model.addAttribute("comments", opTrainer.get().comments());

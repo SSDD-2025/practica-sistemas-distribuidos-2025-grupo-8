@@ -104,6 +104,11 @@ public class UserServices {
         user.getRoutines().remove(routine);
         userRepository.save(user);
     }
+
+    public void deleteRoutine(UserDTO userDTO, RoutineDTO routineDTO){
+        deleteRoutine(userDTO, routineMapper.toSimpleDTO(routineMapper.toDomain(routineDTO)));
+    }
+
     public UserDTO toDTO(User user){
         return userMapper.toDTO(user);
     }

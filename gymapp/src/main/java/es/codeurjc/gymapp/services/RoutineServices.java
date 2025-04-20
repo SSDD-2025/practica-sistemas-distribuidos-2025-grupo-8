@@ -3,6 +3,7 @@ package es.codeurjc.gymapp.services;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -75,16 +76,20 @@ public class RoutineServices {
         User user = mapperUser.toDomain(userDTO);
         return mapperRoutine.toSimpleDTOs(routineRepository.findByUserMember(user));
     }
-
-    public void deleteExercises(RoutineDTO routineDTO){
-        Routine routine = mapperRoutine.toDomain(routineDTO);
+    
+    void deleteExercises(Routine routine){
         routine.removeExercises();
         routineRepository.save(routine);
     }
 
-    public void addExercises(RoutineDTO routineDTO , Set<ExerciseSimpleDTO> exercisesDTO){
+    public void deleteExercises(RoutineDTO routineDTO){
+        deleteExercises(mapperRoutine.toDomain(routineDTO));
+    }
+
+
+    public void addExercises(RoutineDTO routineDTO , Set<ExerciseDTO> exercisesDTO){
         Routine routine = mapperRoutine.toDomain(routineDTO);
-        Set<Exercise> exercises = new HashSet<Exercise>(mapperExercise.toDomainsSimple(exercisesDTO));
+        Set<Exercise> exercises = new HashSet<Exercise>(mapperExercise.toDomains(exercisesDTO));
         routine.addExercises(exercises);
         routineRepository.save(routine);
     }
@@ -95,6 +100,10 @@ public class RoutineServices {
         routineRepository.save(routine);
     }
 
+    public void deleteUser(RoutineDTO routineDTO){
+        deleteUser(mapperRoutine.toSimpleDTO(mapperRoutine.toDomain(routineDTO)));
+    }
+
     public void deleteAllRoutines(UserDTO userDTO){
         User user = mapperUser.toDomain(userDTO);
         routineRepository.deleteAll(user.getRoutines());
@@ -103,41 +112,48 @@ public class RoutineServices {
     }
 
     public void saveExercises(Set<ExerciseSimpleDTO> exerciseDTO, RoutineSimpleDTO routineDTO){
-        List<Exercise> exercise = mapperExercise.toDomainsSimple(exerciseDTO);
-        Routine routine = mapperRoutine.toDomain(routineDTO);
-        for(Exercise ex : exercise){
-            exerciseServices.addRoutine(routine, ex);
-            exerciseServices.save(ex);
-        }
+        Set<Exercise> exercises = new HashSet<>(mapperExercise.toDomainsSimple(exerciseDTO));
+        saveExercises(exercises, mapperRoutine.toDomain(routineDTO));
     }
+
     public void saveExercises(Set<ExerciseDTO> exerciseDTO, RoutineDTO routineDTO){
-        List<Exercise> exercise = mapperExercise.toDomains(exerciseDTO);
-        Routine routine = mapperRoutine.toDomain(routineDTO);
+        Set<Exercise> exercises = new HashSet<>(mapperExercise.toDomains(exerciseDTO));
+        saveExercises(exercises, mapperRoutine.toDomain(routineDTO));
+    }
+
+    void saveExercises(Set<Exercise> exercise, Routine routine){
         for(Exercise ex : exercise){
             exerciseServices.addRoutine(routine, ex);
             exerciseServices.save(ex);
         }
     }
 
-    public void removeExercises(RoutineSimpleDTO routineDTO){
-        Routine routine = mapperRoutine.toDomain(routineDTO);
+    void removeExercises(Routine routine){
         for (Exercise exercise : routine.getExercises()) {
             exerciseServices.removeRoutine(routine, exercise);
             exerciseServices.save(exercise);
         }
     }
 
-    public void modifyRoutine(RoutineDTO routineDTO, List<Long> exerciseIds){
-        RoutineSimpleDTO routineSimpleDTO = mapperRoutine.toSimpleDTO(mapperRoutine.toDomain(routineDTO));
-        this.removeExercises(routineSimpleDTO);
-        this.deleteExercises(routineDTO);
-        HashSet<ExerciseSimpleDTO> exercises = new HashSet<ExerciseSimpleDTO>();
-        exercises.addAll(toSimple(exerciseServices.findAllById(exerciseIds)));
-        this.addExercises(routineDTO, exercises);
-        this.save(routineDTO);
-        this.saveExercises(routineDTO.exercises(), routineSimpleDTO);
+    public void removeExercises(RoutineDTO routine){
+        removeExercises(mapperRoutine.toDomain(routine));
     }
 
+    public void modifyRoutine(RoutineDTO routineDTO, List<Long> exerciseIds){
+        Routine routine = mapperRoutine.toDomain(routineDTO);
+        List<Exercise> exercises = mapperExercise.toDomains(exerciseServices.findAllById(exerciseIds));
+        Set<Exercise> exercisesSet = new HashSet<>(exercises);
+        //Erase the old conections 
+        removeExercises(routine);
+        deleteExercises(routine);
+        //Conections broken now
+        //Add the new connections
+        routine.setExercises(exercisesSet);
+        routineRepository.save(routine);
+        saveExercises(exercisesSet, routine);
+    }
+
+    
     public void modifyRoutines(ExerciseSimpleDTO exerciseDTO){
         Exercise exercise = mapperExercise.toDomain(exerciseDTO);
         Set<Routine> routinesFromExercise = new HashSet<>(exercise.getRoutine());
@@ -148,10 +164,5 @@ public class RoutineServices {
             routineRepository.save(routine);
         }
         exercise.setRoutine(new ArrayList<>());
-    }
-
-    private List<ExerciseSimpleDTO> toSimple(List<ExerciseDTO> ex){
-        List<Exercise> ex1 = mapperExercise.toDomains(ex);
-        return mapperExercise.toSimpleDTOs(ex1);
     }
 }
