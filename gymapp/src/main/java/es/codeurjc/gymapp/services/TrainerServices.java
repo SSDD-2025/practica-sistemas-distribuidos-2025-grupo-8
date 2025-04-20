@@ -155,7 +155,7 @@ public class TrainerServices {
 		if (trainer.getImageFile() != null) {
 			return new InputStreamResource(trainer.getImageFile().getBinaryStream());
 		} else {
-			throw new NoSuchElementException();
+			return null;
 		}
     }
 }
