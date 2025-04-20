@@ -98,7 +98,7 @@ public class MaterialServices {
 
     public MaterialDTO deleteById(Long id) throws IllegalArgumentException {
         Material material = toDomain(this.findById(id));
-        materialRepository.deleteById(id);
+        safeDelete(id);
         return toDTO(material);
     }
 
