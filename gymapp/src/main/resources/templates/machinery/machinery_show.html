@@ -5,40 +5,16 @@
     </head>
     <body>
         {{>common/header}}
-
         <p>Nombre: {{machinery.name}}</p>
+        <p>Ejercicios:
 
-        <div id="ejercicios-container">
-            <!-- Aquí se cargarán los ejercicios por AJAX -->
-        </div>
+        {{#exercises}}
+            {{name}}
+        {{/exercises}}
 
-        <div id="paginacion">
-            <!-- Botones de paginación -->
-            <button onclick="cargarEjercicios(0)">1</button>
-            <button onclick="cargarEjercicios(1)">2</button>
-            <button onclick="cargarEjercicios(2)">3</button>
-            <!-- Añade más botones según necesites o genera dinámicamente -->
-        </div>
-        <div id="machinery-data" data-id="{{machinery.id}}"></div>
-        <script>
-            function cargarEjercicios(pagina) {
-                const machineryId = document.getElementById('machinery-data').dataset.id;
-
-                fetch(`/maquinaria/${machineryId}/ejercicios?page=${pagina}&size=5`)
-                    .then(response => response.text())
-                    .then(html => {
-                        document.getElementById('ejercicios-container').innerHTML = html;
-                    })
-                    .catch(error => {
-                        console.error("Error cargando ejercicios:", error);
-                        document.getElementById('ejercicios-container').innerHTML = '<p>Error al cargar ejercicios.</p>';
-                    });
-            }
-
-            // Cargar la primera página al cargar la vista
-            window.onload = () => cargarEjercicios(0);
-        </script>
-
+        {{^exercises}}
+            <p>No hay ejercicios disponibles actualmente.</p>
+        {{/exercises}}
+        </p>
         {{>common/footer}}
     </body>
-</html>
