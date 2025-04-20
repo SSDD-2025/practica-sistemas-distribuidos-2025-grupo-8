@@ -16,7 +16,7 @@ public class Exercise{
     @ManyToOne
     private Material material;
     @ManyToMany
-    private List<Routine> routine;
+    private List<Routine> routine = new ArrayList<>();
 
     public Exercise() {
     }
@@ -29,7 +29,6 @@ public class Exercise{
         this.name = name;
         this.description = description;
         this.material = material;
-        this.routine = new ArrayList<>();
     }
 
     public Exercise(String name, String description){
