@@ -21,9 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.Trainer.TrainerSimpleDTO;
 import es.codeurjc.gymapp.services.TrainerServices;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/api/trainers")
@@ -33,7 +39,13 @@ public class TrainerRESTController {
     private TrainerServices trainerServices;
 
     //GetMapping parts
-    
+    @Operation(summary = "Get all trainers")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", 
+                     description = "OK",
+                     content = @Content(mediaType = "application/json",
+                     schema = @Schema(implementation = TrainerDTO.class)))
+    })
     @GetMapping("/")
     public ResponseEntity<List<TrainerSimpleDTO>> getTrainers() {
         if(trainerServices.findAllSimple().isEmpty())
@@ -41,7 +53,17 @@ public class TrainerRESTController {
         List<TrainerSimpleDTO> trainers = trainerServices.findAllSimple();
         return ResponseEntity.ok(trainers);
     }
-    
+
+    @Operation(summary = "Get trainer by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",
+                     description = "OK",
+                     content = @Content(mediaType = "application/json",
+                     schema = @Schema(implementation = TrainerDTO.class))),
+        @ApiResponse(responseCode = "404",
+                     description = "Not Found",
+                     content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<TrainerDTO> getTrainer(@PathVariable Long id){
         if(trainerServices.findDTOById(id).isEmpty())
@@ -50,6 +72,16 @@ public class TrainerRESTController {
         return ResponseEntity.ok(trainer);
     }
 
+    @Operation(summary = "Get image by its trainer's ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",
+                     description = "OK",
+                     content = @Content(mediaType = "application/json",
+                     schema = @Schema(implementation = Resource.class))),
+        @ApiResponse(responseCode = "404",
+                     description = "Not Found",
+                     content = @Content)
+    })
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getImage(@PathVariable Long id) throws SQLException {
         Resource trainerImage = trainerServices.getTrainerImage(id);
@@ -61,7 +93,13 @@ public class TrainerRESTController {
         
 
     //PostMapping parts
-
+    @Operation(summary = "Create a new trainer")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201",
+                     description = "Created",
+                     content = @Content(mediaType = "application/json",
+                     schema = @Schema(implementation = TrainerDTO.class)))
+    })
     @PostMapping("/")
     public ResponseEntity<TrainerDTO> postTrainer(@RequestBody TrainerDTO trainerDTO) {
         trainerServices.save(trainerDTO);
@@ -72,6 +110,16 @@ public class TrainerRESTController {
         return ResponseEntity.created(location).body(trainerDTO);
     }
 
+    @Operation(summary = "Add trainer image by trainer's ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",
+                     description = "OK",
+                     content = @Content(mediaType = "application/json",
+                     schema = @Schema(implementation = TrainerDTO.class))),
+        @ApiResponse(responseCode = "404",
+                     description = "Not Found",
+                     content = @Content)
+    })
     @PostMapping("/{id}/image")
     public ResponseEntity<TrainerDTO> postImage(@PathVariable Long id, @RequestBody MultipartFile imageFile) throws IOException {
         if(trainerServices.findDTOById(id).isEmpty())
@@ -82,7 +130,13 @@ public class TrainerRESTController {
     }
 
     //PutMapping parts
-
+    @Operation(summary = "Modify trainer by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",
+                     description = "OK",
+                     content = @Content(mediaType = "application/json",
+                     schema = @Schema(implementation = TrainerDTO.class)))
+    })
     @PutMapping("/{id}")
     public ResponseEntity<TrainerDTO> putTrainer(@PathVariable Long id, @RequestBody TrainerDTO trainerDTO) {
         if(trainerServices.findDTOById(id).isEmpty())
@@ -93,6 +147,17 @@ public class TrainerRESTController {
         return ResponseEntity.ok(newTrainer);
     }
 
+    //PutMapping parts
+    @Operation(summary = "Modify trainer image by trainer's ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",
+                     description = "OK",
+                     content = @Content(mediaType = "application/json",
+                     schema = @Schema(implementation = TrainerDTO.class))),
+        @ApiResponse(responseCode = "404",
+                     description = "Not Found",
+                     content = @Content)
+    })
     @PutMapping("/{id}/image")
     public ResponseEntity<TrainerDTO> putImage(@PathVariable Long id, @RequestBody MultipartFile imageFile) throws IOException {
         if(trainerServices.findDTOById(id).isEmpty())
@@ -102,8 +167,17 @@ public class TrainerRESTController {
         return ResponseEntity.ok(trainerDTO);
     }
 
-    //DeleteMapping parts
-    
+    //DeleteMapping part
+    @Operation(summary = "Delete trainer by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",
+                     description = "OK",
+                     content = @Content(mediaType = "application/json",
+                     schema = @Schema(implementation = TrainerDTO.class))),
+        @ApiResponse(responseCode = "404",
+                     description = "Not Found",
+                     content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<TrainerDTO> deleteTrainer(@PathVariable Long id){
         if(trainerServices.findDTOById(id).isEmpty())
