@@ -1,6 +1,5 @@
 package es.codeurjc.gymapp.controllers.REST;
 
-import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
-import es.codeurjc.gymapp.DTO.Material.MaterialDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Routine.RoutineSimpleDTO;
 import es.codeurjc.gymapp.model.UserSession;

@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
 import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.Trainer.TrainerSimpleDTO;
+import es.codeurjc.gymapp.services.DTOServices;
 import es.codeurjc.gymapp.services.TrainerServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -141,8 +141,8 @@ public class TrainerRESTController {
     public ResponseEntity<TrainerDTO> putTrainer(@PathVariable Long id, @RequestBody TrainerDTO trainerDTO) {
         if(trainerServices.findDTOById(id).isEmpty())
             throw new NoSuchElementException();
-        TrainerDTO newTrainer = new TrainerDTO(id, trainerDTO.name(), trainerDTO.description(), 
-            /*trainerDTO.imageFile(),*/ trainerDTO.users(), trainerDTO.comments());
+        TrainerDTO oldTrainer = trainerServices.findDTOById(id).get();
+        TrainerDTO newTrainer = DTOServices.mergeRecords(oldTrainer, trainerDTO);
         trainerServices.save(newTrainer);
         return ResponseEntity.ok(newTrainer);
     }

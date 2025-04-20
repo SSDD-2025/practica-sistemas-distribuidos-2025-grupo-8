@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
 import es.codeurjc.gymapp.DTO.Material.MaterialDTO;
 import es.codeurjc.gymapp.services.MaterialServices;
 import io.swagger.v3.oas.annotations.Operation;

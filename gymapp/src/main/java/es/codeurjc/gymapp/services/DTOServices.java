@@ -33,8 +33,7 @@ public class DTOServices {
 
         try {
             Constructor<?> canonicalConstructor = record.getDeclaredConstructor(
-                Arrays.stream(components).map(RecordComponent::getType).toArray(Class[]::new)
-            );
+                Arrays.stream(components).map(RecordComponent::getType).toArray(Class[]::new));
             return (T) canonicalConstructor.newInstance(values);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -7,6 +7,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.User.*;
+import es.codeurjc.gymapp.services.DTOServices;
 import es.codeurjc.gymapp.services.UserServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -143,9 +144,8 @@ public class UserRESTController {
     public ResponseEntity<UserDTO> putUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         if(userServices.findById(id).isEmpty())
             return ResponseEntity.notFound().build();
-        UserDTO newUser = new UserDTO(id, userDTO.name(), userDTO.encodedPassword(), 
-                    /*userDTO.imageFile(),*/ userDTO.trainer(), userDTO.routines(),
-                     userDTO.comments(), userDTO.roles());
+        UserDTO oldUser = userServices.findById(id).get();
+        UserDTO newUser = DTOServices.mergeRecords(oldUser, userDTO);
         userServices.save(newUser);
         return ResponseEntity.ok(newUser);
     }
