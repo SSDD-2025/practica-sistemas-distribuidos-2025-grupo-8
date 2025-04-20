@@ -1,7 +1,11 @@
 package es.codeurjc.gymapp.controllers.WEB;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -73,7 +77,7 @@ public class RoutineController implements CommandLineRunner{
 
     @PostMapping("/routine/save")
     public String saveRoutine(Model model, @RequestParam String name, @RequestParam String description, 
-    @RequestParam String day, @RequestParam(required=false) Set<ExerciseSimpleDTO> exercise) {
+    @RequestParam String day, @RequestParam(required=false) Set<Long> exerciseIds) {
         RoutineDTO routineDTO;
         RoutineSimpleDTO routineSimpleDTO;
         if(name.isEmpty()){
@@ -84,17 +88,23 @@ public class RoutineController implements CommandLineRunner{
             model.addAttribute("message", "La rutina debe contener algun día");
             return "error";
         }
-        if(exercise == null){
+        if(exerciseIds == null){
             model.addAttribute("message", "Al menos un ejercicio debe ser seleccionado");
             return "error";
         }
+        Set<ExerciseDTO> exercises = exerciseServices.buildExerciseDTOs(exerciseIds);
+        Set<ExerciseSimpleDTO> exercisesSimple = exerciseServices.buildExerciseSimpleDTOs(exerciseIds);
+
         UserDTO userDTO = userServices.findByName(userSession.getName()).get();
         UserSimpleDTO userSimpleDTO = userServices.findByNameSimple(userSession.getName()).get();
-        routineDTO = new RoutineDTO(null ,name, description, day, exercise, userSimpleDTO);
+
+        routineDTO = new RoutineDTO(null ,name, description, day, exercisesSimple, userSimpleDTO);
         routineSimpleDTO = new RoutineSimpleDTO(null ,name, description, day);
-        userServices.addRoutine(userDTO,routineDTO);
-        routineServices.save(routineDTO);
-        routineServices.saveExercises(exercise, routineSimpleDTO);
+
+        RoutineDTO routineDTOsaved = routineServices.save(routineDTO);
+
+        userServices.addRoutine(userDTO,routineDTOsaved);
+        routineServices.saveExercises(exercises, routineDTOsaved);
         return "routines/routineSaved";
     }
     
@@ -117,6 +127,14 @@ public class RoutineController implements CommandLineRunner{
         if(routine.isPresent()){
             if(routine.get().userMember().name().equals(userSession.getName())){
                 model.addAttribute("routine", routine.get());
+                List<ExerciseDTO> ex = exerciseServices.getExercisesFromRoutine(routine.get());
+
+                for(ExerciseDTO e : ex){
+                    System.out.println("material : " + e.material().name());
+                }
+
+                model.addAttribute("exercises", ex);
+
                 model.addAttribute("isLogged", userSession.isLoggedIn());
                 return "routines/routineViewer";
             }

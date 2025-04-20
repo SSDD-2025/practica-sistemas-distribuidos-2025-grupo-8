@@ -22,7 +22,7 @@ public class User {
     @ManyToOne
     private Trainer trainer;
     @OneToMany(mappedBy="userMember")
-    private List<Routine> routines;
+    private List<Routine> routines = new ArrayList<>();
 
 
 	@ElementCollection(fetch = FetchType.EAGER)
@@ -40,7 +40,6 @@ public class User {
         this.encodedPassword = encodedPassword;
         this.trainer = null;
         this.imageFile = image;
-        this.routines = new ArrayList<>();
         this.roles = List.of(roles);
     }
 

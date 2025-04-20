@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
 import es.codeurjc.gymapp.DTO.Exercise.ExerciseMapper;
+import es.codeurjc.gymapp.DTO.Exercise.ExerciseSimpleDTO;
+import es.codeurjc.gymapp.DTO.Routine.RoutineDTO;
+import es.codeurjc.gymapp.DTO.Routine.RoutineMapper;
 import es.codeurjc.gymapp.DTO.User.UserDTO;
 import es.codeurjc.gymapp.DTO.User.UserMapper;
 import es.codeurjc.gymapp.model.Exercise;
@@ -38,6 +43,9 @@ public class ExerciseServices {
     @Autowired
     private UserMapper mapperUser;
 
+    @Autowired
+    private RoutineMapper mapperRoutine;
+
 
     public ExerciseServices() {
         // Default constructor
@@ -50,6 +58,13 @@ public class ExerciseServices {
     public ExerciseDTO findById(Long id) {
         if (exerciseRepository.findById(id).isPresent()) {
             return mapperExercise.toDTO(exerciseRepository.findById(id).get());
+        }
+        throw new IllegalArgumentException("Exercise with ID " + id + " not found");
+    }
+
+    public ExerciseSimpleDTO findByIdSimple(Long id) {
+        if (exerciseRepository.findById(id).isPresent()) {
+            return mapperExercise.toSimpleDTO(exerciseRepository.findById(id).get());
         }
         throw new IllegalArgumentException("Exercise with ID " + id + " not found");
     }
@@ -133,5 +148,36 @@ public class ExerciseServices {
                 this.save(exercise);
             }
         }
+    }
+
+    public Set<ExerciseDTO> buildExerciseDTOs(Set<Long> exerciseIds){
+        Set<ExerciseDTO> exercises = new HashSet<>();
+        for(Long id : exerciseIds){
+            if(exerciseRepository.findById(id).isPresent()){
+                ExerciseDTO ex = this.findById(id);
+                exercises.add(ex);
+            }
+        }
+        return exercises;
+    }
+
+    public Set<ExerciseSimpleDTO> buildExerciseSimpleDTOs(Set<Long> exerciseIds){
+        Set<ExerciseSimpleDTO> exercises = new HashSet<>();
+        for(Long id : exerciseIds){
+            if(exerciseRepository.findById(id).isPresent()){
+                ExerciseSimpleDTO ex = this.findByIdSimple(id);
+                exercises.add(ex);
+            }
+        }
+        return exercises;
+    }
+
+    public List<ExerciseDTO> getExercisesFromRoutine(RoutineDTO routineDTO){
+        Routine routine = mapperRoutine.toDomain(routineDTO);
+        List<ExerciseDTO> ex = new ArrayList<>();
+        for(Exercise e : routine.getExercises()){
+            ex.add(this.findById(e.getId()));
+        }
+        return ex;
     }
 }

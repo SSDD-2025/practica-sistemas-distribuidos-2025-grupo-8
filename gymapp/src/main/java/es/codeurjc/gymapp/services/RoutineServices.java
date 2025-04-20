@@ -63,7 +63,6 @@ public class RoutineServices {
         return mapperRoutine.toDTO(saved);
     }
     
-
     public void deleteById(Long id) {
         routineRepository.deleteById(id);
     }
@@ -105,6 +104,14 @@ public class RoutineServices {
 
     public void saveExercises(Set<ExerciseSimpleDTO> exerciseDTO, RoutineSimpleDTO routineDTO){
         List<Exercise> exercise = mapperExercise.toDomainsSimple(exerciseDTO);
+        Routine routine = mapperRoutine.toDomain(routineDTO);
+        for(Exercise ex : exercise){
+            exerciseServices.addRoutine(routine, ex);
+            exerciseServices.save(ex);
+        }
+    }
+    public void saveExercises(Set<ExerciseDTO> exerciseDTO, RoutineDTO routineDTO){
+        List<Exercise> exercise = mapperExercise.toDomains(exerciseDTO);
         Routine routine = mapperRoutine.toDomain(routineDTO);
         for(Exercise ex : exercise){
             exerciseServices.addRoutine(routine, ex);
