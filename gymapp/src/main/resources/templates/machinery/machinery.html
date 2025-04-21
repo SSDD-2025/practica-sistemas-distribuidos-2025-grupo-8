@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Maquinaria</title>
-    <link rel="stylesheet" type="text/css" href="/style.css">
-</head>
-<body>
-    {{>common/header}}
-    <h1>Maquinaria</h1>
+    <head>
+        <title>Maquinaria</title>
+        <link rel="stylesheet" type="text/css" href="/style.css">
+    </head>
+    <body>
+        {{>common/header}}
+        <h1>Maquinaria</h1>
+        <div class="inRows">
+            {{#machineries}}
+            <ul>
+                <li>
+                    <div class="alignItems">
+                        <form action="/machinery/{{id}}" method="get">
+                            <button type="submit" class="button">{{name}}</button>
+                        </form>
+                        {{#isAdmin}}
+                        <form action="/machinery/delete/{{id}}" method="post">
+                            <input type="submit" value="Borrar maquinaria">
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
+                        </form>
+                        {{/isAdmin}}
+                    </div>
+                </li>
+            </ul>
+            {{/machineries}}
+        </div>
+            
 
     <div id="machinery-list" class="inRows">
         <!-- Aquí se cargará la maquinaria por AJAX -->
