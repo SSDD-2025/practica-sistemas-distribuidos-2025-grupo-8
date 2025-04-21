@@ -10,15 +10,15 @@
             <h1>Maquinaria</h1>
             <div class="alignItem inRows">
                 {{#machineries}}
-                <ul>
+                <ul class="evenly">
                     <li>
                         <div class="alignItems">
                             <form action="/machinery/{{id}}" method="get">
-                                <button type="submit" class="button">{{name}}</button>
+                                <button type="submit" class="button minerWidth">{{name}}</button>
                             </form>
                             {{#isAdmin}}
                             <form action="/machinery/delete/{{id}}" method="post">
-                                <input type="submit" value="Borrar maquinaria">
+                                <input type="submit" value="Borrar maquinaria" class="small buttonsRoutines">
                                 <input type="hidden" name="_csrf" value="{{token}}"/>
                             </form>
                             {{/isAdmin}}

@@ -349,6 +349,12 @@ select {
     font-weight: 100;
     
 }
+.minerWidth{
+    min-width: 230px;
+    font-size: 20px;
+    font-weight: 100;
+    
+}
 .maxWidth{
     max-width: 400px;
     font-size: 20px;
@@ -356,4 +362,7 @@ select {
 }
 .gray{
     background-color: #B0B0B0;
+}
+.evenly{
+    flex:1;
 }
