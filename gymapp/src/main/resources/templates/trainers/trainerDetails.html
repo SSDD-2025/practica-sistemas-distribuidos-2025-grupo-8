@@ -6,37 +6,43 @@
     </head>
     <body>
         {{>common/header}}
-        <div>
-            <h1>Entrenador</h1>
-            <p>{{trainer.name}}</p>
-            <h2>Descripción:</h2>
-            <p>{{trainer.description}}</p>
-            <img src="/trainer/image/{{id}}" alt="Imagen del entrenador">
+        <div class="container">
+            <div class="alignItems">
+                <h1>Entrenador</h1>
+                <p>{{trainer.name}}</p>
+                <h2>Descripción:</h2>
+                <p>{{trainer.description}}</p>
+                <div>
+                    <img src="/trainer/image/{{id}}" alt="Imagen del entrenador">
+                </div>
+            </div>
+            <div class="alignItems">
+                <form action="/trainer/{{id}}/comments" method ="post">
+                    <input type="submit" value="Ver comentarios" class="minWidth">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+                {{#logged}}
+                <form action="/trainer/{{id}}/addOrReplace" method="post" enctype="multipart/form-data">
+                    <input type='submit' value='Seleccionar entrenador personal' class="minWidth">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+                    {{#isAdmin}}
+                    <form action="/trainer/{{id}}/delete" method="post">
+                        <input type='submit' value='Eliminar entrenador' class="minWidth"/>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
+                    </form>
+                    {{/isAdmin}}
+                {{/logged}}
+        
+                {{^logged}}
+                    <p>Para seleccionar al entrenador, primero debes iniciar sesión</p>
+                {{/logged}}	
+                <form action="/trainer" method="post">
+                    <input type='submit' value='Volver' class="big button"/>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+            </div>
         </div>
-        <form action="/trainer/{{id}}/comments" method ="post">
-            <input type="submit" value="Ver comentarios"/>
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
-        {{#logged}}
-        <form action="/trainer/{{id}}/addOrReplace" method="post" enctype="multipart/form-data">
-            <input type='submit' value='Seleccionar entrenador personal'/>
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
-            {{#isAdmin}}
-            <form action="/trainer/{{id}}/delete" method="post">
-                <input type='submit' value='Eliminar entrenador'/>
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
-            {{/isAdmin}}
-        {{/logged}}
-
-        {{^logged}}
-            <p>Para seleccionar al entrenador, primero debes iniciar sesión</p>
-        {{/logged}}	
-        <form action="/trainer" method="post">
-            <input type='submit' value='Volver'/>
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
         {{>common/footer}}
     </body>
 </html>

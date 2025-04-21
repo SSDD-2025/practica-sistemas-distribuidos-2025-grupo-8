@@ -3,19 +3,21 @@
         <title> Seleccionar ejercicio a eliminar</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
-    {{>common/header}}
     <body>
-        <h1> Seleccione ejercicio a eliminar</h1>
-        <form action="/exercise/delete" method="post">
-            <label for="exercise">Ejercicio:</label>
-            <select id ="exercise" name = "exercise">
-                {{#exercises}}
-                    <option value="{{id}}">{{name}}</option>
-                {{/exercises}}
-            </select><br><br>
-            <input type="submit" value="Eliminar ejercicio">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
+        {{>common/header}}
+        <div class="container">
+            <h1> Seleccione ejercicio a eliminar</h1>
+            <form action="/exercise/delete" method="post">
+                <label for="exercise">Ejercicio:</label>
+                <select id ="exercise" name = "exercise">
+                    {{#exercises}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/exercises}}
+                </select><br><br>
+                <input type="submit" value="Eliminar ejercicio">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
+        </div>
+        {{>common/footer}}
     </body>
-    {{>common/footer}}
-    </html>
+</html>

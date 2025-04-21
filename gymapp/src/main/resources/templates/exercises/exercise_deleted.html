@@ -3,12 +3,13 @@
         <title> Ejercicio eliminado</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
-    {{>common/header}}
     <body>
+        {{>common/header}}
         <p>El ejercicio se ha eliminado correctamente</p>
         <form action="/routine" method="post">
             <input type="submit" value="Volver">
             <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
+        {{>common/footer}}
     </body>
 </html>

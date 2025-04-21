@@ -6,36 +6,38 @@
     </head>
     <body>
         {{>common/header}}
-        <ul>
-            {{#isLogged}}
+        <div class="container">
+            <ul class="inRows">
+                {{#isLogged}}
                 {{#routines}}
-                <li>
+                <li class="padding alignItems">
                     <form action="/routine/view/{{id}}" method="get">
-                        <button type="submit" class="button">{{name}}</button>
+                        <button type="submit" class="big button">{{name}}</button>
                     </form>               
                     <form action = "/routine/delete/{{id}}" method ="post">
-                        <input type = "submit" value = "Borrar rutina">
+                        <input type = "submit" value = "Borrar rutina" class="small buttonsRoutines">
                         <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                     <form action = "/routine/modify/{{id}}" method ="post">
-                        <input type = "submit" value = "Modificar rutina">
+                        <input type = "submit" value = "Modificar rutina" class="small buttonsRoutines">
                         <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                 </li>
                 {{/routines}}
                 {{^routines}}
-                    <li>No hay rutinas</li>
+                <li>No hay rutinas</li>
                 {{/routines}}
-            {{/isLogged}}
-            {{^isLogged}}
+                {{/isLogged}}
+                {{^isLogged}}
                 <li>Debes iniciar sesión para ver las rutinas</li>
                 <form action="/account" method="post">
                     <input type="submit" value="Iniciar sesión">
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
-            {{/isLogged}}
-        </ul>
-
+                {{/isLogged}}
+            </ul>
+        </div>
+            
         {{>common/footer}}
     </body>
 </html>

@@ -6,11 +6,14 @@
     </head>
     <body>
             {{>common/header}}
-            <h1>{{message}}</h1>
-            <form action="/trainer" method="post">
-                <input type='submit' value='Volver'/>
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
+            <div class="container">
+
+                <h1>{{message}}</h1>
+                <form action="/trainer" method="post">
+                    <input type='submit' value='Volver'/>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+            </div>
             {{>common/footer}}
     </body>
 </html>

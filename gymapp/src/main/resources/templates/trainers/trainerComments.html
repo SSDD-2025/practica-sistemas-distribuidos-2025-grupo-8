@@ -5,33 +5,41 @@
     </head>
     <body>
         {{>common/header}}
-        <h1>Comentarios</h1>
-        {{#comments}}
-            <b>{{author.name}}: </b>: {{message}}<br>
-        {{#isAdmin}}
-            <form action="/trainer/{{trainerId}}/comments/{{id}}/delete" method="post">
-                <input type="submit" value="Borrar comentario">
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
-        {{/isAdmin}}
-        {{/comments}}
-
-        {{^comments}}
-        <p> No hay comentarios todavía.</p>
-        {{/comments}}
-        
-        {{#logged}}
-        <form action="/trainer/{{trainerId}}/comments/add" method="post">
-            <input type="submit" value="Añadir comentario">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
-        {{/logged}}
-
-        <form action="/trainer/{{trainerId}}" method="post">
-            <input type="submit" value="Volver">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
-        
+        <div class="container">
+            <h1>Comentarios</h1>
+            <div class="inRows">
+            {{#comments}}
+                <ul>
+                    <b>{{author.name}} : {{message}}</b><br>
+                    {{#isAdmin}}
+                    <form action="/trainer/{{trainerId}}/comments/{{id}}/delete" method="post">
+                        <input type="submit" value="Borrar comentario" class="small buttonsRoutines">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
+                    </form>
+                    {{/isAdmin}}
+                </ul>
+            {{/comments}}
+                
+            {{^comments}}
+            <p> No hay comentarios todavía.</p>
+            {{/comments}}
+                
+            </div>
+            <div class="inRows">
+                {{#logged}}
+                <form action="/trainer/{{trainerId}}/comments/add" method="post">
+                    <input type="submit" value="Añadir comentario">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+                {{/logged}}
+                
+                <form action="/trainer/{{trainerId}}" method="post">
+                    <input type="submit" value="Volver">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+            </div>
+        </div>
+            
         {{>common/footer}}
     </body>
 </html>

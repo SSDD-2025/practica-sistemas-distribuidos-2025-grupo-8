@@ -6,23 +6,28 @@
     </head>
     <body>
         {{>common/header}}
-        <h1>Entrenadores</h1>
-            {{#trainers}}
-            <li>
-                <form action="/trainer/{{id}}" method="get">
-                    <button type="submit" class="button">{{name}}</button>
+        <div class="container">
+            <h1>Entrenadores</h1>
+                <ul class="padding inRows">
+                    {{#trainers}}
+                    <li>
+                        <form action="/trainer/{{id}}" method="get">
+                            <button type="submit" class="big button">{{name}}</button>
+                        </form>
+                    </li>
+                    {{/trainers}}
+                </ul>
+                
+    
+                {{#isAdmin}}
+                <form action="/trainer/add" method="post">
+                    <input type="submit" value = "Añadir nuevo entrenador" class="small buttonsRoutines">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
-            </li>
-            {{/trainers}}
-
-            {{#isAdmin}}
-            <form action="/trainer/add" method="post">
-                <input type="submit" value = "Añadir nuevo entrenador">
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
-            {{/isAdmin}}
-            
-            <p>Entrenador personal: {{personalTrainer}}</p>
+                {{/isAdmin}}
+                
+                <p class="big">Entrenador personal: {{personalTrainer}}</p>
+        </div>
         {{>common/footer}}
     </body>
 </html>

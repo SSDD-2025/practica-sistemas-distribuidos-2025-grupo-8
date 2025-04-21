@@ -5,7 +5,8 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <body>
-        {{>common/header}}        
+        {{>common/header}}
+        <div class="container">
             <form action="/account/login" method="post">
                 <p>Nombre: </p>
                 <input type='text' name='username'/>
@@ -15,6 +16,7 @@
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             <p>¿No tienes una cuenta? <a href="/register/create">Regístrate aquí</a></p>
+        </div>
         {{>common/footer}}
     </body>
 </html>

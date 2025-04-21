@@ -3,16 +3,21 @@
         <title> Mostrar usuarios</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
-    {{>common/header}}
-    <h1>Usuarios de Golden Gym</h1>
-     <body>
-        {{#users}}
-            <p>{{name}}</p>
-        {{/users}}
-        
-        <form action="/account" method="post">
-            <input type="submit" value = "Volver">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
+    <body>
+        {{>common/header}}
+        <h1>Usuarios de Golden Gym</h1>
+        <div class="container">
+            {{#users}}
+                <div>
+                    <p>{{name}}</p>
+                </div>
+            {{/users}}
+            
+            <form action="/account" method="post">
+                <input type="submit" value = "Volver" class="big button">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+        </div>
+        {{>common/footer}}
      </body>
 </html>

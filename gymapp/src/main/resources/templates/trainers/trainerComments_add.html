@@ -5,13 +5,16 @@
     </head>
     <body>
         {{>common/header}}
-        <h1>Entrenador: {{trainerName}}</h1>
-        <form action="/trainer/{{id}}/comments/save" method="post">
-            <p>Usuario: {{name}}</p>
-            <p>Mensaje:<input type="text" name="message"/></p>
-            <input type="submit" value="Enviar comentario">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
+        <div class="container">
+
+            <h1>Entrenador: {{trainerName}}</h1>
+            <form action="/trainer/{{id}}/comments/save" method="post">
+                <p>Usuario: {{name}}</p>
+                <p>Mensaje:<input type="text" name="message"/></p>
+                <input type="submit" value="Enviar comentario">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+        </div>
         {{>common/footer}}
     </body>
 </html>

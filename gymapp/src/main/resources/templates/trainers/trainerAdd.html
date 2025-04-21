@@ -6,6 +6,7 @@
     </head>
     <body>
         {{>common/header}}
+        <div class="container">
             <ul>
                 <form action="/trainer/add/form" method="post" enctype="multipart/form-data">
                     <div class="infoForm">
@@ -17,12 +18,13 @@
                         <input type="file" name='image' accept=".jpg, .jpeg"/>
                     </div>  
                     <br><br>
-                    <div class="sendForm">
+                    <div class="sendForm alignItems">
                         <input type='submit' value='Añadir'/>
                     </div>
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>               
             </ul>
+        </div>
         {{>common/footer}}
     </body>
 </html>

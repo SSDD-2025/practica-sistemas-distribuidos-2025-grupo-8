@@ -6,16 +6,19 @@
     </head>
     <body>
             {{>common/header}}
-            <h1>No hay entrenadores en este momento</h1>
-            {{#isAdmin}}
-            <form action="/trainer/add" method="post">
-                <input type="submit" value = "Añadir nuevo entrenador">
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
-            {{/isAdmin}}
-            <form action="/" method="get">
-                <input type='submit' value='Volver'/>
-            </form>
+            <div class="container">
+
+                <h1>No hay entrenadores en este momento</h1>
+                {{#isAdmin}}
+                <form action="/trainer/add" method="post">
+                    <input type="submit" value = "Añadir nuevo entrenador">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+                {{/isAdmin}}
+                <form action="/" method="get">
+                    <input type='submit' value='Volver'/>
+                </form>
+            </div>
             {{>common/footer}}
     </body>
 </html>

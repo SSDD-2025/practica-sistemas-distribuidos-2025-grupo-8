@@ -24,6 +24,10 @@ img {
     height: auto;
     width: 60%;
 }
+ol, ul{
+    padding-left: 0;
+    list-style: none;
+}
 li{
     list-style-type:none;
 }
@@ -197,7 +201,7 @@ select {
 }
 
 .button:hover {
-    background-color: #3D3D3D; 
+    background-color: #B0B0B0; 
 }
 
 /* Classes for the header */
@@ -249,7 +253,7 @@ select {
     background-color: #555;
 }
 
-.containerRoutine {
+.container{
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -321,4 +325,35 @@ select {
 .bold{
     font-weight: 750;
 }
+.small{
+    font-size: 12px;
+    padding: 5px 10px;
+}
 
+.big {
+    padding: 10px 35px;
+    font-size: 20px;
+    display: inline-block;
+    text-align: center;
+    line-height: normal;
+    min-width: 100px; /* Minimum width */
+    width: auto; /* Allows expansion */
+}
+
+.padding{
+    padding: 10px 10px;
+}
+.minWidth{
+    min-width: 300px;
+    font-size: 20px;
+    font-weight: 100;
+    
+}
+.maxWidth{
+    max-width: 400px;
+    font-size: 20px;
+    font-weight: 100;
+}
+.gray{
+    background-color: #B0B0B0;
+}

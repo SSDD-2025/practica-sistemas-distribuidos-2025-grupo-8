@@ -3,18 +3,21 @@
         <title> Añadir ejercicio</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
-    {{>common/header}}
-    <h1> Añadir ejercicio</h1>
     <body>
-        <form action="/exercise/save" method="post">
-            <label for="nameExercise">Nombre:</label>
-            <input type="text" name="nameExercise">
-            <br><br>
-            <label for="description">Descripción:</label>
-            <br><br>
-            <textarea name="description" rows="5" cols="40"></textarea>
-            <input type="submit" value="Guardar ejercicio">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>    
+        {{>common/header}}
+        <div class="container">
+            <h1> Añadir ejercicio</h1>
+            <form action="/exercise/save" method="post">
+                <label for="nameExercise">Nombre:</label>
+                <input type="text" name="nameExercise">
+                <br><br>
+                <label for="description">Descripción:</label>
+                <br><br>
+                <textarea name="description" rows="5" cols="40"></textarea>
+                <input type="submit" value="Guardar ejercicio">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+        </div>
+        {{>common/footer}}  
     </body>
 </html>

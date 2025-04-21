@@ -3,19 +3,21 @@
         <title>Maquinaria</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
-    <body>
+    <body >
         {{>common/header}}
-        <p>Nombre: {{machinery.name}}</p>
-        <p>Ejercicios:
-
-        {{#exercises}}
-            {{name}}
-        {{/exercises}}
-
-        {{^exercises}}
-            <p>No hay ejercicios disponibles actualmente.</p>
-        {{/exercises}}
-        </p>
+        <div class="container">
+            <p>Nombre: {{machinery.name}}</p>
+            <p>Ejercicios:
+    
+            {{#exercises}}
+                {{name}}
+            {{/exercises}}
+    
+            {{^exercises}}
+                <p>No hay ejercicios disponibles actualmente.</p>
+            {{/exercises}}
+            </p>
+        </div>
         {{>common/footer}}
     </body>
 </html>
