@@ -162,17 +162,17 @@ A continuación, se muestra un recorrido por la página web con las principales 
 - **<span style="color:green">Sergio Antón </span>:** //POR HACER
     - Tareas: implementación de seguridad(comunicación cifrada por https, autenticación de usuarios, autorización de acceso, roles en la aplicación, usuarios en la base de datos, protección con CSRF y autenticación con tokens para gestionar usuarios en la API REST), creación del controlador REST de rutinas, junto con todas las modificaciones necesarias para su correcto funcionamiento(DTO, refactorizar el servicio de rutinas y refactorizar el controlador WEB).
     - 5 commits más significativos:
-      - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/ce2ed89ad2ab75850f79414000222cf3ce1f16ba)
-      - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/6970a67bb99ae4ed7cd8995f08dd82d21f9f6a83)
-      - [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/3699889086afa79d04573d241e0c949c60be8b9b)
-      - [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/783765d6035a637ae58234469e856a6c5d384ff0)
-      - [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/b7a063c12fa434deef75b486f3430601a9e06bc2)
+      - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/5628e476b3543eb18018e5f51da029aac8f6ec7f)
+      - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/003c4d5a60eb9f63d62c2c0d3bb31ba4fda72e62)
+      - [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/5d50513470255c7ec866c0ffcbaeae84cb7dfacb)
+      - [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/fd86ace084261373e082fd67068d779d2642c0c2)
+      - [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/775377bb0ffba337b9f87249cfafc280565612a8)
     - 5 ficheros en los que se ha participado:
-      - [RoutineController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/RoutineController.java)
-      - [Routine](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/model/Routine.java)
-      - [RoutineService](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/services/RoutineServices.java)
-      - [Routine.htmls](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/tree/main/gymapp/src/main/resources/templates/routines)
-      - [AdminController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blame/main/gymapp/src/main/resources/static/style.css)
+      - [RoutineRESTController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/REST/RoutineRESTController.java)
+      - [RoutineDTO](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/DTO/Routine/RoutineDTO.java)
+      - [RoutineController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/WEB/RoutineController.java)
+      - [SecurityCOnfiguration](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/security/SecurityConfiguration.java)
+      - [LoginController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/auth/LoginController.java)
 - **<span style="color:green">Iván Fernández Ruiz</span>:** //POR HACER
     - Tareas: creación de funcionalidad de maquinaria (ver, añadir y eliminar), ejercicios (añadir y eliminar) y comentarios de los entrenadores (ver, añadir y eliminar) creación de los htmls asociados a las funcionalidades anteriores, solución de errores relacionados con la comprobación de campos en los formularios (crear rutina, modificar rutina, entre otros) y solución de errores de borrado de usuarios cuando el usuario tiene rutinas y comentarios asociados.
     - 5 commits más significativos:
