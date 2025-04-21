@@ -150,7 +150,7 @@ public class UserRESTController {
         return ResponseEntity.ok(newUser);
     }
 
-    @Operation(summary = "Modify user image by userr's ID")
+    @Operation(summary = "Modify user image by user's ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",
                      description = "OK",

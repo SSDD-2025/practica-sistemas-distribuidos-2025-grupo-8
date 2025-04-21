@@ -6,33 +6,35 @@
     </head>
     <body class="container">
         {{>common/header}}
-        {{#isLogged}}
-            {{#routine}}
-                <p> <span class = "bold">Nombre rutina: </span>  {{name}} </p>
-                <p> <span class = "bold">Descripción: </span> {{description}} </p>
-                <p> <span class = "bold">Día </span> {{day}} </p>
-                <p> <span class = "bold">Ejercicios: </span> </p>
-                <ul>
-                    {{#exercises}}
-                        <li>
-                            <p> <span class = "bold">Ejercicio : </span>{{name}}</p>
-                            <p> <span class = "bold">Descripción : </span>{{description}}</p>
-                            <p> <span class = "bold">Material : </span> {{material.name}} </p>
-                        </li>
+        <div>
+            {{#isLogged}}
+                {{#routine}}
+                    <p> <span class = "bold">Nombre rutina: </span>  {{name}} </p>
+                    <p> <span class = "bold">Descripción: </span> {{description}} </p>
+                    <p> <span class = "bold">Día </span> {{day}} </p>
+                    <p> <span class = "bold">Ejercicios: </span> </p>
+                    <ul>
+                        {{#exercises}}
+                            <li>
+                                <p> <span class = "bold">Ejercicio : </span>{{name}}</p>
+                                <p> <span class = "bold">Descripción : </span>{{description}}</p>
+                                <p> <span class = "bold">Material : </span> {{material.name}} </p>
+                            </li>
+                        {{/exercises}}
+                    </ul>
+                    {{^exercises}}
+                            <p> Esta rutina no tiene ejercicios </p>
                     {{/exercises}}
-                </ul>
-                {{^exercises}}
-                        <p> Esta rutina no tiene ejercicios </p>
-                {{/exercises}}
-            {{/routine}}
-        {{/isLogged}}
-        {{^isLogged}}
-            <p>Debes estar logueado para ver una rutina</p>
-            <form action="/login" method="post">
-                <input type="submit" value="Login">
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
-        {{/isLogged}}
+                {{/routine}}
+            {{/isLogged}}
+            {{^isLogged}}
+                <p>Debes estar logueado para ver una rutina</p>
+                <form action="/login" method="post">
+                    <input type="submit" value="Login">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+            {{/isLogged}}
+        </div>
         {{>common/footer}}
     </body>
 </html>

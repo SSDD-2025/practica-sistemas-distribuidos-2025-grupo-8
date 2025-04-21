@@ -4,8 +4,9 @@
         <title>Crear rutinas</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
-    <body class="container">
+    <body>
         {{>common/header}}
+        <div class="container">
             <form action = "/routine/save" method="post">
                 <h1>Crear rutina</h1>
                 <label for="name">Nombre de la rutina:</label>
@@ -35,6 +36,8 @@
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             {{/isLogged}}
+
+        </div>
         {{>common/footer}}
     </body>
 </html>

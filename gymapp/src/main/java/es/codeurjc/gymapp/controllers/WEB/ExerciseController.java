@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import es.codeurjc.gymapp.DTO.Exercise.ExerciseDTO;
 import es.codeurjc.gymapp.services.ExerciseServices;
 
 @Controller
@@ -33,9 +32,9 @@ public class ExerciseController {
     }
 
     @PostMapping("/exercise/delete")
-    public String deleteExercise(Model model, @RequestParam ExerciseDTO exerciseDTO){
+    public String deleteExercise(Model model, @RequestParam Long id) {
         try {
-            exerciseService.deleteById(exerciseDTO.id());
+            exerciseService.deleteById(id);
             return "exercises/exercise_deleted";
         } catch (IllegalArgumentException e) {
             model.addAttribute("message", "No se ha podido borrar el ejercicio");

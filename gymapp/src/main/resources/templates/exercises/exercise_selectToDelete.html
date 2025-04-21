@@ -9,7 +9,7 @@
             <h1> Seleccione ejercicio a eliminar</h1>
             <form action="/exercise/delete" method="post">
                 <label for="exercise">Ejercicio:</label>
-                <select id ="exercise" name = "exercise">
+                <select id ="exercise" name = "id">
                     {{#exercises}}
                         <option value="{{id}}">{{name}}</option>
                     {{/exercises}}

@@ -3,27 +3,29 @@
         <title>Añadir Maquinaria</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
-    <body class="container">
+    <body>
         {{>common/header}}
-        <h1>Añadir Maquinaria</h1>
-        <form action="/machinery/save" method="post">
-            <label for="name">Nombre:</label>
-            <input type="text" name="name">
-            <br><br>
-            <label for="exercise">Ejercicio:</label>
-            <select name="exercise" id="exercise" multiple>
-                {{#exercises}}
-                    <option value="{{id}}">{{name}}</option>
-                {{/exercises}}
-            </select>
-            <input type="submit" value="Añadir Maquinaria">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
-        <br>
-        <form action="/exercise/add" method="request" clas="admin">
-            <input type="submit" value="Añadir ejercicio que no este en la lista">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
+        <div class="container">
+            <h1>Añadir Maquinaria</h1>
+            <form action="/machinery/save" method="post">
+                <label for="name">Nombre:</label>
+                <input type="text" name="name">
+                <br><br>
+                <label for="exercise">Ejercicio:</label>
+                <select name="exercise" id="exercise" multiple>
+                    {{#exercises}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/exercises}}
+                </select>
+                <input type="submit" value="Añadir Maquinaria">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+            <br>
+            <form action="/exercise/add" method="request" clas="admin">
+                <input type="submit" value="Añadir ejercicio que no este en la lista">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+        </div>
         {{>common/footer}}
     </body>
 </html>
