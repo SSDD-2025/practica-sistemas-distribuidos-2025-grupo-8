@@ -160,7 +160,7 @@ A continuación, se muestra un recorrido por la página web con las principales 
       - [JWT](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/tree/main/gymapp/src/main/java/es/codeurjc/gymapp/security/jwt)
       - [show_users](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/resources/templates/account/show_users.html)
 - **<span style="color:green">Sergio Antón </span>:** //POR HACER
-    - Tareas: gestión de rutinas (crear, borrar y modificar), trabajo en el routineController,en el routineServices y en la entidad rutina, pequeñas aportaciones al css, refactorización de código, creación de los ficheros html relacionados con las rutinas y con su gestión.
+    - Tareas: implementación de seguridad(comunicación cifrada por https, autenticación de usuarios, autorización de acceso, roles en la aplicación, usuarios en la base de datos, protección con CSRF y autenticación con tokens para gestionar usuarios en la API REST), creación del controlador REST de rutinas, junto con todas las modificaciones necesarias para su correcto funcionamiento(DTO, refactorizar el servicio de rutinas y refactorizar el controlador WEB).
     - 5 commits más significativos:
       - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/ce2ed89ad2ab75850f79414000222cf3ce1f16ba)
       - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/6970a67bb99ae4ed7cd8995f08dd82d21f9f6a83)
