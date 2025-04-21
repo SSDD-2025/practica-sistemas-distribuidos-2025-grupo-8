@@ -1,0 +1,874 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: https://localhost:8443
+  description: Generated server url
+paths:
+  /api/users/{id}:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Get user by its ID
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - user-rest-controller
+      summary: Modify user by its ID
+      operationId: putUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+    delete:
+      tags:
+      - user-rest-controller
+      summary: Delete user by its ID
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+        "404":
+          description: Not Found
+  /api/users/{id}/image:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Get image by its user's ID
+      operationId: getImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - user-rest-controller
+      summary: Modify user image by user's ID
+      operationId: putImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+        "404":
+          description: Not Found
+    post:
+      tags:
+      - user-rest-controller
+      summary: Add user image by user's ID
+      operationId: postImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+        "404":
+          description: Not Found
+  /api/trainers/{id}:
+    get:
+      tags:
+      - trainer-rest-controller
+      summary: Get trainer by its ID
+      operationId: getTrainer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - trainer-rest-controller
+      summary: Modify trainer by its ID
+      operationId: putTrainer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrainerDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+    delete:
+      tags:
+      - trainer-rest-controller
+      summary: Delete trainer by its ID
+      operationId: deleteTrainer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+        "404":
+          description: Not Found
+  /api/trainers/{id}/image:
+    get:
+      tags:
+      - trainer-rest-controller
+      summary: Get image by its trainer's ID
+      operationId: getImage_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - trainer-rest-controller
+      summary: Modify trainer image by trainer's ID
+      operationId: putImage_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+        "404":
+          description: Not Found
+    post:
+      tags:
+      - trainer-rest-controller
+      summary: Add trainer image by trainer's ID
+      operationId: postImage_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+        "404":
+          description: Not Found
+  /api/routines/{id}:
+    get:
+      tags:
+      - routine-rest-controller
+      summary: Get routine by its ID
+      operationId: getRoutine
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoutineDTO"
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - routine-rest-controller
+      summary: Modify routine by its ID
+      operationId: modifyRoutine
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RoutineDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoutineDTO"
+    delete:
+      tags:
+      - routine-rest-controller
+      summary: Delete exercise by its ID
+      operationId: deleteRoutine
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoutineDTO"
+        "404":
+          description: Not Found
+  /api/users/:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Get all users
+      operationId: getUsers
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSimpleDTO"
+    post:
+      tags:
+      - user-rest-controller
+      summary: Create a new user
+      operationId: postUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDTO"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+  /api/trainers/:
+    get:
+      tags:
+      - trainer-rest-controller
+      summary: Get all trainers
+      operationId: getTrainers
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+    post:
+      tags:
+      - trainer-rest-controller
+      summary: Create a new trainer
+      operationId: postTrainer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrainerDTO"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+  /api/routines/:
+    get:
+      tags:
+      - routine-rest-controller
+      summary: Get all routines
+      operationId: getRoutines
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoutineDTO"
+    post:
+      tags:
+      - routine-rest-controller
+      summary: Create a new routine
+      operationId: createRoutine
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RoutineDTO"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoutineDTO"
+  /api/machineries/:
+    get:
+      tags:
+      - material-rest-controller
+      summary: Get all materials
+      operationId: getMaterials
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MaterialDTO"
+    post:
+      tags:
+      - material-rest-controller
+      summary: Create a new material
+      operationId: createMaterial
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MaterialDTO"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MaterialDTO"
+  /api/exercises/:
+    get:
+      tags:
+      - exercise-rest-controller
+      summary: Get all exercises
+      operationId: getExercises
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExerciseDTO"
+    post:
+      tags:
+      - exercise-rest-controller
+      summary: Create a new exercise
+      operationId: createExercise
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExerciseDTO"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExerciseDTO"
+  /api/auth/refresh:
+    post:
+      tags:
+      - login-controller
+      operationId: refreshToken
+      parameters:
+      - name: RefreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+  /api/auth/logout:
+    post:
+      tags:
+      - login-controller
+      operationId: logOut
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+  /api/auth/login:
+    post:
+      tags:
+      - login-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+  /api/machineries/{id}:
+    get:
+      tags:
+      - material-rest-controller
+      summary: Get material by its ID
+      operationId: getMaterial
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MaterialDTO"
+        "404":
+          description: Not Found
+    delete:
+      tags:
+      - material-rest-controller
+      summary: Delete material by its ID
+      operationId: deleteMaterial
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MaterialDTO"
+        "404":
+          description: Not Found
+  /api/exercises/{id}:
+    get:
+      tags:
+      - exercise-rest-controller
+      summary: Get exercise by its ID
+      operationId: getExercise
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExerciseDTO"
+        "404":
+          description: Not Found
+    delete:
+      tags:
+      - exercise-rest-controller
+      summary: Delete exercise by its ID
+      operationId: deleteExercise
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExerciseDTO"
+        "404":
+          description: Not Found
+components:
+  schemas:
+    CommentSimpleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        message:
+          type: string
+        author:
+          $ref: "#/components/schemas/UserSimpleDTO"
+    RoutineSimpleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        day:
+          type: string
+    TrainerSimpleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        encodedPassword:
+          type: string
+        trainer:
+          $ref: "#/components/schemas/TrainerSimpleDTO"
+        routines:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoutineSimpleDTO"
+        comments:
+          type: array
+          items:
+            $ref: "#/components/schemas/CommentSimpleDTO"
+        roles:
+          type: array
+          items:
+            type: string
+    UserSimpleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    TrainerDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserSimpleDTO"
+          uniqueItems: true
+        comments:
+          type: array
+          items:
+            $ref: "#/components/schemas/CommentSimpleDTO"
+    ExerciseSimpleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        material:
+          $ref: "#/components/schemas/MaterialSimpleDTO"
+    MaterialSimpleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    RoutineDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        day:
+          type: string
+        exercises:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExerciseSimpleDTO"
+          uniqueItems: true
+        userMember:
+          $ref: "#/components/schemas/UserSimpleDTO"
+    MaterialDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        exercises:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExerciseSimpleDTO"
+          uniqueItems: true
+    ExerciseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        material:
+          $ref: "#/components/schemas/MaterialSimpleDTO"
+        routine:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoutineSimpleDTO"
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - FAILURE
+        message:
+          type: string
+        error:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Pageable:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 0
+        size:
+          type: integer
+          format: int32
+          minimum: 1
+        sort:
+          type: array
+          items:
+            type: string
