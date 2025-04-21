@@ -6,6 +6,10 @@
         {{>common/header}}
         <div class="container">
             <p>La maquinaria ha sido eliminada correctamente.</p>
+            <form action="/machinery" method="post">
+                <input type="submit" value="Volver">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
         </div>
         {{>common/footer}}
     </body>

@@ -8,6 +8,10 @@
         {{>common/header}}
         <div class="container">
             <h2>Rutina guardada</h2>
+            <form action="/routine" method="post">
+                <input type="submit" value="Volver">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
         </div>
         {{>common/footer}}
     </body>

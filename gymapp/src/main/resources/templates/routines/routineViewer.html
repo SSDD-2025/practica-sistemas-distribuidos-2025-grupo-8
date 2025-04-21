@@ -4,9 +4,9 @@
         <title>Ver rutina</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
-    <body class="container">
+    <body>
         {{>common/header}}
-        <div>
+        <div class="container">
             {{#isLogged}}
                 {{#routine}}
                     <p> <span class = "bold">Nombre rutina: </span>  {{name}} </p>
@@ -34,6 +34,10 @@
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
             {{/isLogged}}
+            <form action="/routine" method="post">
+                <input type="submit" value="Volver">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
         </div>
         {{>common/footer}}
     </body>
