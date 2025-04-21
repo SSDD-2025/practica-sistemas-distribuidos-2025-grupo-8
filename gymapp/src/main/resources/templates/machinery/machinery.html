@@ -38,8 +38,8 @@
             <form action="/machinery/add" method="get">
                 <input type="submit" value="Añadir maquinaria">
             </form>
+            {{/isAdmin}}
         </div>
-        {{/isAdmin}}
         {{>common/footer}}
     </body>
 </html>

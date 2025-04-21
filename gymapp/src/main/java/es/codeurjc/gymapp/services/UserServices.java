@@ -95,14 +95,14 @@ public class UserServices {
         User user = userMapper.toDomain(userDTO);
         Routine routine = routineMapper.toDomain(routineDTO);
         user.addRoutine(routine);
-        userRepository.save(user);
+        save(user);
     }
     
     public void deleteRoutine(UserDTO userDTO, RoutineSimpleDTO routineDTO){
         User user = userMapper.toDomain(userDTO);
         Routine routine = routineMapper.toDomain(routineDTO);
         user.getRoutines().remove(routine);
-        userRepository.save(user);
+        save(user);
     }
 
     public void deleteRoutine(UserDTO userDTO, RoutineDTO routineDTO){

@@ -63,6 +63,16 @@ public class RoutineServices {
         Routine saved = routineRepository.save(routine);
         return mapperRoutine.toDTO(saved);
     }
+
+    void save(Routine routine) {
+        routineRepository.save(routine);
+    }
+
+    void save(Collection<Routine> routines) {
+        for (Routine routine : routines) {
+            routineRepository.save(routine);
+        }
+    }
     
     public void deleteById(Long id) {
         routineRepository.deleteById(id);
@@ -95,20 +105,23 @@ public class RoutineServices {
     }
 
     public void deleteUser(RoutineSimpleDTO routineDTO){
-        Routine routine = mapperRoutine.toDomain(routineDTO);
-        routine.setUser(null);
-        routineRepository.save(routine);
+        deleteUser(mapperRoutine.toDomain(routineDTO));
     }
 
     public void deleteUser(RoutineDTO routineDTO){
-        deleteUser(mapperRoutine.toSimpleDTO(mapperRoutine.toDomain(routineDTO)));
+        deleteUser(mapperRoutine.toDomain(routineDTO));
+    }
+
+    void deleteUser(Routine routine){
+        routine.setUser(null);
+        routineRepository.save(routine);
     }
 
     public void deleteAllRoutines(UserDTO userDTO){
         User user = mapperUser.toDomain(userDTO);
         routineRepository.deleteAll(user.getRoutines());
         user.getRoutines().clear();
-        userServices.save(userDTO);
+        userServices.save(user);
     }
 
     public void saveExercises(Set<ExerciseSimpleDTO> exerciseDTO, RoutineSimpleDTO routineDTO){
