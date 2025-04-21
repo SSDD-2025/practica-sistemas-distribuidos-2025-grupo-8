@@ -366,3 +366,7 @@ select {
 .evenly{
     flex:1;
 }
+.center{
+    text-align: center;
+    align-items: center;
+}

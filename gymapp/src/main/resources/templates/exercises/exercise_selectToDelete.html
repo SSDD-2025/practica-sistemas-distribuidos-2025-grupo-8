@@ -6,18 +6,22 @@
     <body>
         {{>common/header}}
         <div class="container">
-            <h1> Seleccione ejercicio a eliminar</h1>
-            <form action="/exercise/delete" method="post">
-                <label for="exercise">Ejercicio:</label>
-                <select id ="exercise" name = "id">
-                    {{#exercises}}
-                        <option value="{{id}}">{{name}}</option>
-                    {{/exercises}}
-                </select><br><br>
+            <form action="/exercise/delete" method="post" class="center">
+                <h1> Seleccione ejercicio a eliminar</h1>
+                <div>
+                    <label for="exercise">Ejercicio:</label>
+                    <select id ="exercise" name = "id">
+                        {{#exercises}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/exercises}}
+                    </select>
+                    <br><br>
+                </div>
                 <input type="submit" value="Eliminar ejercicio">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
+
         {{>common/footer}}
     </body>
 </html>
