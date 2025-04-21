@@ -29,29 +29,19 @@
     {{>common/footer}}
 
     <script>
-        let paginaActual = 0;
-        const pageSize = 5;
-
-        function cargarMaquinaria(pagina) {
-            if (pagina < 0) return;
-
-            fetch(`/machinery/page?page=${pagina}&size=${pageSize}`)
-                .then(res => res.text())
-                .then(html => {
-                    const container = document.getElementById('machinery-list');
-                    container.innerHTML = html;
-
-                    paginaActual = pagina;
-                    document.getElementById('pagina-actual').textContent = `Página ${pagina + 1}`;
-                })
-                .catch(error => {
-                    console.error("Error al cargar maquinaria:", error);
-                    document.getElementById('machinery-list').innerHTML = '<p>Error al cargar maquinaria.</p>';
+        function loadMachineries(page) {
+            fetch(`/api/machineries?page=${page}&size=5`) 
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    let html = "";
+                    data.content.forEach(machinery => {
+                        html += `<p>${machine.name}</p>`;
+                    });
+                    document.getElementById("user-list").innerHTML = html;
                 });
         }
-
-        // Cargar la primera página al iniciar
-        window.onload = () => cargarMaquinaria(0);
+        loadUsers(0);
     </script>
 </body>
 </html>

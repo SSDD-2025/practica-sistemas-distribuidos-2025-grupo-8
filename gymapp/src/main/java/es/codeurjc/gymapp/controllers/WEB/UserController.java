@@ -164,8 +164,6 @@ public class UserController {
 
 	@PostMapping("/admin/users")
 	public String showUsers(Model model){
-		List<UserDTO> users = userServices.findAll();
-		model.addAttribute("users", users);
 		return "account/show_users";
 	}
 
