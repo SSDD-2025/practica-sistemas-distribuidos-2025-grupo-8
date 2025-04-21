@@ -119,8 +119,9 @@ public class RoutineServices {
 
     public void deleteAllRoutines(UserDTO userDTO){
         User user = mapperUser.toDomain(userDTO);
-        routineRepository.deleteAll(user.getRoutines());
+        List<Routine> routines = user.getRoutines();
         user.getRoutines().clear();
+        routineRepository.deleteAll(routines);
         userServices.save(user);
     }
 

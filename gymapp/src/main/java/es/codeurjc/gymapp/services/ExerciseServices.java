@@ -147,6 +147,8 @@ public class ExerciseServices {
                 exercise.getRoutine().remove(routine);
                 this.save(exercise);
             }
+            routine.getExercises().clear();
+            routineServices.save(routine);
         }
     }
 

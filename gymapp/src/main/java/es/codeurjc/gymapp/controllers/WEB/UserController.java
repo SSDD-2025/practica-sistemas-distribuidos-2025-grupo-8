@@ -124,18 +124,13 @@ public class UserController {
 		UserDTO user = optionalUser.get();
 		// Delete routines from exercises
 		exerciseServices.deleteRoutinesFromExercise(user);
-		System.out.println("EJERCICIOS ELIMINADOS");
 		// Delete all routines
 		routineServices.deleteAllRoutines(user);
-		System.out.println("RUTINAS ELIMINADAS");
 		// Delete all comments
 		commentServices.deleteAllComments(user);
-		System.out.println("COMENTARIOS ELIMINADOS");
 		// Delete user
 		userServices.deleteById(user.id());
-		System.out.println("USUARIO ELIMINADO");
 		userSession.logout(request);
-		System.out.println("SESION CERRADA");
 		model.addAttribute("message", "Cuenta eliminada con éxito");
 		return "account/accountMessage";
 	}
