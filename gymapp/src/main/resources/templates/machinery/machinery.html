@@ -1,52 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Maquinaria</title>
-        <link rel="stylesheet" type="text/css" href="/style.css">
-    </head>
-    <body>
-        {{>common/header}}
-        <h1>Maquinaria</h1>
-        <div class="inRows">
-            {{#machineries}}
-            <ul>
-                <li>
-                    <div class="alignItems">
-                        <form action="/machinery/{{id}}" method="get">
-                            <button type="submit" class="button">{{name}}</button>
-                        </form>
-                        {{#isAdmin}}
-                        <form action="/machinery/delete/{{id}}" method="post">
-                            <input type="submit" value="Borrar maquinaria">
-                            <input type="hidden" name="_csrf" value="{{token}}"/>
-                        </form>
-                        {{/isAdmin}}
-                    </div>
-                </li>
-            </ul>
-            {{/machineries}}
-        </div>
-            
+<head>
+    <title>Mostrar Maquinarias</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+    {{>common/header}}
 
-    <div id="machinery-list" class="inRows">
-        <!-- Aquí se cargará la maquinaria por AJAX -->
+    <h1>Maquinarias de Golden Gym</h1>
+
+    <div id="machinery-list"></div>
+
+    <div id="pagination-buttons">
+        <button onclick="loadMachineries(0)">Página 1</button>
+        <button onclick="loadMachineries(1)">Página 2</button>
     </div>
 
-    <!-- Controles de paginación -->
-    <div class="pagination">
-        <button onclick="cargarMaquinaria(paginaActual - 1)" id="prev-btn">Anterior</button>
-        <span id="pagina-actual"></span>
-        <button onclick="cargarMaquinaria(paginaActual + 1)" id="next-btn">Siguiente</button>
-    </div>
-
-    {{#isAdmin}}
-        <br>
-        <form action="/machinery/add" method="get">
-            <input type="submit" value="Añadir maquinaria">
-        </form>
-    {{/isAdmin}}
-
-    {{>common/footer}}
+    <form action="/account" method="post">
+        <input type="submit" value="Volver">
+        <input type="hidden" name="_csrf" value="{{token}}"/>
+    </form>
 
     <script>
         function loadMachineries(page) {
@@ -55,13 +28,35 @@
                 .then(data => {
                     console.log(data);
                     let html = "";
-                    data.content.forEach(machinery => {
-                        html += `<p>${machine.name}</p>`;
+                    data.content.forEach(machine => {
+                        html += `
+                            <div class="inRows">
+                                <ul>
+                                    <li>
+                                        <div class="alignItems">
+                                            <form action="/machinery/${machine.id}" method="get">
+                                                <button type="submit" class="button">${machine.name}</button>
+                                            </form>
+                                            ${machine.isAdmin ? `
+                                            <form action="/machinery/delete/${machine.id}" method="post">
+                                                <input type="submit" value="Borrar maquinaria">
+                                                <input type="hidden" name="_csrf" value="${machine.token}"/>
+                                            </form>
+                                            ` : ''}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        `;
                     });
-                    document.getElementById("user-list").innerHTML = html;
+                    document.getElementById("machinery-list").innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error cargando maquinarias:', error);
                 });
         }
-        loadUsers(0);
+
+        loadMachineries(0);
     </script>
 </body>
 </html>
