@@ -173,19 +173,19 @@ A continuación, se muestra un recorrido por la página web con las principales 
       - [RoutineController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/WEB/RoutineController.java)
       - [SecurityCOnfiguration](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/security/SecurityConfiguration.java)
       - [LoginController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/auth/LoginController.java)
-- **<span style="color:green">Iván Fernández Ruiz</span>:** //POR HACER
-    - Tareas: creación de funcionalidad de maquinaria (ver, añadir y eliminar), ejercicios (añadir y eliminar) y comentarios de los entrenadores (ver, añadir y eliminar) creación de los htmls asociados a las funcionalidades anteriores, solución de errores relacionados con la comprobación de campos en los formularios (crear rutina, modificar rutina, entre otros) y solución de errores de borrado de usuarios cuando el usuario tiene rutinas y comentarios asociados.
-    - 5 commits más significativos:
+- **<span style="color:green">Iván Fernández Ruiz</span>:** //POR TERMINAR
+    - Tareas: Refactorización de material y exercise services para el uso de los DTOs (y creación de los DTOs) además de la refactorización de sus respectivos controladores, creación de material y exercise REST Controller, documentación API y paginación web con consultas AJAX
       - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/174c8636125cdbce22e5095e4911fe37e082c93c)
       - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/59973cb9b60f6bf2f57e2e13b825ae3b9f398154)
       - [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/74dac0bb697484876c81afa7569dec7a79a89fd2)
       - [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/e281bd808904238967df174b496fb924402da765)
       - [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/6ae3cd17c616fdf8e58604e890e016d9dd80d036)
     - 5 ficheros en los que se ha participado:
+      - [MaterialServices](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/services/MaterialServices.java)
       - [ExerciseServices](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/services/ExerciseServices.java)
-      - [CommentService](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/services/CommentService.java)
-      - [MaterialController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/MaterialController.java)
-      - [ExerciseController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/ExerciseController.java)
+      - [MaterialRestController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/REST/MaterialRESTController.java)
+      - [ExerciseRestController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/REST/ExerciseRESTController.java)
+        // TO DO
       - [TrainerController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/TrainerController.java)
       
 - **<span style="color:green">Andrés Korotkov Vorobey</span>:**
