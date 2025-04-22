@@ -10,11 +10,12 @@ import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import es.codeurjc.gymapp.DTO.Trainer.TrainerDTO;
 import es.codeurjc.gymapp.DTO.Trainer.TrainerMapper;
@@ -76,6 +77,10 @@ public class TrainerServices {
     public List<TrainerDTO> findAll() {
         List<Trainer> trainers = trainerRepository.findAll();
         return mapperTrainer.toDTOs(trainers);
+    }
+
+    public Page<TrainerDTO> findAllPage(Pageable pageable){
+        return trainerRepository.findAll(pageable).map(trainer -> mapperTrainer.toDTO(trainer));
     }
 
     public List<TrainerSimpleDTO> findAllSimple() {

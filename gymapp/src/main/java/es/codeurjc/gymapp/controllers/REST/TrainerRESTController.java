@@ -8,6 +8,8 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,10 +49,10 @@ public class TrainerRESTController {
                      schema = @Schema(implementation = TrainerDTO.class)))
     })
     @GetMapping("/")
-    public ResponseEntity<List<TrainerSimpleDTO>> getTrainers() {
+    public ResponseEntity<Page<TrainerDTO>> getTrainers(Pageable pageable) {
         if(trainerServices.findAllSimple().isEmpty())
             return ResponseEntity.notFound().build();
-        List<TrainerSimpleDTO> trainers = trainerServices.findAllSimple();
+        Page<TrainerDTO> trainers = trainerServices.findAllPage(pageable);
         return ResponseEntity.ok(trainers);
     }
 

@@ -1,33 +1,70 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Entrenadores</title>
-        <link rel="stylesheet" type="text/css" href="/style.css">
-    </head>
-    <body>
-        {{>common/header}}
-        <div class="container">
-            <h1>Entrenadores</h1>
-                <ul class="padding inRows">
-                    {{#trainers}}
-                    <li>
-                        <form action="/trainer/{{id}}" method="get">
-                            <button type="submit" class="big button">{{name}}</button>
-                        </form>
-                    </li>
-                    {{/trainers}}
-                </ul>
-                
-    
-                {{#isAdmin}}
-                <form action="/trainer/add" method="post">
-                    <input type="submit" value = "Añadir nuevo entrenador" class="small buttonsRoutines">
-                    <input type="hidden" name="_csrf" value="{{token}}"/>
-                </form>
-                {{/isAdmin}}
-                
-                <p class="big">Entrenador personal: {{personalTrainer}}</p>
+<head>
+    <title>Entrenadores</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+    {{>common/header}}
+
+    <div class="container">
+        <h1>Entrenadores</h1>
+
+        <ul class="padding inRows" id="trainer-list">
+            <!-- Aquí se cargarán los entrenadores con JS -->
+        </ul>
+
+        <div id="pagination-buttons">
+            <button onclick="loadTrainers(0)">Página 1</button>
+            <button onclick="loadTrainers(1)">Página 2</button>
         </div>
-        {{>common/footer}}
-    </body>
+
+        {{#isAdmin}}
+        <form action="/trainer/add" method="post">
+            <input type="submit" value="Añadir nuevo entrenador" class="small buttonsRoutines">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+        </form>
+        {{/isAdmin}}
+
+        <p class="big">Entrenador personal: {{personalTrainer}}</p>
+    </div>
+
+    {{>common/footer}}
+
+    <script>
+        function loadTrainers(page) {
+            fetch(`/api/trainers/?page=${page}&size=5`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Error al cargar entrenadores");
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // para debug
+                    const list = document.getElementById("trainer-list");
+                    list.innerHTML = "";
+
+                    if (!data.content || data.content.length === 0) {
+                        list.innerHTML = "<p>No hay entrenadores.</p>";
+                        return;
+                    }
+
+                    data.content.forEach(trainer => {
+                        const li = document.createElement("li");
+                        li.innerHTML = `
+                            <form action="/trainer/${trainer.id}" method="get">
+                                <button type="submit" class="big button">${trainer.name}</button>
+                            </form>
+                        `;
+                        list.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    document.getElementById("trainer-list").innerHTML = "<p>Error al cargar entrenadores.</p>";
+                });
+        }
+
+        loadTrainers(0);
+    </script>
+</body>
 </html>
