@@ -27,7 +27,6 @@ public class MaterialController {
     
     @RequestMapping("/machinery")
 	public String machinery(Model model) {
-        model.addAttribute("machineries", materialServices.findAll());
 		return "machinery/machinery";
 	}
 
