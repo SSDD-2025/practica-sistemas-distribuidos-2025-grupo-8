@@ -175,10 +175,10 @@ A continuación, se muestra un recorrido por la página web con las principales 
       - [LoginController](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/controllers/auth/LoginController.java)
 - **<span style="color:green">Iván Fernández Ruiz</span>:** //POR TERMINAR
     - Tareas: Refactorización de material y exercise services para el uso de los DTOs (y creación de los DTOs) además de la refactorización de sus respectivos controladores, creación de material y exercise REST Controller, documentación API y paginación web con consultas AJAX
-      - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/174c8636125cdbce22e5095e4911fe37e082c93c)
-      - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/59973cb9b60f6bf2f57e2e13b825ae3b9f398154)
-      - [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/74dac0bb697484876c81afa7569dec7a79a89fd2)
-      - [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/e281bd808904238967df174b496fb924402da765)
+      - [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/c88db11a7c190a07204585823b012bd3d00033af)
+      - [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/d6dc98b0bcee05a74a8ac0af43bcf9ae369c3121)
+      - [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/100614b4c1daf99e4e333cd5377174c069f61c6c)
+      - [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/a87d6d395cee4f04662471e5780fd816e17b7a53)
       - [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/commit/6ae3cd17c616fdf8e58604e890e016d9dd80d036)
     - 5 ficheros en los que se ha participado:
       - [MaterialServices](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-8/blob/main/gymapp/src/main/java/es/codeurjc/gymapp/services/MaterialServices.java)
