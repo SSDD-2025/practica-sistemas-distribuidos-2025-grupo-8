@@ -9,10 +9,12 @@
         <div class="container">
             {{#isLogged}}
                 {{#routine}}
-                    <p> <span class = "bold">Nombre rutina: </span>  {{name}} </p>
-                    <p> <span class = "bold">Descripción: </span> {{description}} </p>
-                    <p> <span class = "bold">Día </span> {{day}} </p>
-                    <p> <span class = "bold">Ejercicios: </span> </p>
+                <div>
+                    <p> <span class = "bold">Nombre rutina:</span>  {{name}} </p>
+                    <p> <span class = "bold">Descripción:</span> {{description}} </p>
+                    <p> <span class = "bold">Día:</span> {{day}} </p>
+                    <p> <span class = "bold">Ejercicios:</span> </p>
+                </div>
                     <ul>
                         {{#exercises}}
                             <li>
@@ -20,6 +22,7 @@
                                 <p> <span class = "bold">Descripción : </span>{{description}}</p>
                                 <p> <span class = "bold">Material : </span> {{material.name}} </p>
                             </li>
+                            <hr>
                         {{/exercises}}
                     </ul>
                     {{^exercises}}
