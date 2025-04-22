@@ -36,12 +36,6 @@ public class CommentService {
     public void save(Trainer trainerToComment, Comment comment, UserDTO userDTO){
         User user = userMapper.toDomain(userDTO);
 
-        Trainer existingTrainer = trainerServices.findById(trainerToComment.getId()).orElseThrow();
-        trainerToComment.setImageFile(existingTrainer.getImageFile()); 
-    
-        User existingUser = userServices.findEntityById(user.getId()).orElseThrow();
-        user.setImageFile(existingUser.getImageFile());
-
         trainerToComment.getComments().add(comment);
 
         comment.setAuthor(user);
@@ -61,19 +55,12 @@ public class CommentService {
         Comment comment = opComment.get();
         User user = comment.getAuthor();
 
-        Trainer existingTrainer = trainerServices.findById(trainer.getId()).orElseThrow();
-        trainer.setImageFile(existingTrainer.getImageFile()); 
-    
-        User existingUser = userServices.findEntityById(user.getId()).orElseThrow();
-        user.setImageFile(existingUser.getImageFile());
-
         trainer.getComments().remove(comment);
         trainerServices.save(trainer);
 
         user.getComments().remove(comment);
         userServices.save(user);
 
-        commentsRepository.flush();
         commentsRepository.delete(comment);
         return true;
     }

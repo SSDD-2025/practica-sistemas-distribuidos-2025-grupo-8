@@ -63,6 +63,8 @@ public class TrainerServices {
     }
 
     void save(Trainer trainer) {
+        Trainer existingTrainer = trainerRepository.findById(trainer.getId()).orElseThrow();
+        trainer.setImageFile(existingTrainer.getImageFile()); 
         trainerRepository.save(trainer);
     }
 
@@ -130,16 +132,10 @@ public class TrainerServices {
     }
 
     void addOrReplace(User userFromDTO, Trainer trainerFromDTO) {
-        Trainer existingTrainer = trainerRepository.findById(trainerFromDTO.getId()).orElseThrow();
-        trainerFromDTO.setImageFile(existingTrainer.getImageFile()); 
-    
-        User existingUser = userServices.findEntityById(userFromDTO.getId()).orElseThrow();
-        userFromDTO.setImageFile(existingUser.getImageFile());
-    
         userFromDTO.setTrainer(trainerFromDTO);
-        userServices.save(userFromDTO);
-    
         trainerFromDTO.addUser(userFromDTO);
+        
+        userServices.save(userFromDTO);
         trainerRepository.save(trainerFromDTO);
     }
     

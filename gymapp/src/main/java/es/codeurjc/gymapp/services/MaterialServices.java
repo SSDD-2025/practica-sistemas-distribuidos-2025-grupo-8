@@ -2,7 +2,6 @@ package es.codeurjc.gymapp.services;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +31,6 @@ public class MaterialServices {
     private ExerciseMapper exerciseMapper;
 
     public MaterialServices() {
-        // Constructor vacío
     }
 
     public long count() {
@@ -132,10 +130,6 @@ public class MaterialServices {
 
     private MaterialSimpleDTO toSimpleDTO(Material material){
         return materialMapper.toSimpleDTO(material);
-    }
-
-    private List<MaterialDTO> toDTOs(Collection<Material> materials) {
-        return materialMapper.toDTOs(materials);
     }
 
     private Material toDomain(MaterialDTO materialDTO) {

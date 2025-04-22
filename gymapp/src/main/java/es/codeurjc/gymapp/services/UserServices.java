@@ -84,6 +84,8 @@ public class UserServices {
     }
     
     void save(User user){
+        User existingUser = findEntityById(user.getId()).orElseThrow();
+        user.setImageFile(existingUser.getImageFile());
         userRepository.save(user);
     }
 
@@ -105,6 +107,7 @@ public class UserServices {
         User user = userMapper.toDomain(userDTO);
         Routine routine = routineMapper.toDomain(routineDTO);
         user.addRoutine(routine);
+
         save(user);
     }
     
