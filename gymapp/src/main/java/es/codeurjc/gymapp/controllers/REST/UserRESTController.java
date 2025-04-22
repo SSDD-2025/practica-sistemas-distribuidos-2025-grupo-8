@@ -21,8 +21,11 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,10 +54,10 @@ public class UserRESTController {
                      schema = @Schema(implementation = UserSimpleDTO.class)))
     })
     @GetMapping("/")
-    public ResponseEntity<List<UserSimpleDTO>> getUsers() {
+    public ResponseEntity<Page<UserDTO>> getUsers(Pageable pageable) {
         if(userServices.findAll().isEmpty())
             return ResponseEntity.notFound().build();
-        List<UserSimpleDTO> users = userServices.findAllSimple();
+        Page<UserDTO> users = userServices.findAllPage(pageable);
         return ResponseEntity.ok(users);
     }
 
