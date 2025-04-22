@@ -336,7 +336,7 @@ footer{
 
 .big {
     padding: 10px 35px;
-    margin: 15px;
+    margin: 15px 5px;
     font-size: 20px;
     display: inline-block;
     text-align: center;
@@ -348,6 +348,7 @@ footer{
 .padding{
     padding: 10px 10px;
 }
+
 .minWidth{
     min-width: 300px;
     font-size: 20px;
