@@ -46,8 +46,6 @@ public class TrainerServices {
     private TrainerMapper mapperTrainer;
 
     public TrainerServices() {
-        // trainerRepository.save(new Trainer());
-        // trainerRepository.save(new Trainer());
     }
 
     public long count(){
@@ -69,7 +67,7 @@ public class TrainerServices {
     }
 
     public void save(TrainerDTO trainer) {
-        trainerRepository.save(mapperTrainer.toDomain(trainer));
+        save(mapperTrainer.toDomain(trainer));
     }
 
     public void deleteById(Long id) {
@@ -136,7 +134,7 @@ public class TrainerServices {
         trainerFromDTO.addUser(userFromDTO);
         
         userServices.save(userFromDTO);
-        trainerRepository.save(trainerFromDTO);
+        save(trainerFromDTO);
     }
     
 
