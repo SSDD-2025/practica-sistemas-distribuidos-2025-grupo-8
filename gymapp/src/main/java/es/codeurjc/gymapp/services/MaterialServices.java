@@ -39,8 +39,8 @@ public class MaterialServices {
         return materialRepository.count();
     }
 
-    public Collection<MaterialDTO> findAll() {
-        return toDTOs(materialRepository.findAll());
+    public List<MaterialDTO> findAll() {
+        return materialMapper.toDTOs(materialRepository.findAll());
     }
 
     public Page<MaterialDTO> findAll(Pageable pageable) {

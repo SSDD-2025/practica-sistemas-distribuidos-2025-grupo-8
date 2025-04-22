@@ -1,45 +1,77 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Maquinaria</title>
-        <link rel="stylesheet" type="text/css" href="/style.css">
-    </head>
-    <body>
-        {{>common/header}}
-        <div class="container">
-            <h1>Maquinaria</h1>
-            <div class="alignItem inRows">
-                {{#machineries}}
-                <ul class="evenly">
-                    <li>
-                        <div class="alignItems">
-                            <form action="/machinery/{{id}}" method="get">
-                                <button type="submit" class="button minerWidth">{{name}}</button>
-                            </form>
-                            {{#isAdmin}}
-                            <form action="/machinery/delete/{{id}}" method="post">
-                                <input type="submit" value="Borrar maquinaria" class="small buttonsRoutines">
-                                <input type="hidden" name="_csrf" value="{{token}}"/>
-                            </form>
-                            {{/isAdmin}}
-                        </div>
-                    </li>
-                </ul>
-                {{/machineries}}
-            </div>
-            
-            
-            {{^machineries}}
-            <p>No hay maquinaria disponible actualmente.</p>
-            {{/machineries}}
-            
-            {{#isAdmin}}
-            <br>
-            <form action="/machinery/add" method="get">
-                <input type="submit" value="Añadir maquinaria">
-            </form>
-            {{/isAdmin}}
-        </div>
-        {{>common/footer}}
-    </body>
+<head>
+    <title>Maquinaria</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+    {{>common/header}}
+
+    <h1>Maquinaria</h1>
+
+    <div id="machinery-list"></div>
+
+    <div id="pagination-buttons">
+        <button onclick="loadMachinery(0)">Página 1</button>
+        <button onclick="loadMachinery(1)">Página 2</button>
+    </div>
+
+    <form action="/account" method="post">
+        <input type="submit" value="Volver">
+        <input type="hidden" name="_csrf" value="{{token}}"/>
+    </form>
+
+    <script>
+        function loadMachinery(page) {
+            fetch(`/api/machineries/?page=${page}&size=5`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error al cargar las maquinarias");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // para depurar
+
+                    if (!data.content || data.content.length === 0) {
+                        document.getElementById("machinery-list").innerHTML = "<p>No hay maquinarias.</p>";
+                        return;
+                    }
+
+                    let html = "";
+                    data.content.forEach(machinery => {
+                        html += `
+                            <div class="alignItems">
+                                <form action="/machinery/${machinery.id}" method="get">
+                                    <button type="submit" class="button">${machinery.name}</button>
+                                </form>
+                                {{#isAdmin}}
+                                <form action="/machinery/delete/${machinery.id}" method="post">
+                                    <input type="submit" value="Borrar maquinaria">
+                                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                                </form>
+                                {{/isAdmin}}
+                            </div>
+                            <hr/>
+                        `;
+                    });
+
+                    document.getElementById("machinery-list").innerHTML = html;
+                })
+                .catch(error => {
+                    console.error(error);
+                    document.getElementById("machinery-list").innerHTML = "<p>Error al cargar maquinarias.</p>";
+                });
+        }
+
+        loadMachinery(0);
+    </script>
+    {{#isAdmin}}
+    <br>
+    <form action="/machinery/add" method="get">
+        <input type="submit" value="Añadir maquinaria">
+    </form>
+    {{/isAdmin}}
+    {{>common/footer}}
+</body>
 </html>
