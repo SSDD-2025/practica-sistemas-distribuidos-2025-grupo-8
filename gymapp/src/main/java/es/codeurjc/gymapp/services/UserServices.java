@@ -41,6 +41,10 @@ public class UserServices {
         return Optional.of(userMapper.toDTO(userRepository.findById(id).get()));
     }
 
+    Optional<User> findEntityById(Long id) {
+        return userRepository.findById(id);
+    }
+
     public List<UserDTO> findAll(){
         return userMapper.toDTOs(userRepository.findAll());
     }

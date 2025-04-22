@@ -118,23 +118,31 @@ public class TrainerServices {
 
     public boolean deleteCommentFromTrainer(long trainerId, long commentId) {
         Optional<Trainer> opTrainer = this.findById(trainerId);
-        Trainer trainer;
-        boolean commentDeleted = false;
         if (opTrainer.isPresent()){
-            trainer = opTrainer.get();
-            commentDeleted = commentServices.delete(commentId, trainer);
+            Trainer trainer = opTrainer.get();
+            return commentServices.delete(commentId, trainer);
         }
-        return commentDeleted;
+        return false;
     }
 
     public void addOrReplace(UserDTO userDTO, TrainerDTO trainerDTO){
-        User user = mapperUser.toDomain(userDTO);
-        Trainer trainer = mapperTrainer.toDomain(trainerDTO);
-        user.setTrainer(trainer);
-        userServices.save(user);
-        trainer.addUser(user);
-        save(trainer);
+        addOrReplace(mapperUser.toDomain(userDTO), mapperTrainer.toDomain(trainerDTO));
     }
+
+    void addOrReplace(User userFromDTO, Trainer trainerFromDTO) {
+        Trainer existingTrainer = trainerRepository.findById(trainerFromDTO.getId()).orElseThrow();
+        trainerFromDTO.setImageFile(existingTrainer.getImageFile()); 
+    
+        User existingUser = userServices.findEntityById(userFromDTO.getId()).orElseThrow();
+        userFromDTO.setImageFile(existingUser.getImageFile());
+    
+        userFromDTO.setTrainer(trainerFromDTO);
+        userServices.save(userFromDTO);
+    
+        trainerFromDTO.addUser(userFromDTO);
+        trainerRepository.save(trainerFromDTO);
+    }
+    
 
     public void deleteTrainer(TrainerDTO trainer, Long id){
         for (User user : mapperUser.toDomainsSimple(trainer.users())) {

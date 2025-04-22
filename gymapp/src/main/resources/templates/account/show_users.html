@@ -6,35 +6,38 @@
 </head>
 <body>
     {{>common/header}}
+    <div class="container">
 
-    <h1>Usuarios de Golden Gym</h1>
+        <h1>Usuarios de Golden Gym</h1>
 
-    <div id="user-list"></div>
+        <div id="user-list" class="inRows"></div>
 
-    <div id="pagination-buttons">
-        <button onclick="loadUsers(0)">Página 1</button>
-        <button onclick="loadUsers(1)">Página 2</button>
-    </div>
+        <div id="pagination-buttons">
+            <button onclick="loadUsers(0)">Página 1</button>
+            <button onclick="loadUsers(1)">Página 2</button>
+        </div>
 
-    <form action="/account" method="post">
-        <input type="submit" value="Volver">
-        <input type="hidden" name="_csrf" value="{{token}}"/>
-    </form>
+        <form action="/account" method="post">
+            <input type="submit" value="Volver" class="big">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+        </form>
 
-    <script>
-        function loadUsers(page) {
-            fetch(`/api/users/?page=${page}&size=5`) 
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    let html = "";
-                    data.content.forEach(user => {
-                        html += `<p>${user.name}</p>`;
+        <script>
+            function loadUsers(page) {
+                fetch(`/api/users/?page=${page}&size=5`) 
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        let html = "";
+                        data.content.forEach(user => {
+                            html += `<p class="spacing">${user.name}</p>`;
+                        });
+                        document.getElementById("user-list").innerHTML = html;
                     });
-                    document.getElementById("user-list").innerHTML = html;
-                });
-        }
-        loadUsers(0);
-    </script>
+            }
+            loadUsers(0);
+        </script>
+    </div>
+    {{>common/footer}}
 </body>
 </html>

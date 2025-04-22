@@ -29,36 +29,53 @@ public class CommentService {
     @Autowired
     private UserMapper userMapper;
     
-        public Optional<Comment> findById(long id){
-            return commentsRepository.findById(id);
-        }
+    public Optional<Comment> findById(long id){
+        return commentsRepository.findById(id);
+    }
+
+    public void save(Trainer trainerToComment, Comment comment, UserDTO userDTO){
+        User user = userMapper.toDomain(userDTO);
+
+        Trainer existingTrainer = trainerServices.findById(trainerToComment.getId()).orElseThrow();
+        trainerToComment.setImageFile(existingTrainer.getImageFile()); 
     
-        public void save(Trainer trainerToComment, Comment comment, UserDTO userDTO){
-            User user = userMapper.toDomain(userDTO);
-            trainerToComment.getComments().add(comment);
-            comment.setAuthor(user);
-            comment.setTrainer(trainerToComment);
-            user.getComments().add(comment);
-            commentsRepository.save(comment);
-            userServices.save(userDTO);
-            trainerServices.save(trainerToComment);
+        User existingUser = userServices.findEntityById(user.getId()).orElseThrow();
+        user.setImageFile(existingUser.getImageFile());
+
+        trainerToComment.getComments().add(comment);
+
+        comment.setAuthor(user);
+        comment.setTrainer(trainerToComment);
+
+        user.getComments().add(comment);
+        commentsRepository.save(comment);
+
+        userServices.save(user);
+        trainerServices.save(trainerToComment);
     }
 
     public boolean delete(Long commentId, Trainer trainer) {
         Optional<Comment> opComment = this.findById(commentId); 
-        Comment comment;
-        if (opComment.isPresent()) {
-            comment = opComment.get();
-            User user = comment.getAuthor();
-            trainer.getComments().remove(comment);
-            trainerServices.save(trainer);
-            user.getComments().remove(comment);
-            userServices.save(userMapper.toDTO(user));
-            commentsRepository.flush();
-            commentsRepository.delete(comment);
-            return true;
-        }
-        return false;
+        if (opComment.isEmpty()) return false;
+
+        Comment comment = opComment.get();
+        User user = comment.getAuthor();
+
+        Trainer existingTrainer = trainerServices.findById(trainer.getId()).orElseThrow();
+        trainer.setImageFile(existingTrainer.getImageFile()); 
+    
+        User existingUser = userServices.findEntityById(user.getId()).orElseThrow();
+        user.setImageFile(existingUser.getImageFile());
+
+        trainer.getComments().remove(comment);
+        trainerServices.save(trainer);
+
+        user.getComments().remove(comment);
+        userServices.save(user);
+
+        commentsRepository.flush();
+        commentsRepository.delete(comment);
+        return true;
     }
 
     public void deleteAllComments(UserDTO userDTO) {
