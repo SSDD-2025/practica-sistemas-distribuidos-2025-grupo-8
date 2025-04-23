@@ -61,8 +61,10 @@ public class TrainerServices {
     }
 
     void save(Trainer trainer) {
-        Trainer existingTrainer = trainerRepository.findById(trainer.getId()).orElseThrow();
-        trainer.setImageFile(existingTrainer.getImageFile()); 
+        if(trainer.getId() != null){
+            Trainer existingTrainer = trainerRepository.findById(trainer.getId()).orElseThrow();
+            trainer.setImageFile(existingTrainer.getImageFile());
+        }
         trainerRepository.save(trainer);
     }
 
