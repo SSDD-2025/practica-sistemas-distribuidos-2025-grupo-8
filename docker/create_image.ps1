@@ -1,3 +1,9 @@
+if ($args.Count -ne 1) {
+    Write-Error "Uso: .\create_image.ps1 <usuario>"
+    exit 1
+}
+$usuario = $args[0]
+
 $pomPath = "../gymapp/pom.xml"
 
 if (-Not (Test-Path $pomPath)) {
@@ -13,7 +19,7 @@ if (-Not $version) {
     exit 1
 }
 
-$imageName = "ifernandezru22/gymapp:$version"
+$imageName = "$usuario/gymapp:$version"
 
 docker build -f ./Dockerfile -t $imageName ..
 
