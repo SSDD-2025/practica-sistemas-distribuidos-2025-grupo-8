@@ -1,10 +1,10 @@
 services: 
   web:
-    image: ${DOCKER_USER}/gymapp:latest
+    image: ${DOCKER_USER}/gymapp:1.0.0
     ports:
       - 8443:8443
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/gymapp
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/gymapp
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=123456789
     depends_on:

@@ -234,3 +234,9 @@ A continuación, se muestra un recorrido por la página web con las principales 
     - Windows: https://maven.apache.org/download.cgi
 - Spring Boot 3.4.2
 - VisualStudioCode + SpringBoot
+
+
+## Instrucciones de ejecucion mediante dockerización
+```shell
+docker compose -f oci://docker.io/ihnu/gymapp-compose:latest up
+```
