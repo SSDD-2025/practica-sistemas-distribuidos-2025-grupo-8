@@ -237,6 +237,29 @@ A continuación, se muestra un recorrido por la página web con las principales 
 
 
 ## Instrucciones de ejecucion mediante dockerización
+### Instrucciones para ejecutar app con docker compose
+1: Local
+Para poder ejecutar el comando, debes estar situado en la carpeta docker del proyecto.
 ```shell
-docker compose -f oci://docker.io/ihnu/gymapp-compose:latest up
+docker compose -f docker-compose-local.yml up
 ```
+
+2: Producción
+Para poder ejecutar el comando, debes estar situado en la carpeta docker del proyecto.
+```shell
+docker compose -f oci://docker.io/ihnu/gymapp-compose:1.0.0 up
+```
+
+### Instrucciones para construir la imagen docker con el archivo Dockerfile
+Para poder ejecutar el script que crea la imagen, debes estar situado en la carpeta docker del proyecto.
+```shell
+./create_image <nombreUsuarioDocker>
+```
+
+### Instrucciones para construir la imagen docker con buildpacks
+```shell
+mvn spring-boot:build-image -Dspring-boot.build-image.imageName=<nombreUsuarioDocker>/gymapp:1.0.0
+```
+
+
+
