@@ -261,5 +261,25 @@ Para poder ejecutar el script que crea la imagen, debes estar situado en la carp
 mvn spring-boot:build-image -Dspring-boot.build-image.imageName=<nombreUsuarioDocker>/gymapp:1.0.0
 ```
 
+### Instrucciones para ejecutar la aplicación en las máquinas virtuales de la URJC.
+1º: Acceder a la máquina virtual 1
+```shell
+ssh -i ssh-keys/sidi08.key vmuser@193.147.60.48
+```
+
+2º Acceder a la máquina virtual 2 desde la máquina 1
+```shell
+ssh -t -i ssh-keys/sidi08.key vmuser@193.147.60.48 ssh sidi08-2
+```
+3º Lanzar mysql desde la máquina 2
+```shell
+sudo docker run --rm -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=gymapp --name gymapp -v "$PWD/data:/var/lib/mysql" -p 3306:3306 -d mysql:9.2
+```
+4º Lanzar contenedor de la imagen en la máquina 1
+```shell
+sudo docker run -d --name gymapp -p 8443:8443 -e SPRING_DATASOURCE_URL=jdbc:mysql://192.168.110.137:3306/gymapp -e SPRING_DATASOURCE_USERNAME=root -e SPRING_DATASOURCE_PASSWORD=123456789 ihnu/gymapp:1.0.0
+```
+### URL de la página web desplegada desde la máquina 1
+https://193.147.60.48:8443/
 
 
